@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 //Tabs
-import 'package:easy_solutions/src/features/presentation/tabs/explore_tab.dart';
-import 'package:easy_solutions/src/features/presentation/tabs/favorites_tab.dart';
-import 'package:easy_solutions/src/features/presentation/tabs/orders_tab.dart';
-import 'package:easy_solutions/src/features/presentation/tabs/addresses_tab.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/explore_tab/View/explore_tab.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/favorites_tab/View/favorites_tab.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/orders_tab/View/orders_tab.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/addresses_tab/View/addresses_tab.dart';
 
 //Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';

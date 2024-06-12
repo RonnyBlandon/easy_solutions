@@ -1,7 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 
 class RestaurantMenuPage extends StatelessWidget {
   const RestaurantMenuPage({super.key});
@@ -9,28 +10,40 @@ class RestaurantMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: MainAppBar(actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.shopping_cart,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications,
-              )),
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: CustomScrollView(slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.blue,
+            expandedHeight: 265.0,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                  color: Colors.white, child: _restaurantProfile(context)),
+            ),
+            leading: backButton(context, Colors.white),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                color: Colors.white,
+                icon: const Icon(Icons.favorite, size: 28.0),
+              ),
+              const SizedBox(width: 10.0),
+              IconButton(
+                onPressed: () {},
+                color: Colors.white,
+                icon: const Icon(Icons.more_vert, size: 28.0),
+              ),
+              const SizedBox(width: 10.0)
+            ],
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+            //Container(color: Colors.white, child: _restaurantProfile(context)),
+            Container(
+                color: Colors.white, child: _restaurantMenuContainer(context)),
+          ]))
         ]),
       ),
-      body: CustomScrollView(slivers: [
-        SliverList(
-            delegate: SliverChildListDelegate([
-          _restaurantProfile(context),
-          _restaurantMenuContainer(context),
-        ]))
-      ]),
     );
   }
 }
@@ -42,40 +55,18 @@ Widget _restaurantProfile(BuildContext context) {
       Stack(
         children: [
           Container(
-            height: 175.0,
+            height: 200.0,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/welcome_image.jpg'),
               ),
             ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 7.0),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0)),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite_border),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0)),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert_rounded),
-                  ),
-                ),
-              ],
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+              child: Container(
+                color: Colors.black.withOpacity(0.2),
+              ),
             ),
           ),
           Positioned(
@@ -102,27 +93,33 @@ Widget _restaurantProfile(BuildContext context) {
 Widget _restaurantInfo() {
   return Container(
     padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-    child: const Column(
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Jaguar King',
           style: TextStyle(
               color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         Row(
           children: [
-            Text(
-              'Abierto',
-              style: TextStyle(
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
                   color: Colors.green,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold),
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: const Text(
+                'Abierto',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 15.0,
             ),
-            Text(
+            const Text(
               'Horario 10:00 am - 8:00 pm',
               style: TextStyle(
                   color: Colors.black,
@@ -138,7 +135,8 @@ Widget _restaurantInfo() {
 
 Widget _restaurantMenuContainer(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(15.0),
+    padding:
+        const EdgeInsets.only(top: 12.0, left: 15.0, bottom: 15.0, right: 15.0),
     child: Column(
       children: [
         const Text(
@@ -209,8 +207,7 @@ Widget _cardProduct(BuildContext context) {
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           decoration: const BoxDecoration(
               color: Colors.white,
-              border:
-                  Border.symmetric(horizontal: BorderSide(color: Colors.grey))),
+              border: Border(top: BorderSide(color: Colors.grey))),
           child: Column(
             children: [
               GestureDetector(
