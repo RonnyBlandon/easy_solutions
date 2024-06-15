@@ -49,7 +49,9 @@ class _TabsPageState extends State<TabsPage> {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: MainAppBar(actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'shopping_cart');
+                },
                 icon: const Icon(
                   Icons.shopping_cart,
                 )),

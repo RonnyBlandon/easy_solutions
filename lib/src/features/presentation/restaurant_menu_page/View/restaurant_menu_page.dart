@@ -249,7 +249,7 @@ Widget _cardProduct(BuildContext context) {
                       icon: const Icon(Icons.favorite_border)),
                   const Spacer(),
                   const Text(
-                    'L.455.00',
+                    'L. 455.00',
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   )

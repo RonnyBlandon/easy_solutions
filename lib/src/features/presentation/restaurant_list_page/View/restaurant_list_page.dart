@@ -13,7 +13,9 @@ class RestaurantListPage extends StatelessWidget {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: MainAppBar(actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'shopping_cart');
+                },
                 icon: const Icon(
                   Icons.shopping_cart,
                 )),

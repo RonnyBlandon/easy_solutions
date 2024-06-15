@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-Widget customTitle(String title, Color color, {double fontsize = 30.0}) {
+Widget customTitle(String title, Color color,
+    {double fontsize = 30.0,
+    TextAlign textAling = TextAlign.center,
+    FontWeight fontWeight = FontWeight.bold}) {
   return Text(
     title,
-    textAlign: TextAlign.center,
+    textAlign: textAling,
     style: TextStyle(
         color: color,
-        fontWeight: FontWeight.bold,
+        fontWeight: fontWeight,
         fontSize: fontsize,
         decoration: TextDecoration.none),
   );

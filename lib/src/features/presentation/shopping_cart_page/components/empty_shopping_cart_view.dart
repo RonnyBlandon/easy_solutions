@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+//Components
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 
-class EmptyOrderView extends StatelessWidget {
-  const EmptyOrderView({super.key});
+class EmptyShoppingCartView extends StatelessWidget {
+  const EmptyShoppingCartView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +15,23 @@ class EmptyOrderView extends StatelessWidget {
       backgroundColor: bgGreyPage,
       appBar: AppBar(
         elevation: 0.1,
-        leading: const Text(''),
+        leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
+        title: customTitle('Carrito', Colors.black, fontsize: 18.0),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.assignment,
-              size: 150.0,
+            const Image(
+              width: 180.0,
+              height: 180.0,
+              image: AssetImage('assets/images/shopping_basket.png'),
             ),
-            customTitle('¡Tu historial de pedidos está vacío! 🤔', Colors.grey,
-                fontsize: 25.0),
-            const SizedBox(height: 10.0),
+            customTitle('Carrito Vacío', Colors.grey, fontsize: 25.0),
             const Text(
-              'Realiza tu primer pedido para acceder al historial y estado de tus entregas. 🍔📦',
+              'Agrega al carrito lo que más te guste.',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.grey,

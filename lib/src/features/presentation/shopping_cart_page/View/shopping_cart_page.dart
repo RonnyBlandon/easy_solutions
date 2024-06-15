@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 //Components
-import 'package:easy_solutions/src/features/presentation/tabs/orders_tab/View/components/empty_order_view.dart';
+import 'package:easy_solutions/src/features/presentation/shopping_cart_page/components/empty_shopping_cart_view.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 
-class OrdersTab extends StatefulWidget {
-  const OrdersTab({super.key});
+class ShoppingCartPage extends StatefulWidget {
+  const ShoppingCartPage({super.key});
 
   @override
-  State<OrdersTab> createState() => _OrdersTabState();
+  State<ShoppingCartPage> createState() => _ShoppingCartPageState();
 }
 
-class _OrdersTabState extends State<OrdersTab> {
-  final bool emptyOrderState = true;
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  final bool emptyOrderState = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
       body: emptyOrderState
-          ? const EmptyOrderView()
+          ? const EmptyShoppingCartView()
           : CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  leading: const Text(''),
+                  leading: backButton(context, black),
                   backgroundColor: white,
-                  title:
-                      customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
+                  title: customTitle('Carrito', Colors.black, fontsize: 18.0),
                   centerTitle: true,
                 ),
                 SliverList(
@@ -39,6 +39,9 @@ class _OrdersTabState extends State<OrdersTab> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _orders(context),
+                        _orders(context),
+                        const SizedBox(height: 20.0),
+                        _checkoutResume(context),
                       ],
                     ),
                   )
@@ -102,22 +105,30 @@ Widget _items(context) {
     decoration: const BoxDecoration(
       border: Border(bottom: BorderSide(color: grey)),
     ),
-    child: ListTile(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          customTitle('Pollo frito 8 piezas combo', orange,
-              fontsize: 15.0,
-              fontWeight: FontWeight.w400,
-              textAling: TextAlign.start),
-          customTitle('Con tajadas de guineo, repollo, caldo y aderezo.', grey,
-              fontsize: 12.0,
-              fontWeight: FontWeight.w400,
-              textAling: TextAlign.start),
-        ],
-      ),
-      trailing: customTitle('L. 455.00', grey,
-          fontsize: 15.0, fontWeight: FontWeight.w500),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            const Image(
+                width: 60.0,
+                height: 60.0,
+                image: AssetImage(
+                    'assets/images/restaurants/menu_images/pollo_frito.jpg')),
+            Expanded(
+              child: customTitle('Pollo frito 8 piezas combo', orange,
+                  fontsize: 16.0, fontWeight: FontWeight.w400),
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever))
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            customTitle('L. 455.00', red, fontsize: 18.0),
+            _cartItemQuantity(),
+          ],
+        )
+      ],
     ),
   );
 }
@@ -148,13 +159,25 @@ Widget _checkoutResume(BuildContext context) {
       children: [
         _itemsCheckOutResume(
             context: context, title: 'Subtotal', value: 'L. 455.00'),
+        //_itemsCheckOutResume(
+        //    context: context, title: 'Impuestos', value: 'L. 59.35'),
         _itemsCheckOutResume(
             context: context, title: 'Envío', value: 'L. 50.00'),
-        _itemsCheckOutResume(
-            context: context, title: 'Total', value: 'L. 59.35'),
         _buttonCheckout(),
       ],
     ),
+  );
+}
+
+Widget _cartItemQuantity() {
+  return Row(
+    children: [
+      IconButton(
+          onPressed: () {}, icon: const Icon(Icons.remove_circle_outline)),
+      customTitle('Cantidad: 1', black,
+          fontsize: 14.0, fontWeight: FontWeight.w300),
+      IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle_outline)),
+    ],
   );
 }
 

@@ -1,50 +1,46 @@
 import 'package:flutter/material.dart';
-//Components
-import 'package:easy_solutions/src/features/presentation/tabs/orders_tab/View/components/empty_order_view.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 
-class OrdersTab extends StatefulWidget {
-  const OrdersTab({super.key});
+class OrderDetails extends StatefulWidget {
+  const OrderDetails({super.key});
 
   @override
-  State<OrdersTab> createState() => _OrdersTabState();
+  State<OrderDetails> createState() => _OrderDetailsState();
 }
 
-class _OrdersTabState extends State<OrdersTab> {
-  final bool emptyOrderState = true;
-
+class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
-      body: emptyOrderState
-          ? const EmptyOrderView()
-          : CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  leading: const Text(''),
-                  backgroundColor: white,
-                  title:
-                      customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
-                  centerTitle: true,
-                ),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _orders(context),
-                      ],
-                    ),
-                  )
-                ]))
-              ],
-            ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            leading: const Text(''),
+            backgroundColor: white,
+            title: customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
+            centerTitle: true,
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _orders(context),
+                  _orders(context),
+                  const SizedBox(height: 20.0),
+                  _checkoutResume(context),
+                ],
+              ),
+            )
+          ]))
+        ],
+      ),
     );
   }
 }
