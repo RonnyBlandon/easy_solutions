@@ -14,7 +14,7 @@ class OrdersTab extends StatefulWidget {
 }
 
 class _OrdersTabState extends State<OrdersTab> {
-  final bool emptyOrderState = true;
+  final bool emptyOrderState = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,174 +32,113 @@ class _OrdersTabState extends State<OrdersTab> {
                   centerTitle: true,
                 ),
                 SliverList(
-                    delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _orders(context),
-                      ],
-                    ),
-                  )
-                ]))
+                  delegate: SliverChildListDelegate([
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          _order(
+                            context,
+                            orderDate: '16/06/2024',
+                            orderId: '1005',
+                            orderTotal: '505.00',
+                            orderStatus: 'Pendiente',
+                          ),
+                          _order(
+                            context,
+                            orderDate: '15/06/2024',
+                            orderId: '1004',
+                            orderTotal: '578.00',
+                            orderStatus: 'Entregado',
+                          ),
+                          _order(
+                            context,
+                            orderDate: '14/06/2024',
+                            orderId: '1003',
+                            orderTotal: '608.00',
+                            orderStatus: 'Entregado',
+                          ),
+                          _order(
+                            context,
+                            orderDate: '13/06/2024',
+                            orderId: '1002',
+                            orderTotal: '441.00',
+                            orderStatus: 'Cancelado',
+                          ),
+                          _order(
+                            context,
+                            orderDate: '12/06/2024',
+                            orderId: '1001',
+                            orderTotal: '638.50',
+                            orderStatus: 'Entregado',
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                ),
               ],
             ),
     );
   }
 }
 
-Widget _orders(BuildContext context) {
-  return Column(
-    children: [
-      _cardOrders(context),
-    ],
-  );
-}
+final Map<String, Color> _orderStatusToColorMap = {
+  "Pendiente": Colors.blue,
+  "Entregado": Colors.green,
+  "Cancelado": Colors.red,
+};
 
-Widget _cardOrders(BuildContext context) {
+Widget _order(BuildContext context,
+    {required String orderDate,
+    required String orderId,
+    required String orderTotal,
+    required String orderStatus}) {
+  final Color color = _orderStatusToColorMap[orderStatus] ?? Colors.grey;
+
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-    margin: const EdgeInsets.symmetric(vertical: 10.0),
-    width: double.infinity,
+    padding: const EdgeInsets.all(10.0),
+    margin: const EdgeInsets.only(bottom: 20.0),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: const Color.fromRGBO(248, 248, 248, 1.0),
+        color: white,
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: const [
           BoxShadow(
               color: Color.fromRGBO(210, 211, 215, 1.0),
               spreadRadius: 1.0,
               blurRadius: 4.0)
         ]),
-    child: Column(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _cardOrderTopContent(),
-        _items(context),
-        _items(context),
-        _moreContent(context),
-      ],
-    ),
-  );
-}
-
-Widget _cardOrderTopContent() {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 10.0),
-    width: double.infinity,
-    child: Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 20.0),
-          child: customTitle('Jaguar King', Colors.black, fontsize: 20.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            customTitle('Fecha: $orderDate', black, fontsize: 16.0),
+            customTitle('ID: $orderId', black, fontsize: 16.0),
+            customTitle('Total: L. $orderTotal', black, fontsize: 16.0),
+            Row(
+              children: [
+                customTitle('Estado: ', black, fontsize: 16.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  margin: const EdgeInsets.only(left: 5.0),
+                  decoration: BoxDecoration(
+                      color: color, borderRadius: BorderRadius.circular(20.0)),
+                  child: customTitle(orderStatus, white, fontsize: 16.0),
+                )
+              ],
+            ),
+          ],
         ),
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'order_details');
+            },
+            color: Colors.green,
+            iconSize: 40.0,
+            icon: const Icon(Icons.remove_red_eye)),
       ],
-    ),
-  );
-}
-
-Widget _items(context) {
-  return Container(
-    decoration: const BoxDecoration(
-      border: Border(bottom: BorderSide(color: grey)),
-    ),
-    child: ListTile(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          customTitle('Pollo frito 8 piezas combo', orange,
-              fontsize: 15.0,
-              fontWeight: FontWeight.w400,
-              textAling: TextAlign.start),
-          customTitle('Con tajadas de guineo, repollo, caldo y aderezo.', grey,
-              fontsize: 12.0,
-              fontWeight: FontWeight.w400,
-              textAling: TextAlign.start),
-        ],
-      ),
-      trailing: customTitle('L. 455.00', grey,
-          fontsize: 15.0, fontWeight: FontWeight.w500),
-    ),
-  );
-}
-
-Widget _moreContent(BuildContext context) {
-  return ListTile(
-    title: customTitle('Añadir más', pink,
-        fontWeight: FontWeight.w600, fontsize: 17.0),
-  );
-}
-
-Widget _checkoutResume(BuildContext context) {
-  return Container(
-    padding: const EdgeInsets.all(10.0),
-    margin: const EdgeInsets.symmetric(vertical: 10.0),
-    width: double.infinity,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      color: white,
-      boxShadow: const [
-        BoxShadow(
-            color: Color.fromRGBO(210, 211, 215, 1.0),
-            spreadRadius: 1.0,
-            blurRadius: 4.0)
-      ],
-    ),
-    child: Column(
-      children: [
-        _itemsCheckOutResume(
-            context: context, title: 'Subtotal', value: 'L. 455.00'),
-        _itemsCheckOutResume(
-            context: context, title: 'Envío', value: 'L. 50.00'),
-        _itemsCheckOutResume(
-            context: context, title: 'Total', value: 'L. 59.35'),
-        _buttonCheckout(),
-      ],
-    ),
-  );
-}
-
-Widget _itemsCheckOutResume(
-    {context = BuildContext, title = String, value = String}) {
-  return Container(
-    decoration: const BoxDecoration(
-        border: Border(
-      bottom: BorderSide(color: grey),
-    )),
-    child: ListTile(
-      title: customTitle(title, Colors.black,
-          fontWeight: FontWeight.w500,
-          fontsize: 15.0,
-          textAling: TextAlign.start),
-      trailing: customTitle(value, Colors.black,
-          fontWeight: FontWeight.w500,
-          fontsize: 15.0,
-          textAling: TextAlign.start),
-    ),
-  );
-}
-
-Widget _buttonCheckout() {
-  return Container(
-    width: double.infinity,
-    height: 45.0,
-    margin: const EdgeInsets.only(top: 10.0),
-    child: ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        backgroundColor: orange,
-        foregroundColor: white,
-        overlayColor: Colors.black,
-      ),
-      child: Row(
-        children: [
-          customTitle('Continuar', white, fontsize: 17.0),
-          const Spacer(),
-          customTitle('L. 505.00', white, fontsize: 15.0),
-        ],
-      ),
     ),
   );
 }

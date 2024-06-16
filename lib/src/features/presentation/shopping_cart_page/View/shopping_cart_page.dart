@@ -158,9 +158,9 @@ Widget _checkoutResume(BuildContext context) {
     child: Column(
       children: [
         _itemsCheckOutResume(
-            context: context, title: 'Subtotal', value: 'L. 455.00'),
-        //_itemsCheckOutResume(
-        //    context: context, title: 'Impuestos', value: 'L. 59.35'),
+            context: context, title: 'Subtotal', value: 'L. 395.65'),
+        _itemsCheckOutResume(
+            context: context, title: 'Impuestos', value: 'L. 59.35'),
         _itemsCheckOutResume(
             context: context, title: 'Envío', value: 'L. 50.00'),
         _buttonCheckout(),

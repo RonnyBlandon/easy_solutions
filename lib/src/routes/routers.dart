@@ -11,6 +11,7 @@ import 'package:easy_solutions/src/features/presentation/restaurant_list_page/Vi
 import 'package:easy_solutions/src/features/presentation/restaurant_menu_page/View/restaurant_menu_page.dart';
 import 'package:easy_solutions/src/features/presentation/menu_details_page/View/menu_details_page.dart';
 import 'package:easy_solutions/src/features/presentation/shopping_cart_page/View/shopping_cart_page.dart';
+import 'package:easy_solutions/src/features/presentation/order_details_page/View/order_details_page.dart';
 
 final routes = <String, WidgetBuilder>{
   'welcome': (BuildContext context) => const WelcomePage(),
@@ -22,5 +23,6 @@ final routes = <String, WidgetBuilder>{
   'restaurant_list': (BuildContext context) => const RestaurantListPage(),
   'restaurant_menu': (BuildContext context) => const RestaurantMenuPage(),
   'menu_details': (BuildContext context) => const MenuDetailsPage(),
-  'shopping_cart': (BuildContext context) => const ShoppingCartPage()
+  'shopping_cart': (BuildContext context) => const ShoppingCartPage(),
+  'order_details': (BuildContext context) => const OrderDetailsPage()
 };
