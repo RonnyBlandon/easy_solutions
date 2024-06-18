@@ -106,7 +106,7 @@ Widget _orderStatus({required String orderStatus}) {
 }
 
 Widget _buttonOrderTracking() {
-  return Container(
+  return SizedBox(
     width: 200.0,
     child: ElevatedButton(
         onPressed: () {},

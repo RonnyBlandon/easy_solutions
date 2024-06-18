@@ -15,13 +15,13 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  final bool emptyOrderState = false;
+  final bool emptyShoppingCartState = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
-      body: emptyOrderState
+      body: emptyShoppingCartState
           ? const EmptyShoppingCartView()
           : CustomScrollView(
               slivers: [
