@@ -11,13 +11,6 @@ class EmptyOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
-      appBar: AppBar(
-        elevation: 0.1,
-        leading: const Text(''),
-        backgroundColor: white,
-        title: customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
-        centerTitle: true,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

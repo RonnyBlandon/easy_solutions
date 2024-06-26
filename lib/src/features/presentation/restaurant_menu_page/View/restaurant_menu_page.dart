@@ -38,7 +38,6 @@ class RestaurantMenuPage extends StatelessWidget {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            //Container(color: Colors.white, child: _restaurantProfile(context)),
             Container(
                 color: Colors.white, child: _restaurantMenuContainer(context)),
           ]))

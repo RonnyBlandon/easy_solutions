@@ -4,40 +4,43 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: backButton(context, Colors.black),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          child: Column(
-            children: [
-              customTitle('Olvidaste tu contraseña', black, fontsize: 29.0),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Por favor, ingrese su correo electrónico para recuperar su contraseña.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15.0),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: backButton(context, Colors.black),
+        ),
+        body: Center(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: Column(
+              children: [
+                customTitle('Olvidaste tu contraseña', black, fontsize: 29.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Por favor, ingrese su correo electrónico para recuperar su contraseña.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15.0),
+                  ),
                 ),
-              ),
-              _emailInput(),
-              const SizedBox(height: 30.0),
-              _sendButton(context),
-            ],
+                _emailInput(),
+                const SizedBox(height: 30.0),
+                _sendButton(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -78,7 +81,7 @@ Widget _sendButton(BuildContext context) {
 }
 
 void _showAlertPassword(BuildContext context) {
-  return showAlertDialog(
+  return showAlertDialogWithImage(
     context,
     const AssetImage('assets/images/forgot_password.png'),
     'Tu contraseña ha sido restablecida',
@@ -86,6 +89,7 @@ void _showAlertPassword(BuildContext context) {
     'Hecho',
     false,
     () {
+      Navigator.of(context).pop();
       Navigator.pushNamed(context, 'login');
     },
   );

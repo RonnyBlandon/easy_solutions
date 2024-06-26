@@ -19,11 +19,23 @@ class MainDrawer extends StatelessWidget {
                 )),
             child: Text(''),
           ),
-          const ListTile(
-              title: Text('Perfil'), leading: Icon(Icons.person_outline)),
-          const ListTile(
-              title: Text('Metodos de pago'), leading: Icon(Icons.payment)),
-          const ListTile(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, 'profile_details');
+            },
+            title: const Text('Perfil'),
+            leading: const Icon(Icons.person_outline),
+          ),
+          ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, 'payment_methods');
+              },
+              title: const Text('Formas de pago'),
+              leading: const Icon(Icons.payment)),
+          ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, 'legal_info');
+              },
               title: Text('Información legal'),
               leading: Icon(Icons.info_outline)),
           const ListTile(

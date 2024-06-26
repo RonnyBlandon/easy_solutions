@@ -9,7 +9,7 @@ import 'package:easy_solutions/src/features/presentation/tabs/addresses_tab/View
 //Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_drawer.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
 
 class TabsPage extends StatefulWidget {
   const TabsPage({super.key});
@@ -89,7 +89,7 @@ class _TabsPageState extends State<TabsPage> {
   }
 
   Future _requestLocation(BuildContext context) async {
-    showAlertDialog(
+    showAlertDialogWithImage(
         context,
         const AssetImage('assets/images/location_google.png'),
         'Habilita tu localización',

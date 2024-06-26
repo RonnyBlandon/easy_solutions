@@ -54,7 +54,9 @@ Widget _scrollCategories(BuildContext context) {
         ),
         const SizedBox(height: 20.0),
         ButtonCategories(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, 'business_list');
+          },
           text: 'SUPER MERCADOS',
           assetsImage: 'assets/images/supermarket_categories.jpg',
           decoration: TextDecoration.underline,
@@ -62,7 +64,9 @@ Widget _scrollCategories(BuildContext context) {
         ),
         const SizedBox(height: 20.0),
         ButtonCategories(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, 'business_list');
+          },
           text: 'FARMACIAS',
           assetsImage: 'assets/images/pharmacy_categories.jpg',
           decoration: TextDecoration.underline,
@@ -70,7 +74,9 @@ Widget _scrollCategories(BuildContext context) {
         ),
         const SizedBox(height: 20.0),
         ButtonCategories(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, 'business_list');
+          },
           text: 'FERRETERÍAS',
           assetsImage: 'assets/images/hardware_store_categories.jpg',
           decoration: TextDecoration.underline,
@@ -78,7 +84,9 @@ Widget _scrollCategories(BuildContext context) {
         ),
         const SizedBox(height: 20.0),
         ButtonCategories(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, 'business_list');
+          },
           text: 'FLORISTERÍAS',
           assetsImage: 'assets/images/florist_categories.jpg',
           decoration: TextDecoration.underline,

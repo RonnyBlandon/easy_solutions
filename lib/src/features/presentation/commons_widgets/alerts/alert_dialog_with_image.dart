@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/rounded_button.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
-void showAlertDialog(
+void showAlertDialogWithImage(
     BuildContext context,
     ImageProvider<Object> imagePath,
     String headerTitle,

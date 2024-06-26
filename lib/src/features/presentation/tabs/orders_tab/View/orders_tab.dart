@@ -5,6 +5,8 @@ import 'package:easy_solutions/src/features/presentation/tabs/orders_tab/View/co
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
+//Styles
+import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 
 class OrdersTab extends StatefulWidget {
   const OrdersTab({super.key});
@@ -20,17 +22,17 @@ class _OrdersTabState extends State<OrdersTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
+      appBar: AppBar(
+        elevation: 0.1,
+        leading: const Text(''),
+        backgroundColor: white,
+        title: customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
+        centerTitle: true,
+      ),
       body: emptyOrderState
           ? const EmptyOrderView()
           : CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  leading: const Text(''),
-                  backgroundColor: white,
-                  title:
-                      customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
-                  centerTitle: true,
-                ),
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Padding(
@@ -99,15 +101,7 @@ Widget _order(BuildContext context,
   return Container(
     padding: const EdgeInsets.all(10.0),
     margin: const EdgeInsets.only(bottom: 20.0),
-    decoration: BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: const [
-          BoxShadow(
-              color: Color.fromRGBO(210, 211, 215, 1.0),
-              spreadRadius: 1.0,
-              blurRadius: 4.0)
-        ]),
+    decoration: createBoxDecorationWithShadows(),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

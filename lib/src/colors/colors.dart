@@ -12,3 +12,4 @@ const grey = Colors.grey;
 const pink = Colors.pink;
 const bgInputs = Color.fromRGBO(142, 142, 147, 1.2);
 const bgGreyPage = Color.fromRGBO(247, 248, 250, 1.0);
+const bgGreyPage2 = Color.fromRGBO(216, 217, 219, 1);

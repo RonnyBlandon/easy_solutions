@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+// Styles
+import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 
 class FavoriteLocaleView extends StatefulWidget {
   const FavoriteLocaleView({super.key});
@@ -43,15 +45,8 @@ Widget _cardFavorite(BuildContext context) {
     child: Container(
       padding: const EdgeInsets.all(10.0),
       margin: const EdgeInsets.only(bottom: 20.0),
-      decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(20.0),
-          boxShadow: const [
-            BoxShadow(
-                color: Color.fromRGBO(210, 211, 215, 1.0),
-                spreadRadius: 1.0,
-                blurRadius: 4.0)
-          ]),
+      decoration: createBoxDecorationWithShadows(
+          borderRadius: BorderRadius.circular(10.0)),
       child: Row(
         children: [
           const Image(

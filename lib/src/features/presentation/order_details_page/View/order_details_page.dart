@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
+// Styles
+import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 
@@ -141,15 +143,7 @@ Widget _cardOrders(BuildContext context) {
     padding: const EdgeInsets.symmetric(horizontal: 10.0),
     margin: const EdgeInsets.symmetric(vertical: 10.0),
     width: double.infinity,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: const Color.fromRGBO(248, 248, 248, 1.0),
-        boxShadow: const [
-          BoxShadow(
-              color: Color.fromRGBO(210, 211, 215, 1.0),
-              spreadRadius: 1.0,
-              blurRadius: 4.0)
-        ]),
+    decoration: createBoxDecorationWithShadows(),
     child: Column(
       children: [
         _cardOrderTopContent(),
@@ -205,16 +199,8 @@ Widget _checkoutResume(BuildContext context) {
     padding: const EdgeInsets.all(10.0),
     margin: const EdgeInsets.symmetric(vertical: 10.0),
     width: double.infinity,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      color: white,
-      boxShadow: const [
-        BoxShadow(
-            color: Color.fromRGBO(210, 211, 215, 1.0),
-            spreadRadius: 1.0,
-            blurRadius: 4.0)
-      ],
-    ),
+    decoration: createBoxDecorationWithShadows(
+        borderRadius: BorderRadius.circular(10.0)),
     child: Column(
       children: [
         _itemsCheckOutResume(

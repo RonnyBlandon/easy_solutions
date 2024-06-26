@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//Components
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
@@ -13,13 +11,6 @@ class EmptyShoppingCartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgGreyPage,
-      appBar: AppBar(
-        elevation: 0.1,
-        leading: backButton(context, black),
-        backgroundColor: white,
-        title: customTitle('Carrito', Colors.black, fontsize: 18.0),
-        centerTitle: true,
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

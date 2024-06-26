@@ -4,7 +4,7 @@ import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/rounded_button.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
