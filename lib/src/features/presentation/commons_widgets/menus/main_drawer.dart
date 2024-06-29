@@ -36,8 +36,8 @@ class MainDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, 'legal_info');
               },
-              title: Text('Información legal'),
-              leading: Icon(Icons.info_outline)),
+              title: const Text('Información legal'),
+              leading: const Icon(Icons.info_outline)),
           const ListTile(
               title: Text('Cerrar Sesión'), leading: Icon(Icons.exit_to_app)),
           const Padding(

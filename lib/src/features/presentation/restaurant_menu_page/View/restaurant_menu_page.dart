@@ -235,7 +235,11 @@ Widget _cardProduct(BuildContext context) {
                           style: TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.bold),
                         ),
-                        Text('Con tajadas de guineo repollo, caldo y aderezo.')
+                        Text(
+                          'Con tajadas de guineo repollo, caldo y aderezo.',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
                       ],
                     ),
                   )
