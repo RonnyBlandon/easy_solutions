@@ -58,43 +58,48 @@ Widget _businessList(BuildContext context) {
     child: ListView.builder(
       itemCount: 3,
       itemBuilder: (BuildContext context, index) {
-        return _cardBusinnes();
+        return _cardBusinnes(context);
       },
     ),
   );
 }
 
-Widget _cardBusinnes() {
-  return Container(
-    padding: const EdgeInsets.all(10.0),
-    margin: const EdgeInsets.all(10.0),
-    decoration: createBoxDecorationWithShadows(
-        borderRadius: BorderRadius.circular(10.0)),
-    child: Row(
-      children: [
-        const Image(
-            width: 80.0,
-            height: 80.0,
-            image: AssetImage('assets/images/business/logo_business.png')),
-        const SizedBox(width: 10.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            customTitle(
-              'Jaguar King',
-              Colors.black,
-              fontsize: 18.0,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 7.0),
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(30.0)),
-              child: customTitle('Abierto', Colors.white, fontsize: 16.0),
-            )
-          ],
-        )
-      ],
+Widget _cardBusinnes(BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, 'business_product_categories');
+    },
+    child: Container(
+      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(10.0),
+      decoration: createBoxDecorationWithShadows(
+          borderRadius: BorderRadius.circular(10.0)),
+      child: Row(
+        children: [
+          const Image(
+              width: 80.0,
+              height: 80.0,
+              image: AssetImage('assets/images/business/logo_business.png')),
+          const SizedBox(width: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              customTitle(
+                'Jaguar King',
+                Colors.black,
+                fontsize: 18.0,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 7.0),
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(30.0)),
+                child: customTitle('Abierto', Colors.white, fontsize: 16.0),
+              )
+            ],
+          )
+        ],
+      ),
     ),
   );
 }

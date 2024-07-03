@@ -18,6 +18,7 @@ import 'package:easy_solutions/src/features/presentation/add_card_credit_page/Vi
 import 'package:easy_solutions/src/features/presentation/add_address_page/View/add_address_page.dart';
 import 'package:easy_solutions/src/features/presentation/legal_info_page/View/legal_info_page.dart';
 import 'package:easy_solutions/src/features/presentation/business_list_page/View/business_list_page.dart';
+import 'package:easy_solutions/src/features/presentation/business_product_categories_page/View/business_product_categories_page.dart';
 
 final routes = <String, WidgetBuilder>{
   'welcome': (BuildContext context) => const WelcomePage(),
@@ -28,7 +29,7 @@ final routes = <String, WidgetBuilder>{
   'tabs': (BuildContext context) => const TabsPage(),
   'restaurant_list': (BuildContext context) => const RestaurantListPage(),
   'restaurant_menu': (BuildContext context) => const RestaurantMenuPage(),
-  'menu_details': (BuildContext context) => const FoodDetailsPage(),
+  'food_details': (BuildContext context) => const FoodDetailsPage(),
   'shopping_cart': (BuildContext context) => const ShoppingCartPage(),
   'order_details': (BuildContext context) => const OrderDetailsPage(),
   'profile_details': (BuildContext context) => const ProfileDetailsPage(),
@@ -36,5 +37,8 @@ final routes = <String, WidgetBuilder>{
   'legal_info': (BuildContext context) => const LegalInfoPage(),
   'form_add_card_credit': (BuildContext context) => const FormAddCardCredit(),
   'add_address': (BuildContext context) => const AddAddressPage(),
-  'business_list': (BuildContext context) => const BusinessListPage()
+  'business_list': (BuildContext context) => const BusinessListPage(),
+  'business_product_categories': (BuildContext context) =>
+      const BusinessProductCategoriesPage(),
+  'product_details': (BuildContext context) => const BusinessListPage(),
 };

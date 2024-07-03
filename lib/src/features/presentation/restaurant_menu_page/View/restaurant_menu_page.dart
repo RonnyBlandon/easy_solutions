@@ -211,7 +211,7 @@ Widget _cardProduct(BuildContext context) {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, 'menu_details');
+                  Navigator.pushNamed(context, 'food_details');
                 },
                 child: Row(children: [
                   ClipRRect(

@@ -96,7 +96,7 @@ Widget _sliderProducts(BuildContext context) {
 Widget _cardProduct(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'menu_details');
+      Navigator.pushNamed(context, 'food_details');
     },
     child: Container(
       width: 180.0,

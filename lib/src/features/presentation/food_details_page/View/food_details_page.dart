@@ -13,10 +13,9 @@ class FoodDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: CustomScrollView(slivers: [
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(slivers: [
           SliverAppBar(
             backgroundColor: Colors.blue,
             expandedHeight: 265.0,
@@ -37,15 +36,10 @@ class FoodDetailsPage extends StatelessWidget {
                   productPrice: 'L. 455.00',
                   productProvider: 'Jaguar King',
                 )),
-            // This container is just to fill space in height
-            Container(
-                color: Colors.white,
-                height: screenHeight.getScreenHeight(
-                    context: context, multiplier: 0.16)),
           ]))
         ]),
+        bottomNavigationBar: _addCart(context),
       ),
-      bottomNavigationBar: _addCart(context),
     );
   }
 }
@@ -92,7 +86,7 @@ Widget _productInfoContainer(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            customTitle(productPrice, Colors.green, fontsize: 20.0),
+            customTitle(productPrice, Colors.green, fontsize: 24.0),
             IconButton(
                 onPressed: () {}, icon: const Icon(Icons.favorite_border))
           ],

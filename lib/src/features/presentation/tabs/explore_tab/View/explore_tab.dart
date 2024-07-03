@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// Colors
-import 'package:easy_solutions/src/colors/colors.dart';
 // Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/button_categories.dart';
@@ -93,47 +91,6 @@ Widget _scrollCategories(BuildContext context) {
           textColor: Colors.yellow,
         ),
         const SizedBox(height: 20.0)
-      ],
-    ),
-  );
-}
-
-Widget _topBar() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10.0),
-    child: Row(
-      children: [
-        Container(
-          width: 280.0,
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(left: 15.0),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(20.0)),
-          child: const Row(
-            children: [
-              Icon(
-                Icons.search,
-                size: 20.0,
-              ),
-              Text('  Buscar', style: TextStyle(color: grey, fontSize: 17.0))
-            ],
-          ),
-        ),
-        Container(
-          width: 40.0,
-          height: 40.0,
-          margin: const EdgeInsets.only(left: 10.0),
-          decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(30.0)),
-          child: const IconButton(
-              icon: Icon(
-                Icons.filter_list,
-                size: 25.0,
-                color: Colors.white,
-              ),
-              onPressed: null),
-        )
       ],
     ),
   );
