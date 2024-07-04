@@ -4,11 +4,12 @@ import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/main_search.dart';
 //Extensions
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 
-class BusinessProductCategoriesPage extends StatelessWidget {
-  const BusinessProductCategoriesPage({super.key});
+class ProductCategoriesPage extends StatelessWidget {
+  const ProductCategoriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class BusinessProductCategoriesPage extends StatelessWidget {
           toolbarHeight:
               screenHeight.getScreenHeight(context: context, multiplier: 0.1),
           leading: backButton(context, black),
-          actions: [_search(context)],
+          actions: [searchProduct(context)],
         ),
         body: CustomScrollView(
           slivers: [
@@ -41,31 +42,6 @@ class BusinessProductCategoriesPage extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _search(BuildContext context) {
-  return Container(
-    width: screenWidth.getScreenWidth(context: context, multiplier: 0.8),
-    padding: const EdgeInsets.all(10.0),
-    margin: const EdgeInsets.symmetric(horizontal: 15.0),
-    decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(20.0)),
-    child: Row(
-      children: [
-        const Icon(
-          Icons.search,
-          color: black,
-          size: 20.0,
-        ),
-        const SizedBox(
-          width: 10.0,
-        ),
-        customTitle('Buscar', grey,
-            fontsize: 17.0, fontWeight: FontWeight.w400),
-      ],
-    ),
-  );
 }
 
 Widget _businessInfo(BuildContext context, {required String businessName}) {
@@ -235,12 +211,17 @@ Widget _businessCategories(BuildContext context,
                     overflow: TextOverflow.ellipsis),
               ),
               const SizedBox(width: 10.0),
-              Row(
-                children: [
-                  customTitle('Ver todos', black,
-                      fontsize: 14.0, fontWeight: FontWeight.w400),
-                  const Icon(Icons.arrow_right)
-                ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'product_category');
+                },
+                child: Row(
+                  children: [
+                    customTitle('Ver todos', black,
+                        fontsize: 14.0, fontWeight: FontWeight.w400),
+                    const Icon(Icons.arrow_right)
+                  ],
+                ),
               )
             ],
           ),
@@ -267,43 +248,48 @@ Widget _categoryProductList(BuildContext context) {
 
 _cardProduct(BuildContext context,
     {required String productName, required String productPrice}) {
-  return Container(
-    margin: const EdgeInsets.only(left: 12.0),
-    decoration: BoxDecoration(
-        border: Border.all(color: grey),
-        borderRadius: BorderRadius.circular(6.0)),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
-          child: Image(
-              width: screenWidth.getScreenWidth(
-                  context: context, multiplier: 0.35),
-              height: screenHeight.getScreenHeight(
-                  context: context, multiplier: 0.15),
-              fit: BoxFit.cover,
-              image: const AssetImage('assets/images/business/product.jpg')),
-        ),
-        const SizedBox(height: 5.0),
-        Padding(
-          padding: const EdgeInsets.only(left: 5.0),
-          child: customTitle(productName, black,
-              fontsize: 14.0,
-              fontWeight: FontWeight.w300,
-              textAling: TextAlign.start,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5.0),
-          child: customTitle(productPrice, black,
-              fontsize: 16.0,
-              fontWeight: FontWeight.w400,
-              textAling: TextAlign.start),
-        )
-      ],
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, 'product_details');
+    },
+    child: Container(
+      margin: const EdgeInsets.only(left: 12.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: grey),
+          borderRadius: BorderRadius.circular(6.0)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
+            child: Image(
+                width: screenWidth.getScreenWidth(
+                    context: context, multiplier: 0.35),
+                height: screenHeight.getScreenHeight(
+                    context: context, multiplier: 0.15),
+                fit: BoxFit.cover,
+                image: const AssetImage('assets/images/business/product.jpg')),
+          ),
+          const SizedBox(height: 5.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: customTitle(productName, black,
+                fontsize: 14.0,
+                fontWeight: FontWeight.w300,
+                textAling: TextAlign.start,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: customTitle(productPrice, black,
+                fontsize: 16.0,
+                fontWeight: FontWeight.w400,
+                textAling: TextAlign.start),
+          )
+        ],
+      ),
     ),
   );
 }

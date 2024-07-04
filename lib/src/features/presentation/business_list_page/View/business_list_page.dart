@@ -67,7 +67,7 @@ Widget _businessList(BuildContext context) {
 Widget _cardBusinnes(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, 'business_product_categories');
+      Navigator.pushNamed(context, 'product_categories');
     },
     child: Container(
       padding: const EdgeInsets.all(10.0),
