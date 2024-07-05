@@ -20,6 +20,7 @@ import 'package:easy_solutions/src/features/presentation/legal_info_page/View/le
 import 'package:easy_solutions/src/features/presentation/business_list_page/View/business_list_page.dart';
 import 'package:easy_solutions/src/features/presentation/product_categories_page/View/product_categories_page.dart';
 import 'package:easy_solutions/src/features/presentation/product_category_page/View/product_category_page.dart';
+import 'package:easy_solutions/src/features/presentation/search_page/View/search_page.dart';
 
 final routes = <String, WidgetBuilder>{
   'welcome': (BuildContext context) => const WelcomePage(),
@@ -41,4 +42,5 @@ final routes = <String, WidgetBuilder>{
   'business_list': (BuildContext context) => const BusinessListPage(),
   'product_categories': (BuildContext context) => const ProductCategoriesPage(),
   'product_category': (BuildContext context) => const ProductCategoryPage(),
+  'search': (BuildContext context) => const SearchPage()
 };
