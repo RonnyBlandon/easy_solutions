@@ -6,7 +6,7 @@ import 'package:easy_solutions/src/features/presentation/profile_details_page/Vi
 import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/textfields_view.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Extensions
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 //Styles
@@ -27,7 +27,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Editar Perfil', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Editar Perfil', fontsize: 18.0),
         centerTitle: true,
         actions: [
           GestureDetector(
@@ -36,9 +36,9 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
             },
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
-              child: customTitle(
-                'Guardar',
-                orange,
+              child: headerText(
+                text: 'Guardar',
+                color: orange,
                 fontsize: 17.0,
                 fontWeight: FontWeight.w500,
               ),

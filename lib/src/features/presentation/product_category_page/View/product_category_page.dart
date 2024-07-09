@@ -4,7 +4,7 @@ import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/main_search.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Extensions
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 
@@ -40,7 +40,9 @@ Widget _businessCategories(BuildContext context,
       Padding(
         padding: const EdgeInsets.all(10.0),
         child: Expanded(
-          child: customTitle(categoryName, black,
+          child: headerText(
+              text: categoryName,
+              color: black,
               fontsize: 20.0,
               fontWeight: FontWeight.w500,
               textAling: TextAlign.start,
@@ -91,7 +93,9 @@ _cardProduct(BuildContext context,
           const SizedBox(height: 5.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: customTitle(productName, black,
+            child: headerText(
+                text: productName,
+                color: black,
                 fontsize: 14.0,
                 fontWeight: FontWeight.w300,
                 textAling: TextAlign.start,
@@ -100,7 +104,9 @@ _cardProduct(BuildContext context,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: customTitle(productPrice, black,
+            child: headerText(
+                text: productPrice,
+                color: black,
                 fontsize: 16.0,
                 fontWeight: FontWeight.w400,
                 textAling: TextAlign.start),

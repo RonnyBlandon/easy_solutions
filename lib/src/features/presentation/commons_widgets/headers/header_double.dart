@@ -1,4 +1,4 @@
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:flutter/material.dart';
 
 Widget headerDoubleText(
@@ -7,13 +7,13 @@ Widget headerDoubleText(
     void Function()? onPressed}) {
   return Row(
     children: [
-      customTitle(textHeader, Colors.black, fontsize: 20.0),
+      headerText(text: textHeader, fontsize: 20.0),
       const Spacer(),
       GestureDetector(
         onTap: onPressed,
-        child: customTitle(
-          textAction,
-          Colors.orange,
+        child: headerText(
+          text: textAction,
+          color: Colors.orange,
           fontsize: 15.0,
           fontWeight: FontWeight.w500,
         ),

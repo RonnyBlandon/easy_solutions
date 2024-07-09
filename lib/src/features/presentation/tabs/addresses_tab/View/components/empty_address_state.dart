@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:flutter/material.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class EmptyAddressState extends StatelessWidget {
@@ -20,8 +20,9 @@ class EmptyAddressState extends StatelessWidget {
               color: Colors.orange,
               size: 150.0,
             ),
-            customTitle(
-                '¡Aún no hay una dirección registrada.! 🤔', Colors.grey,
+            headerText(
+                text: '¡Aún no hay una dirección registrada.! 🤔',
+                color: Colors.grey,
                 fontsize: 25.0),
             const SizedBox(height: 10.0),
             const Padding(

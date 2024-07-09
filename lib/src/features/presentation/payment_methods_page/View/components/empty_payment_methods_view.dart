@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class EmptyPaymentMethodsView extends StatelessWidget {
@@ -23,9 +23,10 @@ class EmptyPaymentMethodsView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: customTitle(
-                  'Añade una tarjeta y disfruta de pagos más sencillos. 💳✨',
-                  Colors.grey,
+              child: headerText(
+                  text:
+                      'Añade una tarjeta y disfruta de pagos más sencillos. 💳✨',
+                  color: Colors.grey,
                   fontsize: 25.0),
             ),
             const SizedBox(height: 10.0),

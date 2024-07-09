@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 
 class FavoriteProductView extends StatefulWidget {
   const FavoriteProductView({super.key});
@@ -59,14 +59,17 @@ Widget _cardFavorite(BuildContext context) {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  customTitle('Jaguar King', black,
-                      fontsize: 16.0, fontWeight: FontWeight.w500),
+                  headerText(
+                      text: 'Jaguar King',
+                      fontsize: 16.0,
+                      fontWeight: FontWeight.w500),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                         color: green,
                         borderRadius: BorderRadius.circular(10.0)),
-                    child: customTitle('Abierto', white, fontsize: 14.0),
+                    child: headerText(
+                        text: 'Abierto', color: white, fontsize: 14.0),
                   )
                 ],
               ),
@@ -131,7 +134,7 @@ Widget _cardProduct(BuildContext context) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                customTitle('L. 455.00', black, fontsize: 14.0),
+                headerText(text: 'L. 455.00', fontsize: 14.0),
                 IconButton(
                     color: Colors.red,
                     onPressed: () {},

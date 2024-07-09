@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 
 class EmptyOrderView extends StatelessWidget {
   const EmptyOrderView({super.key});
@@ -19,7 +19,9 @@ class EmptyOrderView extends StatelessWidget {
               Icons.assignment,
               size: 150.0,
             ),
-            customTitle('¡Tu historial de pedidos está vacío! 🤔', Colors.grey,
+            headerText(
+                text: '¡Tu historial de pedidos está vacío! 🤔',
+                color: Colors.grey,
                 fontsize: 25.0),
             const SizedBox(height: 10.0),
             const Text(

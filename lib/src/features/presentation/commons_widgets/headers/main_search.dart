@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Extensions
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 
@@ -22,8 +22,11 @@ Widget searchProduct(BuildContext context) {
             size: 20.0,
           ),
           const SizedBox(width: 10.0),
-          customTitle('Buscar', Colors.grey,
-              fontsize: 17.0, fontWeight: FontWeight.w400),
+          headerText(
+              text: 'Buscar',
+              color: Colors.grey,
+              fontsize: 17.0,
+              fontWeight: FontWeight.w400),
         ],
       ),
     ),

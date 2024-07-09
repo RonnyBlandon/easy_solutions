@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/button_categories.dart';
 
 class ExploreTab extends StatelessWidget {
@@ -11,7 +11,7 @@ class ExploreTab extends StatelessWidget {
     return SafeArea(
         child: Column(
       children: [
-        customTitle('¿Qué necesitas?', Colors.black),
+        headerText(text: '¿Qué necesitas?'),
         Expanded(
           child: CustomScrollView(
             slivers: [
@@ -91,60 +91,6 @@ Widget _scrollCategories(BuildContext context) {
           textColor: Colors.yellow,
         ),
         const SizedBox(height: 20.0)
-      ],
-    ),
-  );
-}
-
-Widget _sliderCards() {
-  return SizedBox(
-    height: 400.0,
-    child: ListView.builder(
-        itemCount: 4,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) {
-          return _card(context);
-        }),
-  );
-}
-
-Widget _card(BuildContext context) {
-  return Container(
-    margin: const EdgeInsets.all(8.0),
-    child: Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: const Image(
-            width: 100.0,
-            height: 100.0,
-            fit: BoxFit.cover,
-            image: NetworkImage(
-                'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              child: const Text(
-                'Ensalada proteica',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0),
-              ),
-            ),
-            const Text(
-              'Huevo y carne juntos',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 209, 192, 192),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13.0),
-            )
-          ],
-        ),
       ],
     ),
   );

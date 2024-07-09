@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/features/presentation/tabs/favorites_tab/View/Components/favorite_locale_view.dart';
 import 'package:easy_solutions/src/features/presentation/tabs/favorites_tab/View/Components/favorite_product_view.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 
@@ -26,7 +26,8 @@ class _FavoritesTabState extends State<FavoritesTab> {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: AppBar(
             leadingWidth: 0,
-            title: customTitle('Favoritos', Colors.black, fontsize: 18.0),
+            title: headerText(
+                text: 'Favoritos', color: Colors.black, fontsize: 18.0),
             backgroundColor: white,
             actions: [
               ElevatedButton(

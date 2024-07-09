@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_double.dart';
 
 class SearchPage extends StatelessWidget {
@@ -31,7 +31,7 @@ class SearchPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      customTitle('Buscar', Colors.black),
+                      headerText(text: 'Buscar', color: Colors.black),
                       _searchInput(),
                       const SizedBox(height: 30.0),
                       headerDoubleText(
@@ -104,13 +104,18 @@ Widget _cardProduct(BuildContext context,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              customTitle(productName, Colors.black,
+              headerText(
+                  text: productName,
+                  color: Colors.black,
                   fontsize: 17.0,
                   fontWeight: FontWeight.w500,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-              customTitle(productPrice, Colors.black,
-                  fontsize: 15.0, fontWeight: FontWeight.w400)
+              headerText(
+                  text: productPrice,
+                  color: Colors.black,
+                  fontsize: 15.0,
+                  fontWeight: FontWeight.w400)
             ],
           )
         ],

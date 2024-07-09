@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -31,8 +31,9 @@ class WelcomePage extends StatelessWidget {
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: customTitle(
-                  'ENTREGAS A DOMICILIO HASTA LA PUERTA DE TU CASA', white)),
+              child: headerText(
+                  text: 'ENTREGAS A DOMICILIO HASTA LA PUERTA DE TU CASA',
+                  color: white)),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             child: Text(

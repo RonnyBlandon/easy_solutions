@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class LegalInfoPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class LegalInfoPage extends StatelessWidget {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Información Legal', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Información Legal', fontsize: 18.0),
         centerTitle: true,
       ),
       body: Column(

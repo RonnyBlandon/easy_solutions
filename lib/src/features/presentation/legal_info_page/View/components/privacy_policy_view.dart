@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 
 class PrivacyPolicyView extends StatelessWidget {
   const PrivacyPolicyView({super.key});
@@ -14,8 +14,10 @@ class PrivacyPolicyView extends StatelessWidget {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title:
-            customTitle('Politica de privacidad', Colors.black, fontsize: 18.0),
+        title: headerText(
+            text: 'Politica de privacidad',
+            color: Colors.black,
+            fontsize: 18.0),
         centerTitle: true,
       ),
       body: const Center(

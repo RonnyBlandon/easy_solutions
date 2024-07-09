@@ -6,7 +6,7 @@ import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 //Components
@@ -30,7 +30,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
         elevation: 0.1,
         leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Formas de Pago', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Formas de Pago', fontsize: 18.0),
         centerTitle: true,
       ),
       body: emptyPaymentMethodsState
@@ -87,9 +87,9 @@ Widget _cardContainer(BuildContext context,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            customTitle(cardNumber, Colors.black,
-                fontsize: 18.0, textAling: TextAlign.start),
-            customTitle(cardAlias, Colors.black, fontsize: 16.0),
+            headerText(
+                text: cardNumber, fontsize: 18.0, textAling: TextAlign.start),
+            headerText(text: cardAlias, fontsize: 16.0),
           ],
         ),
       ),
@@ -119,12 +119,12 @@ Widget _buildBottomSheetContent(BuildContext context,
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20.0, vertical: 10.0),
-                child: customTitle(cardNumber, Colors.black, fontsize: 18.0),
+                child: headerText(text: cardNumber, fontsize: 18.0),
               ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 20.0, top: 0.0, right: 20.0, bottom: 10.0),
-                child: customTitle(cardAlias, Colors.black, fontsize: 16.0),
+                child: headerText(text: cardAlias, fontsize: 16.0),
               ),
             ],
           ),

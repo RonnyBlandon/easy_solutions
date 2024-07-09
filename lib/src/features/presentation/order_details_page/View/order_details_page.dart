@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 // Styles
 import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
@@ -24,8 +24,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           child: AppBar(
             leading: backButton(context, black),
             backgroundColor: white,
-            title:
-                customTitle('Detalles de Pedido', Colors.black, fontsize: 18.0),
+            title: headerText(text: 'Detalles de Pedido', fontsize: 18.0),
             centerTitle: true,
           )),
       body: CustomScrollView(
@@ -46,14 +45,16 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   const SizedBox(height: 10.0),
                   _buttonOrderTracking(),
                   const SizedBox(height: 10.0),
-                  customTitle('Productos:', black, fontsize: 25.0),
+                  headerText(text: 'Productos:', fontsize: 25.0),
                   _orders(context),
                   _orders(context),
                   const SizedBox(height: 10.0),
                   _checkoutResume(context),
                   const SizedBox(height: 10.0),
-                  customTitle('Dirección: ', black,
-                      fontsize: 25.0, textAling: TextAlign.start),
+                  headerText(
+                      text: 'Dirección: ',
+                      fontsize: 25.0,
+                      textAling: TextAlign.start),
                   _addressOrder(
                     fullName: 'Ronny Humberto Blandon Martinez',
                     address:
@@ -62,8 +63,10 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     phone: '88956471',
                   ),
                   const SizedBox(height: 20.0),
-                  customTitle('Nota Importante: ', black,
-                      fontsize: 25.0, textAling: TextAlign.start),
+                  headerText(
+                      text: 'Nota Importante: ',
+                      fontsize: 25.0,
+                      textAling: TextAlign.start),
                   _importantNote(),
                   const SizedBox(height: 10.0),
                 ],
@@ -77,11 +80,11 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 }
 
 Widget _orderId({required String orderId}) {
-  return customTitle('ID Pedido: #$orderId', black, fontsize: 25.0);
+  return headerText(text: 'ID Pedido: #$orderId', fontsize: 25.0);
 }
 
 Widget _orderDate({required String orderDate}) {
-  return customTitle('Fecha: $orderDate', black, fontsize: 25.0);
+  return headerText(text: 'Fecha: $orderDate', fontsize: 25.0);
 }
 
 final Map<String, Color> _orderStatusToColorMap = {
@@ -95,13 +98,12 @@ Widget _orderStatus({required String orderStatus}) {
 
   return Row(
     children: [
-      customTitle('Estado: ', black,
-          fontsize: 25.0, textAling: TextAlign.start),
+      headerText(text: 'Estado: ', fontsize: 25.0, textAling: TextAlign.start),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         decoration: BoxDecoration(
             color: color, borderRadius: BorderRadius.circular(30.0)),
-        child: customTitle(orderStatus, white, fontsize: 25.0),
+        child: headerText(text: orderStatus, color: white, fontsize: 25.0),
       )
     ],
   );
@@ -119,7 +121,7 @@ Widget _buttonOrderTracking() {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customTitle('Seguimiento', white, fontsize: 16.0),
+            headerText(text: 'Seguimiento', color: white, fontsize: 16.0),
             const SizedBox(width: 10.0),
             const Icon(
               Icons.arrow_forward,
@@ -162,7 +164,7 @@ Widget _cardOrderTopContent() {
       children: [
         Container(
           margin: const EdgeInsets.only(right: 20.0),
-          child: customTitle('Jaguar King', Colors.black, fontsize: 20.0),
+          child: headerText(text: 'Jaguar King', fontsize: 20.0),
         ),
       ],
     ),
@@ -178,18 +180,25 @@ Widget _items(context) {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          customTitle('Pollo frito 8 piezas combo', orange,
+          headerText(
+              text: 'Pollo frito 8 piezas combo',
+              color: orange,
               fontsize: 15.0,
               fontWeight: FontWeight.w400,
               textAling: TextAlign.start),
-          customTitle('Cantidad: 1', grey,
+          headerText(
+              text: 'Cantidad: 1',
+              color: grey,
               fontsize: 12.0,
               fontWeight: FontWeight.w400,
               textAling: TextAlign.start),
         ],
       ),
-      trailing: customTitle('L. 455.00', grey,
-          fontsize: 15.0, fontWeight: FontWeight.w500),
+      trailing: headerText(
+          text: 'L. 455.00',
+          color: grey,
+          fontsize: 15.0,
+          fontWeight: FontWeight.w500),
     ),
   );
 }
@@ -224,11 +233,13 @@ Widget _itemsCheckOutResume(
       bottom: BorderSide(color: grey),
     )),
     child: ListTile(
-      title: customTitle(title, Colors.black,
+      title: headerText(
+          text: title,
           fontWeight: FontWeight.w500,
           fontsize: 15.0,
           textAling: TextAlign.start),
-      trailing: customTitle(value, Colors.black,
+      trailing: headerText(
+          text: value,
           fontWeight: FontWeight.w500,
           fontsize: 15.0,
           textAling: TextAlign.start),
@@ -252,19 +263,27 @@ Widget _addressOrder({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customTitle(fullName, grey,
+        headerText(
+            text: fullName,
+            color: grey,
             fontsize: 14.0,
             fontWeight: FontWeight.w400,
             textAling: TextAlign.start),
-        customTitle(address, grey,
+        headerText(
+            text: address,
+            color: grey,
             fontsize: 14.0,
             fontWeight: FontWeight.w400,
             textAling: TextAlign.start),
-        customTitle(department, grey,
+        headerText(
+            text: department,
+            color: grey,
             fontsize: 14.0,
             fontWeight: FontWeight.w400,
             textAling: TextAlign.start),
-        customTitle('Celular: $phone', grey,
+        headerText(
+            text: 'Celular: $phone',
+            color: grey,
             fontsize: 14.0,
             fontWeight: FontWeight.w400,
             textAling: TextAlign.start),
@@ -281,7 +300,6 @@ Widget _importantNote({String text = ''}) {
         color: white,
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(color: grey)),
-    child:
-        customTitle(text, black, fontsize: 12.0, fontWeight: FontWeight.w300),
+    child: headerText(text: text, fontsize: 12.0, fontWeight: FontWeight.w300),
   );
 }

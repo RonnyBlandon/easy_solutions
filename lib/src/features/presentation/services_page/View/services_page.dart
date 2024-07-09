@@ -15,7 +15,7 @@ class ServicesPage extends StatelessWidget {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: MainAppBar(actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, 'notifications'),
                 icon: const Icon(
                   Icons.notifications,
                 )),

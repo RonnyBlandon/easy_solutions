@@ -6,7 +6,7 @@ import 'package:easy_solutions/src/colors/colors.dart';
 
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -25,7 +25,7 @@ class SignUpPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
           child: Column(
             children: [
-              customTitle('Crea una cuenta', black),
+              headerText(text: 'Crea una cuenta', color: black),
               _namesInput(context),
               _surnamesInput(context),
               _emailInput(context),

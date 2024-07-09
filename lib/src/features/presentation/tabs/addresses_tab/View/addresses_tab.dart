@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 //Components
 import 'package:easy_solutions/src/features/presentation/tabs/addresses_tab/View/components/empty_address_state.dart';
@@ -29,7 +29,7 @@ class _AddressesTabState extends State<AddressesTab> {
         elevation: 0.1,
         leading: const Text(''),
         backgroundColor: white,
-        title: customTitle('Mis Direcciones', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Mis Direcciones', fontsize: 18.0),
         centerTitle: true,
         actions: [
           GestureDetector(
@@ -38,9 +38,9 @@ class _AddressesTabState extends State<AddressesTab> {
             },
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
-              child: customTitle(
-                'Agregar',
-                orange,
+              child: headerText(
+                text: 'Agregar',
+                color: orange,
                 fontsize: 17.0,
                 fontWeight: FontWeight.w500,
               ),
@@ -96,7 +96,9 @@ Widget _addressContainer(BuildContext context,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customTitle(type, isSelected ? Colors.white : Colors.black,
+        headerText(
+            text: type,
+            color: isSelected ? Colors.white : Colors.black,
             fontsize: 16.0,
             fontWeight: FontWeight.w500,
             textAling: TextAlign.start),
@@ -160,7 +162,8 @@ Widget _buildBottomSheetContent(BuildContext context,
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20.0, vertical: 10.0),
-                child: customTitle(address, Colors.black, fontsize: 18.0),
+                child: headerText(
+                    text: address, color: Colors.black, fontsize: 18.0),
               ),
             ],
           ),
@@ -168,7 +171,7 @@ Widget _buildBottomSheetContent(BuildContext context,
         if (!isSelected)
           ListTile(
             leading: const Icon(Icons.payment),
-            title: const Text('Usar como tarjeta predeterminada.'),
+            title: const Text('Usar como direción predeterminada.'),
             onTap: () {},
           ),
         ListTile(

@@ -1,11 +1,12 @@
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
+import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
-import 'package:flutter/services.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class FormAddCardCredit extends StatefulWidget {
   const FormAddCardCredit({super.key});
@@ -22,7 +23,7 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Agregar Tarjeta', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Agregar Tarjeta', fontsize: 18.0),
         centerTitle: true,
       ),
       body: Padding(
@@ -40,7 +41,9 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
             Form(
               child: Column(
                 children: [
+                  // Input card number
                   TextFormField(
+                    selectionControls: EmptyTextSelectionControls(),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -56,6 +59,7 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    // Input card Name
                     child: TextFormField(
                       decoration: const InputDecoration(
                           hintText: 'Nombre en la tarjeta',
@@ -67,6 +71,7 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
                   Row(
                     children: [
                       Expanded(
+                          // Input cvv card
                           child: TextFormField(
                         obscureText: true,
                         keyboardType: TextInputType.number,
@@ -85,12 +90,15 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
                       )),
                       const SizedBox(width: 20.0),
                       Expanded(
+                          // Input card expiration date
                           child: TextFormField(
+                        enableInteractiveSelection: false,
                         keyboardType: TextInputType.number,
                         //Limit the input
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(5),
                           FilteringTextInputFormatter.digitsOnly,
+                          ExpiryDateInputFormatter(),
                         ],
                         decoration: const InputDecoration(
                             hintText: 'MM/YY',
@@ -101,6 +109,7 @@ class _FormAddCardCreditState extends State<FormAddCardCredit> {
                     ],
                   ),
                   Padding(
+                    //Input Card alias
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: TextFormField(
                       decoration: const InputDecoration(
@@ -153,5 +162,56 @@ class CardNumberInputFormatter extends TextInputFormatter {
         selection: TextSelection.collapsed(
           offset: buffer.toString().length,
         ));
+  }
+}
+
+class ExpiryDateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Permitir solo caracteres numéricos
+    String newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limitar la longitud del texto a 4 caracteres (MMYY)
+    if (newText.length > 4) {
+      newText = newText.substring(0, 4);
+    }
+
+    // Insertar la barra automáticamente después del segundo dígito
+    if (newText.length > 2 && !newText.contains('/')) {
+      newText = '${newText.substring(0, 2)}/${newText.substring(2)}';
+    }
+
+    //Valindando los digitos del mes
+    // ignore: prefer_is_empty
+    if (newText.length == 1) {
+      if (newText[0] != '0' && newText[0] != '1') {
+        newText = '0${newText[0]}';
+      }
+    } else if (newText.length >= 2) {
+      if (int.parse(newText[1]) >= 3 &&
+          int.parse(newText[1]) <= 9 &&
+          newText[0] == '1') {
+        newText = '1';
+      } else if (newText[0] == '0' && newText[1] == '0') {
+        newText = newText.substring(0, 1);
+      }
+    }
+    //Valindando los digitos del año
+    int currentYear = DateTime.now().year % 100;
+    if (newText.length > 3) {
+      String year = newText.substring(3);
+      if (year.length == 2 && int.parse(year) < currentYear) {
+        newText = newText.substring(0, 3) + currentYear.toString();
+      }
+    }
+
+    // Construir el texto formateado
+    String formattedText = newText;
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 
 class TermsAndConditionsView extends StatelessWidget {
   const TermsAndConditionsView({super.key});
@@ -15,8 +15,10 @@ class TermsAndConditionsView extends StatelessWidget {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title:
-            customTitle('Terminos y condiciones', Colors.black, fontsize: 18.0),
+        title: headerText(
+            text: 'Terminos y condiciones',
+            color: Colors.black,
+            fontsize: 18.0),
         centerTitle: true,
       ),
       body: const Center(

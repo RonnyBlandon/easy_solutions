@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Components
 import 'package:easy_solutions/src/features/presentation/shopping_cart_page/View/components/empty_shopping_cart_view.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 //Styles
 import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
@@ -26,7 +26,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: customTitle('Carrito', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Carrito', color: Colors.black, fontsize: 18.0),
         centerTitle: true,
       ),
       body: emptyShoppingCartState
@@ -88,7 +88,8 @@ Widget _cardOrderTopContent() {
       children: [
         Container(
           margin: const EdgeInsets.only(right: 20.0),
-          child: customTitle('Jaguar King', Colors.black, fontsize: 20.0),
+          child: headerText(
+              text: 'Jaguar King', color: Colors.black, fontsize: 20.0),
         ),
       ],
     ),
@@ -110,8 +111,11 @@ Widget _items(context) {
                 image: AssetImage(
                     'assets/images/restaurants/menu_images/pollo_frito.jpg')),
             Expanded(
-              child: customTitle('Pollo frito 8 piezas combo', orange,
-                  fontsize: 16.0, fontWeight: FontWeight.w400),
+              child: headerText(
+                  text: 'Pollo frito 8 piezas combo',
+                  color: orange,
+                  fontsize: 16.0,
+                  fontWeight: FontWeight.w400),
             ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever))
           ],
@@ -119,7 +123,7 @@ Widget _items(context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            customTitle('L. 455.00', red, fontsize: 18.0),
+            headerText(text: 'L. 455.00', color: red, fontsize: 18.0),
             _cartItemQuantity(),
           ],
         )
@@ -130,8 +134,11 @@ Widget _items(context) {
 
 Widget _moreContent(BuildContext context) {
   return ListTile(
-    title: customTitle('Añadir más', pink,
-        fontWeight: FontWeight.w600, fontsize: 17.0),
+    title: headerText(
+        text: 'Añadir más',
+        color: pink,
+        fontWeight: FontWeight.w600,
+        fontsize: 17.0),
   );
 }
 
@@ -161,8 +168,11 @@ Widget _cartItemQuantity() {
     children: [
       IconButton(
           onPressed: () {}, icon: const Icon(Icons.remove_circle_outline)),
-      customTitle('Cantidad: 1', black,
-          fontsize: 14.0, fontWeight: FontWeight.w300),
+      headerText(
+          text: 'Cantidad: 1',
+          color: black,
+          fontsize: 14.0,
+          fontWeight: FontWeight.w300),
       IconButton(onPressed: () {}, icon: const Icon(Icons.add_circle_outline)),
     ],
   );
@@ -176,11 +186,15 @@ Widget _itemsCheckOutResume(
       bottom: BorderSide(color: grey),
     )),
     child: ListTile(
-      title: customTitle(title, Colors.black,
+      title: headerText(
+          text: title,
+          color: Colors.black,
           fontWeight: FontWeight.w500,
           fontsize: 15.0,
           textAling: TextAlign.start),
-      trailing: customTitle(value, Colors.black,
+      trailing: headerText(
+          text: value,
+          color: Colors.black,
           fontWeight: FontWeight.w500,
           fontsize: 15.0,
           textAling: TextAlign.start),
@@ -205,9 +219,9 @@ Widget _buttonCheckout() {
       ),
       child: Row(
         children: [
-          customTitle('Continuar', white, fontsize: 17.0),
+          headerText(text: 'Continuar', color: white, fontsize: 17.0),
           const Spacer(),
-          customTitle('L. 505.00', white, fontsize: 15.0),
+          headerText(text: 'L. 505.00', color: white, fontsize: 15.0),
         ],
       ),
     ),

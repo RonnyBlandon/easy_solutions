@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 //Third party package
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -23,8 +23,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: backButton(context, Colors.black),
-          title: customTitle('Pollo frito 8 piezas combo', Colors.black,
-              fontsize: 18.0),
+          title: headerText(text: 'Pollo frito 8 piezas combo', fontsize: 18.0),
           actions: [
             IconButton(
                 onPressed: () {},
@@ -90,12 +89,12 @@ Widget _productInfoContainer(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customTitle(productName, Colors.black, fontsize: 21.0),
+        headerText(text: productName, fontsize: 21.0),
         const SizedBox(height: 5.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            customTitle(productPrice, Colors.green, fontsize: 24.0),
+            headerText(text: productPrice, color: Colors.green, fontsize: 24.0),
             IconButton(
                 onPressed: () {},
                 iconSize: 30.0,
@@ -103,14 +102,16 @@ Widget _productInfoContainer(
           ],
         ),
         const SizedBox(height: 10.0),
-        customTitle('Descripción y Especificaciones', Colors.black,
-            fontsize: 20.0, fontWeight: FontWeight.w500),
+        headerText(
+            text: 'Descripción y Especificaciones',
+            color: Colors.black,
+            fontsize: 20.0,
+            fontWeight: FontWeight.w500),
         const SizedBox(height: 5.0),
-        customTitle('-', Colors.black, fontWeight: FontWeight.w400),
+        headerText(text: '-', fontWeight: FontWeight.w400),
         const SizedBox(height: 5.0),
-        customTitle(
-          productDescription,
-          Colors.black,
+        headerText(
+          text: productDescription,
           fontsize: 16.0,
           fontWeight: FontWeight.w400,
           textAling: TextAlign.start,
@@ -119,11 +120,13 @@ Widget _productInfoContainer(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            customTitle('Proveedor', Colors.black,
-                fontsize: 16.0, fontWeight: FontWeight.w400),
+            headerText(
+                text: 'Proveedor', fontsize: 16.0, fontWeight: FontWeight.w400),
             const Text('-'),
-            customTitle(productProvider, Colors.black,
-                fontsize: 16.0, fontWeight: FontWeight.w400),
+            headerText(
+                text: productProvider,
+                fontsize: 16.0,
+                fontWeight: FontWeight.w400),
           ],
         )
       ],
@@ -144,7 +147,7 @@ Widget _addCart(BuildContext context) {
           child: Row(
             children: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.remove)),
-              customTitle(' 1 ', Colors.black, fontsize: 16.0),
+              headerText(text: ' 1 ', fontsize: 16.0),
               IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
             ],
           ),

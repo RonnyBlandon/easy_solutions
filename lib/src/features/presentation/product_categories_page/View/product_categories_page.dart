@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/main_search.dart';
 //Extensions
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
@@ -60,16 +60,21 @@ Widget _businessInfo(BuildContext context, {required String businessName}) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            customTitle(businessName, black,
-                fontsize: 20.0, maxLines: 1, overflow: TextOverflow.ellipsis),
+            headerText(
+                text: businessName,
+                fontsize: 20.0,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
             Row(
               children: [
-                customTitle('Minimo de compra', black,
-                    fontsize: 14.0, fontWeight: FontWeight.w300),
+                headerText(
+                    text: 'Minimo de compra',
+                    fontsize: 14.0,
+                    fontWeight: FontWeight.w300),
                 const SizedBox(
                   width: 10.0,
                 ),
-                customTitle('L. 110', black, fontsize: 14.0),
+                headerText(text: 'L. 110', fontsize: 14.0),
               ],
             )
           ],
@@ -107,8 +112,10 @@ Widget _buildBottomSheetBusinessInfo(BuildContext context,
               width:
                   screenWidth.getScreenWidth(context: context, multiplier: 0.8),
               alignment: Alignment.center,
-              child: customTitle('Información', black,
-                  fontsize: 16.0, fontWeight: FontWeight.w400)),
+              child: headerText(
+                  text: 'Información',
+                  fontsize: 16.0,
+                  fontWeight: FontWeight.w400)),
         ],
       ),
       Container(
@@ -127,7 +134,8 @@ Widget _buildBottomSheetBusinessInfo(BuildContext context,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                customTitle(businessName, black,
+                headerText(
+                    text: businessName,
                     fontsize: 20.0,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis),
@@ -141,46 +149,74 @@ Widget _buildBottomSheetBusinessInfo(BuildContext context,
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            child: customTitle('Horarios', black,
-                fontsize: 20.0, fontWeight: FontWeight.w500),
+            child: headerText(
+                text: 'Horarios', fontsize: 20.0, fontWeight: FontWeight.w500),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
                 children: [
-                  customTitle('Lunes', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Martes', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Miercoles', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Jueves', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Viernes', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Sabado', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Domingo', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Lunes',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Martes',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Miercoles',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Jueves',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Viernes',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Sabado',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Domingo',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
                 ],
               ),
               Column(
                 children: [
-                  customTitle('07:00 AM - 05:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('07:00 AM - 05:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('07:00 AM - 05:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('07:00 AM - 05:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('07:00 AM - 05:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('07:00 AM - 08:00 PM', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
-                  customTitle('Cerrado', black,
-                      fontsize: 15.0, fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '07:00 AM - 05:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '07:00 AM - 05:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '07:00 AM - 05:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '07:00 AM - 05:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '07:00 AM - 05:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: '09:00 AM - 08:00 PM',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
+                  headerText(
+                      text: 'Cerrado',
+                      fontsize: 15.0,
+                      fontWeight: FontWeight.w400),
                 ],
               ),
             ],
@@ -203,7 +239,8 @@ Widget _businessCategories(BuildContext context,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: customTitle(categoryName, black,
+                child: headerText(
+                    text: categoryName,
                     fontsize: 20.0,
                     fontWeight: FontWeight.w500,
                     textAling: TextAlign.start,
@@ -217,8 +254,10 @@ Widget _businessCategories(BuildContext context,
                 },
                 child: Row(
                   children: [
-                    customTitle('Ver todos', black,
-                        fontsize: 14.0, fontWeight: FontWeight.w400),
+                    headerText(
+                        text: 'Ver todos',
+                        fontsize: 14.0,
+                        fontWeight: FontWeight.w400),
                     const Icon(Icons.arrow_right)
                   ],
                 ),
@@ -274,7 +313,8 @@ _cardProduct(BuildContext context,
           const SizedBox(height: 5.0),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
-            child: customTitle(productName, black,
+            child: headerText(
+                text: productName,
                 fontsize: 14.0,
                 fontWeight: FontWeight.w300,
                 textAling: TextAlign.start,
@@ -283,7 +323,8 @@ _cardProduct(BuildContext context,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
-            child: customTitle(productPrice, black,
+            child: headerText(
+                text: productPrice,
                 fontsize: 16.0,
                 fontWeight: FontWeight.w400,
                 textAling: TextAlign.start),

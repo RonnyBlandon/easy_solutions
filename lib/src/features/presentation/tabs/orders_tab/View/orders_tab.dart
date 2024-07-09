@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //Components
 import 'package:easy_solutions/src/features/presentation/tabs/orders_tab/View/components/empty_order_view.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Styles
@@ -26,7 +26,7 @@ class _OrdersTabState extends State<OrdersTab> {
         elevation: 0.1,
         leading: const Text(''),
         backgroundColor: white,
-        title: customTitle('Mis Pedidos', Colors.black, fontsize: 18.0),
+        title: headerText(text: 'Mis Pedidos', fontsize: 18.0),
         centerTitle: true,
       ),
       body: emptyOrderState
@@ -108,18 +108,19 @@ Widget _order(BuildContext context,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            customTitle('Fecha: $orderDate', black, fontsize: 16.0),
-            customTitle('ID: $orderId', black, fontsize: 16.0),
-            customTitle('Total: L. $orderTotal', black, fontsize: 16.0),
+            headerText(text: 'Fecha: $orderDate', fontsize: 16.0),
+            headerText(text: 'ID: $orderId', fontsize: 16.0),
+            headerText(text: 'Total: L. $orderTotal', fontsize: 16.0),
             Row(
               children: [
-                customTitle('Estado: ', black, fontsize: 16.0),
+                headerText(text: 'Estado: ', fontsize: 16.0),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   margin: const EdgeInsets.only(left: 5.0),
                   decoration: BoxDecoration(
                       color: color, borderRadius: BorderRadius.circular(20.0)),
-                  child: customTitle(orderStatus, white, fontsize: 16.0),
+                  child: headerText(
+                      text: orderStatus, color: white, fontsize: 16.0),
                 )
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 //Styles
 import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 //Extensions
@@ -84,9 +84,9 @@ Widget _cardBusinnes(BuildContext context) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              customTitle(
-                'Jaguar King',
-                Colors.black,
+              headerText(
+                text: 'Jaguar King',
+                color: Colors.black,
                 fontsize: 18.0,
               ),
               Container(
@@ -94,7 +94,8 @@ Widget _cardBusinnes(BuildContext context) {
                 decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(30.0)),
-                child: customTitle('Abierto', Colors.white, fontsize: 16.0),
+                child: headerText(
+                    text: 'Abierto', color: Colors.white, fontsize: 16.0),
               )
             ],
           )

@@ -4,8 +4,8 @@ import 'package:easy_solutions/src/colors/colors.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 
-class EmptyShoppingCartView extends StatelessWidget {
-  const EmptyShoppingCartView({super.key});
+class EmptyNotificationsView extends StatelessWidget {
+  const EmptyNotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +15,18 @@ class EmptyShoppingCartView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-              width: 180.0,
-              height: 180.0,
-              image: AssetImage('assets/images/shopping_basket.png'),
+            const Icon(
+              color: Colors.amber,
+              Icons.notifications,
+              size: 150.0,
             ),
             headerText(
-                text: 'Carrito Vacío', color: Colors.grey, fontsize: 25.0),
+                text: 'No tienes nuevas notificaciones. 📭',
+                color: Colors.grey,
+                fontsize: 25.0),
+            const SizedBox(height: 10.0),
             const Text(
-              'Agrega al carrito lo que más te guste.',
+              'No tienes nuevas notificaciones por ahora. Revisa más tarde para estar al tanto de cualquier actualización o mensaje importante. 📅🔔',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.grey,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/custom_title.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
 
@@ -24,7 +24,7 @@ class ForgotPassword extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               children: [
-                customTitle('Olvidaste tu contraseña', black, fontsize: 29.0),
+                headerText(text: 'Olvidaste tu contraseña', fontsize: 29.0),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
