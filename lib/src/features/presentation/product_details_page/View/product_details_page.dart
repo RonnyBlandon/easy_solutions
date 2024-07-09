@@ -26,7 +26,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           title: headerText(text: 'Pollo frito 8 piezas combo', fontsize: 18.0),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'shopping_cart');
+                },
                 color: Colors.black,
                 icon: const Icon(Icons.shopping_cart))
           ],

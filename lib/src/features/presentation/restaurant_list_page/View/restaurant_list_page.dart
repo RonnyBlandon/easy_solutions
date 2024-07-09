@@ -20,7 +20,9 @@ class RestaurantListPage extends StatelessWidget {
                   Icons.shopping_cart,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'notifications');
+                },
                 icon: const Icon(
                   Icons.notifications,
                 )),
