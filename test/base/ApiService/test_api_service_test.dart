@@ -22,7 +22,7 @@ void main() {
     test('Test correct post connection to jsonplaceholder', () async {
       final bodyParams =
           CorrectPostBodyParams(tittle: 'foo', body: 'bar', userId: 1);
-      final result = await testApiService.getDataFromPostRecuest(
+      final result = await testApiService.getDataFromPostRequest(
           bodyParameters: bodyParams.toMap(),
           url: _Constants.postEndpoint,
           headers: _Constants.defaultHeaders);
@@ -32,7 +32,7 @@ void main() {
 
     // Test correct get connection to jsonplaceholder
     test('Test correct get connection to jsonplaceholder', () async {
-      final result = await testApiService.getDataFromGetRecuest(
+      final result = await testApiService.getDataFromGetRequest(
           url: _Constants.getEndpoint);
 
       expect(result, Map.from(result));
@@ -42,7 +42,7 @@ void main() {
     test('Test correct put connection to jsonplaceholder', () async {
       final body =
           CorrectPutBodyParams(id: 1, tittle: 'foo', body: 'bar', userId: 1);
-      final result = await testApiService.getDataFromPutRecuest(
+      final result = await testApiService.getDataFromPutRequest(
           bodyParameters: body.toMap(),
           url: _Constants.putEndpoint,
           headers: _Constants.defaultHeaders);

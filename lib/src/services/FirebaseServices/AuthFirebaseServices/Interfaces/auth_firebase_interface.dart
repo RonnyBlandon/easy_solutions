@@ -8,20 +8,20 @@ abstract class BaseFirebaseService {
   static String adminToken = "AIzaSyC4behj4hdyn91BGC_2xOitc4uP4zdK6N8";
 }
 
-abstract class SingUpServices extends BaseFirebaseService {
+abstract class SignUpService extends BaseFirebaseService {
   String endpoint = BaseFirebaseService.baseUrl +
       BaseFirebaseService.singUpEndpoint +
       BaseFirebaseService.adminToken;
 
-  Future<Map<String, dynamic>> singUp(
+  Future<Map<String, dynamic>> signUp(
       {required Map<String, dynamic> bodyParameters});
 }
 
-abstract class SingInServices extends BaseFirebaseService {
+abstract class SignInService extends BaseFirebaseService {
   String endpoint = BaseFirebaseService.baseUrl +
-      BaseFirebaseService.singUpEndpoint +
+      BaseFirebaseService.singInEndpoint +
       BaseFirebaseService.adminToken;
 
-  Future<Map<String, dynamic>> singUp(
+  Future<Map<String, dynamic>> signIn(
       {required Map<String, dynamic> bodyParameters});
 }

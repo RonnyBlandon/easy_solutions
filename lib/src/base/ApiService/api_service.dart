@@ -10,21 +10,21 @@ abstract class _Exceptions {
 }
 
 abstract class ApiService {
-  Future<Map<String, dynamic>> getDataFromPostRecuest(
+  Future<Map<String, dynamic>> getDataFromPostRequest(
       {required Map<String, dynamic> bodyParameters,
       required String url,
       Map<String, String>? headers});
-  Future<Map<String, dynamic>> getDataFromPutRecuest(
+  Future<Map<String, dynamic>> getDataFromPutRequest(
       {required Map<String, dynamic> bodyParameters,
       required String url,
       Map<String, String>? headers});
-  Future<Map<String, dynamic>> getDataFromGetRecuest(
+  Future<Map<String, dynamic>> getDataFromGetRequest(
       {required String url, Map<String, String>? headers});
 }
 
 class DefaultApiService extends ApiService {
   @override
-  Future<Map<String, dynamic>> getDataFromGetRecuest(
+  Future<Map<String, dynamic>> getDataFromGetRequest(
       {required String url, Map<String, String>? headers}) async {
     final parsedUrl = Uri.parse(url);
     final response = await http.get(parsedUrl, headers: headers);
@@ -46,7 +46,7 @@ class DefaultApiService extends ApiService {
   }
 
   @override
-  Future<Map<String, dynamic>> getDataFromPostRecuest(
+  Future<Map<String, dynamic>> getDataFromPostRequest(
       {required Map<String, dynamic> bodyParameters,
       required String url,
       Map<String, String>? headers}) async {
@@ -71,7 +71,7 @@ class DefaultApiService extends ApiService {
   }
 
   @override
-  Future<Map<String, dynamic>> getDataFromPutRecuest(
+  Future<Map<String, dynamic>> getDataFromPutRequest(
       {required Map<String, dynamic> bodyParameters,
       required String url,
       Map<String, String>? headers}) async {
