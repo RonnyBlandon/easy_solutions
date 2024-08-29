@@ -59,13 +59,14 @@ extension on DefaultSignUpUseCase {
     SaveUserDataUseCaseParameters parameters = SaveUserDataUseCaseParameters(
         localId: entity.localId,
         role: UserRole.user,
-        names: params.names,
-        surnames: params.surnames,
+        username: params.username,
         email: params.email,
         phone: params.phone,
         startDate: DateHelpers.getStartDate(),
         idToken: entity.idToken);
 
+    print(
+        "Esto tiene parameters en SaveUserDataUseCaseParameters: ${parameters.startDate}");
     return _saveUserDataUseCase.execute(parameters: parameters).then((result) {
       switch (result.status) {
         case ResultStatus.success:

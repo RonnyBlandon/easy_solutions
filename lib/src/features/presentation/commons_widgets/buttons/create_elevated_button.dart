@@ -10,7 +10,7 @@ Widget createElevatedButton(
     bool isWithIcon = false,
     ImageProvider<Object> icon = const AssetImage(''),
     String labelButton = '',
-    required void Function() onPressed}) {
+    void Function()? onPressed}) {
   return SizedBox(
     width: width,
     height: height,

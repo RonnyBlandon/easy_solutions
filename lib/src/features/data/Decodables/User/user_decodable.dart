@@ -3,8 +3,7 @@ import 'dart:convert';
 class UserDecodable {
   String? localId;
   String? role;
-  String? names;
-  String? surnames;
+  String? username;
   String? email;
   String? phone;
   String? startDate;
@@ -13,8 +12,7 @@ class UserDecodable {
   UserDecodable({
     this.localId,
     this.role,
-    this.names,
-    this.surnames,
+    this.username,
     this.email,
     this.phone,
     this.startDate,
@@ -29,8 +27,7 @@ class UserDecodable {
   factory UserDecodable.fromMap(Map<String, dynamic> json) => UserDecodable(
         localId: json["localId"],
         role: json["role"],
-        names: json["names"],
-        surnames: json["surnames"],
+        username: json["username"],
         email: json["email"],
         phone: json["phone"],
         startDate: json["startDate"],
@@ -40,8 +37,7 @@ class UserDecodable {
   Map<String, dynamic> toMap() => {
         "localId": localId,
         "role": role,
-        "names": names,
-        "surnames": surnames,
+        "username": username,
         "email": email,
         "phone": phone,
         "startDate": startDate,

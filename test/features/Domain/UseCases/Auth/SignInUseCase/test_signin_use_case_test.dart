@@ -27,6 +27,7 @@ void main() {
       // WHEN
       var result = await sut.execute(params: params);
       switch (result.status) {
+        // THEN
         case ResultStatus.success:
           expect(result.value, isA<SignInEntity>());
         case ResultStatus.error:

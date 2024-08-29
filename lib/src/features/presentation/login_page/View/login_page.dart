@@ -142,7 +142,7 @@ Widget _loginButton(BuildContext context) {
     child: createElevatedButton(
         labelButton: 'Inicie Sesión',
         onPressed: () {
-          Navigator.pushNamed(context, 'services');
+          Navigator.pushNamed(context, 'tabs');
         }),
   );
 }

@@ -21,8 +21,7 @@ void main() {
   group('Test success Signup user in Firebase', () {
     test('Test success signup user in Firebase', () async {
       final SignUpUseCaseParameters params = SignUpUseCaseParameters(
-          names: "Ronny Humberto 4",
-          surnames: "Blandon Martinez",
+          username: "Ronny Humberto Blandon Martinez 4",
           email: _Constatns.correctEmail,
           phone: "98311490",
           password: _Constatns.correctPass,
@@ -49,8 +48,7 @@ void main() {
       try {
         // WHEN
         final SignUpUseCaseParameters params = SignUpUseCaseParameters(
-            names: "Ronny Humberto 4",
-            surnames: "Blandon Martinez",
+            username: "Ronny Humberto Blandon Martinez 4",
             email: _Constatns.wrongEmail,
             phone: "98311490",
             password: _Constatns.wrongPass,
