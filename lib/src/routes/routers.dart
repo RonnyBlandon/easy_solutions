@@ -25,7 +25,7 @@ import 'package:easy_solutions/src/features/presentation/notifications_page/View
 
 final routes = <String, WidgetBuilder>{
   'welcome': (BuildContext context) => const WelcomePage(),
-  'login': (BuildContext context) => const LoginPage(),
+  'login': (BuildContext context) => LoginPage(),
   'forgot_password': (BuildContext context) => const ForgotPassword(),
   'sign_up': (BuildContext context) => SignUpPage(),
   'services': (BuildContext context) => const ServicesPage(),

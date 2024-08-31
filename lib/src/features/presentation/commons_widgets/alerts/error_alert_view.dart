@@ -26,7 +26,7 @@ class ErrorAlertView {
                   Container(
                     margin: const EdgeInsets.all(15.0),
                     child: const Text(
-                      'Error de red',
+                      'Network error',
                       style: TextStyle(color: primaryColor, fontSize: 20.0),
                     ),
                   ),
@@ -40,6 +40,7 @@ class ErrorAlertView {
                           fontSize: 15.0),
                     ),
                   ),
+                  const SizedBox(height: 5.0),
                   createElevatedButton(
                       onPressed: ctaButtonAction, labelButton: 'Ir a inicio')
                 ],

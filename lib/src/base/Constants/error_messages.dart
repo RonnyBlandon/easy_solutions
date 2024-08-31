@@ -5,6 +5,8 @@ abstract class AppFailureMessages {
 
 abstract class FirebaseFailureMessages {
   // Error messages
+  static String invalidLoginCredentialsMessage =
+      "Correo o contraseña incorrectos. Inténtalo de nuevo.";
   static String emailNotFoundMessage =
       "No existe ningún registro de usuario correspondiente a este identificador.";
   static String invalidPasswordMessage =

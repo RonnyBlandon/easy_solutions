@@ -25,7 +25,10 @@ class Failure {
       message = error.message ?? "";
     });
 
-    if (message == "EMAIL_NOT_FOUND") {
+    if (message == "INVALID_LOGIN_CREDENTIALS") {
+      return Failure.fromMessage(
+          message: FirebaseFailureMessages.invalidLoginCredentialsMessage);
+    } else if (message == "EMAIL_NOT_FOUND") {
       return Failure.fromMessage(
           message: FirebaseFailureMessages.emailNotFoundMessage);
     } else if (message == "INVALID_PASSWORD") {
