@@ -1,5 +1,6 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/base/Constants/local_storage_keys.dart';
+import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/Auth/SignUpUseCase/signup_use_case.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/Auth/SignUpUseCase/signup_use_case_parameters.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/local_storage_use_case_parameters.dart';
@@ -11,17 +12,16 @@ import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'package:flutter/material.dart';
 
 abstract class SignUpViewModelInput {
-  late LoadingStateProvider loadingState;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late DateTime selectDate;
   SignUpModel? signUpModel = SignUpModel();
 
-  void initState({required LoadingStateProvider loadingStateProvider});
   Future<Result<bool, Failure>> signUp();
   bool isFormValidate();
 }
 
 abstract class SignUpViewModel extends SignUpViewModelInput
+    with BaseViewModel
     implements TextFormFieldDelegate {}
 
 class DefaultSignUpViewModel extends SignUpViewModel {

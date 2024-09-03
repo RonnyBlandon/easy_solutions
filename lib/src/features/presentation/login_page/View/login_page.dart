@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +22,9 @@ class LoginPage extends StatelessWidget with BaseView {
   Widget build(BuildContext context) {
     // Inicializar ViewModel
     _viewModel.initState(
-        loadinState: Provider.of<LoadingStateProvider>(context));
+        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
 
-    return _viewModel.loadingStatusState.isLoading
+    return _viewModel.loadingState.isLoading
         ? loadingView
         : Scaffold(
             body: CustomScrollView(slivers: [
@@ -34,17 +33,14 @@ class LoginPage extends StatelessWidget with BaseView {
                 [
                   Column(
                     children: [
-                      Stack(
+                      const Stack(
                         children: [
-                          const Image(
+                          Image(
                               width: double.infinity,
                               height: 300.0,
                               fit: BoxFit.cover,
                               image: AssetImage(
                                   'assets/images/login_back_image.jpg')),
-                          Container(
-                              margin: const EdgeInsets.only(top: 40.0),
-                              child: backButton(context, Colors.white))
                         ],
                       ),
                       Transform.translate(

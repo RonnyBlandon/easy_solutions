@@ -1,11 +1,23 @@
+import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/ViewModel/menu_view_model.dart';
+import 'package:easy_solutions/src/features/presentation/welcome_page/View/welcome_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
+  final MenuViewModel _viewModel;
+
+  MainDrawer({super.key, MenuViewModel? viewModel})
+      : _viewModel = viewModel ?? DefaultMenuViewModel();
 
   @override
   Widget build(BuildContext context) {
+    // Inicializamos el viewModel
+    _viewModel.initState(
+        loadingState: Provider.of<LoadingStateProvider>(context));
+
     return Drawer(
       backgroundColor: Colors.white,
       child: ListView(
@@ -38,8 +50,12 @@ class MainDrawer extends StatelessWidget {
               },
               title: const Text('Información legal'),
               leading: const Icon(Icons.info_outline)),
-          const ListTile(
-              title: Text('Cerrar Sesión'), leading: Icon(Icons.exit_to_app)),
+          ListTile(
+              onTap: () {
+                _signOut(context);
+              },
+              title: const Text('Cerrar Sesión'),
+              leading: const Icon(Icons.exit_to_app)),
           const Padding(
             padding: EdgeInsets.only(top: 25.0, bottom: 25.0),
             child: Text(
@@ -82,5 +98,22 @@ class MainDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+extension UserActions on MainDrawer {
+  Future<void> _signOut(BuildContext context) async {
+    showAlertDialogWithImage(
+        context,
+        const AssetImage('assets/images/logout.png'),
+        "Cierre de Sesión en curso",
+        "¿Desea salir de la sesión?",
+        "Cerrar Sesión",
+        true, () {
+      _viewModel.signOut().then((_) {
+        Navigator.pushReplacement(context,
+            PageRouteBuilder(pageBuilder: (_, __, ___) => const WelcomePage()));
+      });
+    });
   }
 }

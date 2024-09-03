@@ -12,11 +12,11 @@ abstract class UserAuthDataUseCase {
       {required GetUserDataUseCaseParameters parameters});
 }
 
-class DeaultUserAuthDataUseCase extends UserAuthDataUseCase {
+class DefaultUserAuthDataUseCase extends UserAuthDataUseCase {
   // Dependencias
   final UserAuthDataRepository _userAuthDataRepository;
 
-  DeaultUserAuthDataUseCase({UserAuthDataRepository? userAuthDataRepository})
+  DefaultUserAuthDataUseCase({UserAuthDataRepository? userAuthDataRepository})
       : _userAuthDataRepository =
             userAuthDataRepository ?? DefaultUserAuthDataRepository();
 

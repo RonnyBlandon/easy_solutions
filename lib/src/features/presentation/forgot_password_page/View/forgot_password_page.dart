@@ -1,13 +1,27 @@
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
+import 'package:easy_solutions/src/features/presentation/forgot_password_page/View/Components/text_form_field_forgot_email.dart';
 import 'package:flutter/material.dart';
 
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
 
-class ForgotPassword extends StatelessWidget {
+import '../ViewModel/forgot_password_view_model.dart';
+
+class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
+
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
+  // Dependencias
+  final ForgotPasswordViewModel _viewModel;
+
+  _ForgotPasswordState({ForgotPasswordViewModel? viewModel})
+      : _viewModel = viewModel ?? DefaultForgotPasswordViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +50,15 @@ class ForgotPassword extends StatelessWidget {
                         fontSize: 15.0),
                   ),
                 ),
-                _emailInput(),
+                TextFormFieldEmailResetPassword(
+                  viewModel: _viewModel,
+                ),
                 const SizedBox(height: 30.0),
-                _sendButton(context),
+                createElevatedButton(
+                    labelButton: "Enviar",
+                    onPressed: () {
+                      _ctaButtonTapped(context);
+                    })
               ],
             ),
           ),
@@ -48,49 +68,21 @@ class ForgotPassword extends StatelessWidget {
   }
 }
 
-Widget _emailInput() {
-  return Container(
-    margin: const EdgeInsets.only(top: 20.0),
-    padding: const EdgeInsets.only(left: 20.0),
-    decoration: BoxDecoration(
-        color: bgInputs, borderRadius: BorderRadius.circular(30.0)),
-    child: const TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-          hintText: 'Correo electrónico',
-          border: OutlineInputBorder(borderSide: BorderSide.none)),
-    ),
-  );
-}
-
-Widget _sendButton(BuildContext context) {
-  return ElevatedButton(
-    onPressed: () {
-      _showAlertPassword(context);
-    },
-    style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
-        overlayColor: Colors.black,
-        minimumSize: const Size(300, 40)),
-    child: const Text(
-      'Enviar',
-      style: TextStyle(fontSize: 16.0),
-    ),
-  );
-}
-
-void _showAlertPassword(BuildContext context) {
-  return showAlertDialogWithImage(
-    context,
-    const AssetImage('assets/images/forgot_password.png'),
-    'Tu contraseña ha sido restablecida',
-    'Recibirá un código en su correo electrónico para restablecer su contraseña.',
-    'Hecho',
-    false,
-    () {
-      Navigator.of(context).pop();
-      Navigator.pushNamed(context, 'login');
-    },
-  );
+extension UserActions on _ForgotPasswordState {
+  void _ctaButtonTapped(BuildContext context) {
+    _viewModel.resetPassword().then((value) {
+      return showAlertDialogWithImage(
+        context,
+        const AssetImage('assets/images/forgot_password.png'),
+        'Tu contraseña ha sido restablecida',
+        'Recibirá un código en su correo electrónico para restablecer su contraseña.',
+        'Hecho',
+        false,
+        () {
+          Navigator.of(context).pop();
+          Navigator.pushNamed(context, 'login');
+        },
+      );
+    });
+  }
 }

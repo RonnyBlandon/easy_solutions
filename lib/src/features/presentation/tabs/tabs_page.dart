@@ -64,7 +64,7 @@ class _TabsPageState extends State<TabsPage> {
                 )),
           ])),
       body: _widgetOptions.elementAt(_selectedItemIndex),
-      drawer: const MainDrawer(),
+      drawer: MainDrawer(),
       bottomNavigationBar: _bottomNavigationBar(),
     );
   }

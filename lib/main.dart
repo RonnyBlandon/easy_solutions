@@ -1,3 +1,4 @@
+import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/error_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/welcome_page/View/welcome_page.dart';
@@ -20,13 +21,32 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ErrorStateProvider()),
         ChangeNotifierProvider(create: (_) => LoadingStateProvider())
       ],
-      child: const MyApp(),
+      child: MyAppUserState(),
     );
   }
 }
 
+class MyAppUserState extends StatelessWidget with BaseView {
+  MyAppUserState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: coordinator.start(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return MyApp(initialRoute: snapshot.data);
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
+  }
+}
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String _initialRoute;
+  const MyApp({super.key, required String initialRoute})
+      : _initialRoute = initialRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +54,7 @@ class MyApp extends StatelessWidget {
       title: 'Easy Solutions',
       debugShowCheckedModeBanner: false,
       routes: routes,
-      initialRoute: 'welcome',
+      initialRoute: _initialRoute,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

@@ -20,7 +20,7 @@ class ServicesPage extends StatelessWidget {
                   Icons.notifications,
                 )),
           ])),
-      drawer: const MainDrawer(),
+      drawer: MainDrawer(),
       body: Column(
         children: [
           Container(
