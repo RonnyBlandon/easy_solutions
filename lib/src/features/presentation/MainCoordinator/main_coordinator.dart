@@ -2,6 +2,7 @@ import 'package:easy_solutions/src/base/Constants/local_storage_keys.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/fetch_local_storage_use_case.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/local_storage_use_case_parameters.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/User/ValidateCurrentUserUseCase/validate_current_user_use_case.dart';
+import 'package:flutter/material.dart';
 
 class RoutesPath {
   static String welcomePath = "welcome";
@@ -31,8 +32,11 @@ class MainCoordinator {
     var idToken = await _fetchLocalStorageUseCase.execute(
         parameters: FetchLocalStorageParameters(key: LocalStorageKeys.idToken));
 
+    print("Esto contiene idToken en el MainCoordinator: ${idToken}");
+    return idToken;
+
     // Revisar si el usuario esta guardado
-    if (idToken == null) {
+    /*if (idToken == null) {
       return null;
     }
 
@@ -44,6 +48,10 @@ class MainCoordinator {
       return idToken;
     } else {
       return null;
-    }
+    }*/
+  }
+
+  showTabsPage({required BuildContext context}) {
+    Navigator.pushNamed(context, RoutesPath.tabsPath);
   }
 }

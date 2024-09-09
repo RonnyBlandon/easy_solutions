@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/error_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/welcome_page/View/welcome_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +12,20 @@ import 'package:provider/provider.dart';
 //Routes
 import 'package:easy_solutions/src/routes/routers.dart';
 
-void main() => runApp(const AppState());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Inicializamos Firebase con la libreria Firebase_core
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+              apiKey: "AIzaSyA3PYYUVmKtNhbbj4cC30tL3wznw98Xu5A",
+              appId: "1:789478797113:android:0dd7b4657457384d7742e8",
+              messagingSenderId: "789478797113",
+              projectId: "easy-delivery-78b08"))
+      : await Firebase.initializeApp();
+
+  runApp(const AppState());
+}
 
 class AppState extends StatelessWidget {
   const AppState({super.key});

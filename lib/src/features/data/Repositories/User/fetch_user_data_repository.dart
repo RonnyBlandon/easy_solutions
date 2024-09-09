@@ -6,7 +6,7 @@ import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseSer
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 extension Paths on DefaultFetchUserDataRepository {
-  static String path = "users/";
+  String get path => "users/";
 }
 
 class DefaultFetchUserDataRepository extends FetchUserDataRepository {

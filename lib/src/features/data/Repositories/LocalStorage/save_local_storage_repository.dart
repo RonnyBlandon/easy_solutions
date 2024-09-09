@@ -9,6 +9,9 @@ class DefaultSaveLocalStorageRepository extends SaveLocalStorageRepository {
   Future<void> saveInLocalStorage(
       {required String key, required String value}) async {
     final SharedPreferences prefs = await _prefs;
+
+    print("Esto contiene prefs en DefaultSaveLocalStorageRepository: ${prefs}");
+
     await prefs.setString(key, value);
   }
 }

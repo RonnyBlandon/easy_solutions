@@ -6,7 +6,7 @@ import 'package:easy_solutions/src/features/presentation/login_page/View/login_p
 import 'package:easy_solutions/src/features/presentation/forgot_password_page/View/forgot_password_page.dart';
 import 'package:easy_solutions/src/features/presentation/sign_up_page/View/sign_up_page.dart';
 import 'package:easy_solutions/src/features/presentation/services_page/View/services_page.dart';
-import 'package:easy_solutions/src/features/presentation/tabs/tabs_page.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/TabsPage/View/tabs_page.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_list_page/View/restaurant_list_page.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_menu_page/View/restaurant_menu_page.dart';
 import 'package:easy_solutions/src/features/presentation/product_details_page/View/product_details_page.dart';

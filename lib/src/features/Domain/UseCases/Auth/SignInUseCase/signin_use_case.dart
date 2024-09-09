@@ -35,6 +35,10 @@ class DefaultSignInUseCase extends SignInUseCase {
                 message: AppFailureMessages.unExpectedErrorMessage));
           }
           var entity = SignInEntity.fromMap(result.value!.toMap());
+
+          print("Esto contiene entity.idToken: ${entity.idToken}");
+          print("Esto contiene entity.localId: ${entity.localId}");
+
           return Result.success(entity);
         case ResultStatus.error:
           return Result.failure(result.error);

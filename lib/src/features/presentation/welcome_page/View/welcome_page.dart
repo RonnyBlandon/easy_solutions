@@ -1,16 +1,34 @@
 import 'dart:ui';
+import 'package:easy_solutions/src/base/Views/base_view.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
+import 'package:easy_solutions/src/features/presentation/welcome_page/ViewModel/welcome_page_view_model.dart';
+import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
+import 'package:provider/provider.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
 
   @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> with BaseView {
+  final WelcomePageViewModel viewModel;
+
+  _WelcomePageState({WelcomePageViewModel? welcomePageViewModel})
+      : viewModel = welcomePageViewModel ?? DefaultWelcomePageViewModel();
+
+  @override
   Widget build(BuildContext context) {
+    viewModel.initState(
+        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
+
     return Stack(
       children: [
         Container(
@@ -58,9 +76,25 @@ class WelcomePage extends StatelessWidget {
               labelButton: 'Iniciar Sesión con Google',
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
-              onPressed: () {})
+              onPressed: () {
+                _googleSignInTapped(context);
+              })
         ]),
       ],
     );
+  }
+}
+
+extension UserActions on _WelcomePageState {
+  _googleSignInTapped(BuildContext context) {
+    viewModel.signInWithGoogle().then((result) {
+      print("Esto contiene result.status: ${result.status}");
+      switch (result.status) {
+        case ResultStatus.success:
+          coordinator.showTabsPage(context: context);
+        case ResultStatus.error:
+          errorStateProvider.setFailure(context: context, value: result.error!);
+      }
+    });
   }
 }

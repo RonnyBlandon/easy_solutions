@@ -65,11 +65,6 @@ class SignUpPage extends StatelessWidget with BaseView {
                                   CustomTextFormFieldType.password,
                               hintext: 'Contraseña',
                               delegate: _viewModel),
-                          CustomTextFormField(
-                              textFormFieldType:
-                                  CustomTextFormFieldType.password,
-                              hintext: 'Repetir Contraseña',
-                              delegate: _viewModel),
                           const SizedBox(
                             height: 25.0,
                           ),

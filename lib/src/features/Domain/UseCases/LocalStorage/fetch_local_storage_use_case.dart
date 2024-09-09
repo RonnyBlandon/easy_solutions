@@ -19,7 +19,8 @@ class DefaultFetchLocalStorageUseCase extends FetchLocalStorageUseCase {
   @override
   Future<String?> execute(
       {required FetchLocalStorageParameters parameters}) async {
-    return await _fetchLocalStorageRepository.fetchInLocalStorage(
+    var value = await _fetchLocalStorageRepository.fetchInLocalStorage(
         key: parameters.key);
+    return value;
   }
 }
