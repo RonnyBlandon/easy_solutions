@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/User/user_entity.dart';
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/User/fetch_user_data_repository.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 

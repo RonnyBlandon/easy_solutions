@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Auth/SignInEntity/signin_entity.dart';
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/SignInRepository/signin_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/SignInRepository/signin_repository.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
@@ -35,9 +35,6 @@ class DefaultSignInUseCase extends SignInUseCase {
                 message: AppFailureMessages.unExpectedErrorMessage));
           }
           var entity = SignInEntity.fromMap(result.value!.toMap());
-
-          print("Esto contiene entity.idToken: ${entity.idToken}");
-          print("Esto contiene entity.localId: ${entity.localId}");
 
           return Result.success(entity);
         case ResultStatus.error:

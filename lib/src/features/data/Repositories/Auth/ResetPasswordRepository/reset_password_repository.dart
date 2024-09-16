@@ -1,5 +1,5 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Decodables/reset_password_decodable.dart';
 import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Interfaces/auth_firebase_interface.dart';
 import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Services/reset_password_user_service.dart';

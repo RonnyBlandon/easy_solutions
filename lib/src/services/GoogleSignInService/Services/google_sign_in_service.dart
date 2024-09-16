@@ -32,7 +32,7 @@ class DefaultGoogleSignInService extends GoogleSignInService {
 
   @override
   Future<GoogleSignInUserEntity> signInWithGoogle() async {
-    // Log out the previous account if any
+    // Sign out of the old Google account, if applicable
     await GoogleSignIn().signOut();
 
     // Trigger the authentication flow

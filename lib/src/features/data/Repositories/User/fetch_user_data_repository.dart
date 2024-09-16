@@ -1,5 +1,5 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Decodables/User/user_decodable.dart';
 import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Interfaces/interface.dart';
 import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Services/realtime_database_service.dart';

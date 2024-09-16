@@ -1,4 +1,4 @@
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/ResetPasswordRepository/reset_password_repository.dart';
 
 abstract class ResetPasswordUseCase {

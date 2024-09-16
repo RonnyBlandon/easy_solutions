@@ -1,4 +1,5 @@
-import 'package:easy_solutions/src/features/Domain/Interfaces/Interfaces.dart';
+import 'package:easy_solutions/src/base/Constants/local_storage_keys.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DefaultFetchLocalStorageRepository extends FetchLocalStorageRepository {
@@ -9,5 +10,11 @@ class DefaultFetchLocalStorageRepository extends FetchLocalStorageRepository {
   Future<String?> fetchInLocalStorage({required String key}) async {
     final SharedPreferences prefs = await _prefs;
     return prefs.getString(key);
+  }
+
+  @override
+  Future<List<String>?> fetchRecentSearches() async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getStringList(LocalStorageKeys.recentSearches);
   }
 }

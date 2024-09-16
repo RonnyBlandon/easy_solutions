@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Auth/UserAuthData/user_auth_data_entity.dart';
-import 'package:easy_solutions/src/features/Domain/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/Auth/UserAuthData/user_auth_data_use_case_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/UserAuthData/user_auth_data_repository_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/UserAuthData/user_auth_data_repository.dart';
