@@ -1,20 +1,16 @@
 import 'dart:convert';
 
 class SignUpEntity {
-  String? kind;
-  String? idToken;
-  String? email;
-  String? refreshToken;
-  String? expiresIn;
   String? localId;
+  String? tokenType;
+  String? accessToken;
+  String? refreshToken;
 
   SignUpEntity({
-    this.kind,
-    this.idToken,
-    this.email,
-    this.refreshToken,
-    this.expiresIn,
     this.localId,
+    this.tokenType,
+    this.accessToken,
+    this.refreshToken,
   });
 
   factory SignUpEntity.fromJson(String str) =>
@@ -23,20 +19,15 @@ class SignUpEntity {
   String toJson() => json.encode(toMap());
 
   factory SignUpEntity.fromMap(Map<String, dynamic> json) => SignUpEntity(
-        kind: json["kind"],
-        idToken: json["idToken"],
-        email: json["email"],
-        refreshToken: json["refreshToken"],
-        expiresIn: json["expiresIn"],
-        localId: json["localId"],
-      );
+      tokenType: json["token_type"],
+      localId: json["local_id"],
+      accessToken: json["access_token"],
+      refreshToken: json["refresh_token"]);
 
   Map<String, dynamic> toMap() => {
-        "kind": kind,
-        "idToken": idToken,
-        "email": email,
+        "tokenType": tokenType,
+        "accessToken": accessToken,
         "refreshToken": refreshToken,
-        "expiresIn": expiresIn,
-        "localId": localId,
+        "localId": localId
       };
 }

@@ -3,8 +3,8 @@ import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Decodables/User/user_decodable.dart';
 import 'package:easy_solutions/src/features/data/Repositories/User/user_body_parameters.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Interfaces/interface.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 abstract class _Paths {

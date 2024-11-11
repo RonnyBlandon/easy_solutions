@@ -6,8 +6,8 @@ import 'package:easy_solutions/src/features/data/Repositories/Auth/SignInReposit
 import 'package:easy_solutions/src/features/data/Repositories/Auth/UserAuthData/user_auth_data_repository_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/User/user_body_parameters.dart';
 import 'package:easy_solutions/src/managers/businessManager/Decodables/business_list_decodable.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Decodables/reset_password_decodable.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Decodables/sign_in_decodable.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/AuthEasyDeliveryServices/Decodables/reset_password_decodable.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/AuthEasyDeliveryServices/Decodables/sign_in_decodable.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 //Auth Repositories

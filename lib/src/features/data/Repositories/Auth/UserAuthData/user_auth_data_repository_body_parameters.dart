@@ -1,9 +1,9 @@
 class GetUserDataBodyParameters {
-  GetUserDataBodyParameters({required this.idToken});
+  GetUserDataBodyParameters({required this.accessToken});
 
-  final String idToken;
+  final String accessToken;
 
   Map<String, dynamic> toMap() => {
-        "idToken": idToken,
+        "idToken": accessToken,
       };
 }

@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/features/data/Decodables/CategoriesDecodable/categories_decodable.dart';
 import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Interfaces/interface.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
 
 class DefaultCategoriesRepository extends CategoriesRepository {
   final String _path = "categories/";

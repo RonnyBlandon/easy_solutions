@@ -40,10 +40,10 @@ class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
     // Mantener la sesión del usuario
     _saveLocalStorageUseCase.execute(
         parameters: SaveLocalStorageParameters(
-            key: LocalStorageKeys.idToken, value: user.idToken ?? ""));
+            key: LocalStorageKeys.accessToken, value: user.accessToken ?? ""));
 
     final isUserInDatabase =
-        await _googleSignInService.isUserInDatabase(uid: user.uid ?? "");
+        await _googleSignInService.isUserInDatabase(uid: user.localId ?? "");
     if (isUserInDatabase) {
       return Result.success(_mapUserEntity(user: user));
     } else {
@@ -55,13 +55,13 @@ class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
 extension Mapper on DefaultGoogleSignInUseCase {
   UserEntity _mapUserEntity({required GoogleSignInUserEntity user}) {
     return UserEntity(
-        localId: user.uid,
+        localId: user.localId,
         role: UserRole.user.toShortString(),
-        username: user.displayName,
+        fullName: user.fullName,
         email: user.email,
-        phone: user.phoneNumber,
+        phone: user.phone,
         startDate: DateHelpers.getStartDate(),
-        idToken: user.idToken);
+        accessToken: user.accessToken);
   }
 }
 
@@ -69,13 +69,13 @@ extension PrivateMethods on DefaultGoogleSignInUseCase {
   Future<Result<UserEntity, Failure>> _saveUserDataInDataBase(
       {required GoogleSignInUserEntity user}) {
     SaveUserDataUseCaseParameters parameters = SaveUserDataUseCaseParameters(
-        localId: user.uid,
+        localId: user.localId,
         role: UserRole.user,
-        username: user.displayName,
+        fullName: user.fullName,
         email: user.email,
-        phone: user.phoneNumber,
+        phone: user.phone,
         startDate: DateHelpers.getStartDate(),
-        idToken: user.idToken);
+        accessToken: user.accessToken);
 
     return _saveUserDataUseCase.execute(parameters: parameters);
   }

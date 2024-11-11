@@ -3,20 +3,20 @@ import 'dart:convert';
 class UserEntity {
   String? localId;
   String? role;
-  String? username;
+  String? fullName;
   String? email;
   String? phone;
   String? startDate;
-  String? idToken;
+  String? accessToken;
 
   UserEntity({
     this.localId,
     this.role,
-    this.username,
+    this.fullName,
     this.email,
     this.phone,
     this.startDate,
-    this.idToken,
+    this.accessToken,
   });
 
   factory UserEntity.fromJson(String str) =>
@@ -27,21 +27,21 @@ class UserEntity {
   factory UserEntity.fromMap(Map<String, dynamic> json) => UserEntity(
         localId: json["localId"],
         role: json["role"],
-        username: json["username"],
+        fullName: json["fullName"],
         email: json["email"],
         phone: json["phone"],
         startDate: json["startDate"],
-        idToken: json["idToken"],
+        accessToken: json["accessToken"],
       );
 
   Map<String, dynamic> toMap() => {
         "localId": localId,
         "role": role,
-        "username": username,
+        "fullName": fullName,
         "email": email,
         "phone": phone,
         "startDate": startDate,
-        "idToken": idToken,
+        "accessToken": accessToken,
       };
 }
 

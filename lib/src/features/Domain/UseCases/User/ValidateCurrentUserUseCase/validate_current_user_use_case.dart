@@ -4,7 +4,7 @@ import 'package:easy_solutions/src/features/Domain/UseCases/Auth/UserAuthData/us
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 abstract class ValidateCurrentUserUseCase {
-  Future<bool> execute({required String idToken});
+  Future<bool> execute({required String accessToken});
 }
 
 class DefaultValidateCurrentUserUseCase extends ValidateCurrentUserUseCase {
@@ -15,10 +15,12 @@ class DefaultValidateCurrentUserUseCase extends ValidateCurrentUserUseCase {
             userAuthDataUseCase ?? DefaultUserAuthDataUseCase();
 
   @override
-  Future<bool> execute({required String idToken}) async {
+  Future<bool> execute({required String accessToken}) async {
     try {
       return _userAuthDataUseCase
-          .execute(parameters: GetUserDataUseCaseParameters(idToken: idToken))
+          .execute(
+              parameters:
+                  GetUserDataUseCaseParameters(accessToken: accessToken))
           .then((result) {
         switch (result.status) {
           case ResultStatus.success:

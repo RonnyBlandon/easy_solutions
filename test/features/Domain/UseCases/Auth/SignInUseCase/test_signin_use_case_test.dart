@@ -3,13 +3,13 @@ import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Auth/SignInEntity/signin_entity.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/Auth/SignInUseCase/signin_use_case.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/Auth/SignInUseCase/signin_use_case_parameters.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Decodables/auth_error_decodable.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/AuthEasyDeliveryServices/Decodables/auth_error_decodable.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 abstract class _Constants {
-  static String correctEmail = "ronny8@gmail.com";
-  static String correctPass = "123456";
+  static String correctEmail = "ronnyblandon2015@gmail.com";
+  static String correctPass = "12345678";
   static String wrongEmail = "ronny550@gmail.com";
   static String wrongPass = "12345678524";
 }
@@ -26,12 +26,17 @@ void main() {
 
       // WHEN
       var result = await sut.execute(params: params);
+      print("Esto contiene result: ${result.status}");
       switch (result.status) {
         // THEN
         case ResultStatus.success:
+          print("Esto contiene result success: ${result.value}");
           expect(result.value, isA<SignInEntity>());
+          break;
         case ResultStatus.error:
-          expect(result.error, Failure);
+          print("Esto contiene result success: ${result.error}");
+          expect(result.error, isA<Failure>());
+          break;
       }
     });
   });
@@ -48,7 +53,11 @@ void main() {
         AuthErrorDecodable error = f as AuthErrorDecodable;
         // THEN
         expect(
-            error.error!.message, FirebaseFailureMessages.emailNotFoundMessage);
+          error.detailErrors != null && error.detailErrors!.isNotEmpty
+              ? error.detailErrors![0].msg
+              : '',
+          ApiFailureMessages.emailNotFoundMessage,
+        );
       }
     });
 
@@ -63,8 +72,12 @@ void main() {
       } on Failure catch (f) {
         AuthErrorDecodable error = f as AuthErrorDecodable;
         // THEN
-        expect(error.error!.message,
-            FirebaseFailureMessages.invalidPasswordMessage);
+        expect(
+          error.detailErrors != null && error.detailErrors!.isNotEmpty
+              ? error.detailErrors![0].msg
+              : '',
+          ApiFailureMessages.invalidPasswordMessage,
+        );
       }
     });
   });

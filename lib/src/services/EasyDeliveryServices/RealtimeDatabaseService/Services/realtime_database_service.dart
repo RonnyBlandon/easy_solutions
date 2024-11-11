@@ -1,6 +1,6 @@
 import 'package:easy_solutions/src/base/ApiService/api_service.dart';
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Interfaces/interface.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
 
 class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
   final ApiService _apiService;

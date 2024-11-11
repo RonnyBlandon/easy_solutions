@@ -3,13 +3,13 @@ import 'package:easy_solutions/src/base/Constants/error_messages.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Auth/SignUpEntity/signup_entity.dart';
 import 'package:easy_solutions/src/features/domain/UseCases/Auth/SignUpUseCase/signup_use_case.dart';
 import 'package:easy_solutions/src/features/domain/UseCases/Auth/SignUpUseCase/signup_use_case_parameters.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/AuthFirebaseServices/Decodables/auth_error_decodable.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/AuthEasyDeliveryServices/Decodables/auth_error_decodable.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-abstract class _Constatns {
-  static String correctEmail = "ronny4@gmail.com";
-  static String correctPass = "123456";
+abstract class _Constants {
+  static String correctEmail = "ronnyblandon2015@gmail.com";
+  static String correctPass = "12345678";
   static String wrongEmail = "ronny8@gmail.com";
   static String wrongPass = "123456";
 }
@@ -18,47 +18,62 @@ void main() {
   // GIVEN
   SignUpUseCase sut = DefaultSignUpUseCase();
 
-  group('Test success Signup user in Firebase', () {
-    test('Test success signup user in Firebase', () async {
+  group('Test success Signup user with FastAPI', () {
+    test('Test success signup user with FastAPI', () async {
       final SignUpUseCaseParameters params = SignUpUseCaseParameters(
-          username: "Ronny Humberto Blandon Martinez 4",
-          email: _Constatns.correctEmail,
+          fullName: "Ronny Humberto Blandon Martinez",
+          email: _Constants.correctEmail,
           phone: "98311490",
-          password: _Constatns.correctPass,
-          repeatPassword: _Constatns.correctPass);
+          departmentId: 1,
+          municipalityId: 1,
+          role: "USER",
+          isActive: true,
+          password: _Constants.correctPass);
 
       // WHEN
       final result = await sut.execute(params: params);
-
+      print("Esto contiene result: ${result.status}");
       switch (result.status) {
         case ResultStatus.success:
+          print("Esto contiene result success: ${result.value}");
           // THEN
           expect(result.value, isA<SignUpEntity>());
           break;
         case ResultStatus.error:
-          //THEN
-          expect(result.error, Failure);
+          print("Esto contiene result error: ${result.error}");
+          // THEN
+          expect(result.error, isA<Failure>());
           break;
       }
     });
   });
 
-  group('Test failure Signup user in Firebase', () {
-    test('Test failure Signup user in Firebase', () async {
+  group('Test failure Signup user with FastAPI', () {
+    test('Test failure Signup user with FastAPI', () async {
       try {
         // WHEN
         final SignUpUseCaseParameters params = SignUpUseCaseParameters(
-            username: "Ronny Humberto Blandon Martinez 4",
-            email: _Constatns.wrongEmail,
+            fullName: "Ronny Humberto Blandon Martinez 4",
+            email: _Constants.wrongEmail,
             phone: "98311490",
-            password: _Constatns.wrongPass,
-            repeatPassword: _Constatns.wrongPass);
+            departmentId: 1,
+            municipalityId: 1,
+            role: "USER",
+            isActive: true,
+            password: _Constants.wrongPass);
 
         final _ = await sut.execute(params: params);
       } on Failure catch (f) {
         // THEN
-        AuthErrorDecodable error = f as AuthErrorDecodable;
-        expect(error.error!.message, FirebaseFailureMessages.emailExitMessage);
+        // Usar el Failure adaptado con AuthErrorDecodable (FastAPI)
+        AuthErrorDecodable errorDecodable = AuthErrorDecodable.fromMap(f.error);
+        expect(
+          errorDecodable.detailErrors != null &&
+                  errorDecodable.detailErrors!.isNotEmpty
+              ? errorDecodable.detailErrors![0].msg
+              : '',
+          ApiFailureMessages.emailExitMessage,
+        );
       }
     });
   });

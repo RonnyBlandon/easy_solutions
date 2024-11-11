@@ -25,7 +25,8 @@ class DefaultUserAuthDataUseCase extends UserAuthDataUseCase {
       {required GetUserDataUseCaseParameters parameters}) {
     return _userAuthDataRepository
         .getUserAuthData(
-            parameters: GetUserDataBodyParameters(idToken: parameters.idToken))
+            parameters:
+                GetUserDataBodyParameters(accessToken: parameters.accessToken))
         .then((result) {
       switch (result.status) {
         case ResultStatus.success:

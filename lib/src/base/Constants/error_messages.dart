@@ -3,7 +3,7 @@ abstract class AppFailureMessages {
   static String unExpectedErrorMessage = "Ha ocurrido un error inesperado.";
 }
 
-abstract class FirebaseFailureMessages {
+abstract class ApiFailureMessages {
   // Error messages
   static String invalidLoginCredentialsMessage =
       "Correo o contraseña incorrectos. Inténtalo de nuevo.";

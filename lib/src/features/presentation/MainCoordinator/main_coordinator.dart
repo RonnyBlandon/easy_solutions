@@ -29,23 +29,24 @@ class MainCoordinator {
   }
 
   Future<String?> _isUserLogged() async {
-    var idToken = await _fetchLocalStorageUseCase.execute(
-        parameters: FetchLocalStorageParameters(key: LocalStorageKeys.idToken));
+    var accessToken = await _fetchLocalStorageUseCase.execute(
+        parameters:
+            FetchLocalStorageParameters(key: LocalStorageKeys.accessToken));
 
-    print("Esto contiene idToken en el MainCoordinator: ${idToken}");
-    return idToken;
+    print("Esto contiene accessToken en el MainCoordinator: $accessToken");
+    return accessToken;
 
     // Revisar si el usuario esta guardado
-    /*if (idToken == null) {
+    /*if (accesToken == null) {
       return null;
     }
 
     // Hay un token guardado, vamos a comprobar que el usuario existe aún en Firebase
     var isUserValid =
-        await _validateCurrentUserUseCase.execute(idToken: idToken);
+        await _validateCurrentUserUseCase.execute(idToken: accessToken);
 
     if (isUserValid) {
-      return idToken;
+      return accessToken;
     } else {
       return null;
     }*/

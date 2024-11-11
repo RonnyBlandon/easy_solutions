@@ -33,7 +33,14 @@ class DefaultSignUpUseCase extends SignUpUseCase {
     return _signUpRepository
         .signUp(
             params: SignUpBodyParameters(
-                email: params.email, password: params.password))
+                fullName: params.fullName,
+                email: params.email,
+                phone: params.phone,
+                departmentId: params.departmentId,
+                municipalityId: params.municipalityId,
+                role: params.role,
+                isActive: params.isActive,
+                password: params.password))
         .then((result) {
       switch (result.status) {
         case ResultStatus.success:
@@ -43,7 +50,6 @@ class DefaultSignUpUseCase extends SignUpUseCase {
                 message: AppFailureMessages.unExpectedErrorMessage));
           }
           SignUpEntity entity = SignUpEntity.fromMap(result.value!.toMap());
-
           // Guardamos el nuevo usuario en la base de datos
           return saveUserDataInDatabase(params: params, entity: entity);
         case ResultStatus.error:
@@ -59,15 +65,17 @@ extension on DefaultSignUpUseCase {
     SaveUserDataUseCaseParameters parameters = SaveUserDataUseCaseParameters(
         localId: entity.localId,
         role: UserRole.user,
-        username: params.username,
+        fullName: params.fullName,
         email: params.email,
         phone: params.phone,
+        departmentId: params.departmentId,
+        municipalityId: params.municipalityId,
         startDate: DateHelpers.getStartDate(),
-        idToken: entity.idToken);
+        accessToken: entity.accessToken);
+    print("Esto contiene parameters: ${parameters.toMap()}");
 
-    print(
-        "Esto tiene parameters en SaveUserDataUseCaseParameters: ${parameters.startDate}");
     return _saveUserDataUseCase.execute(parameters: parameters).then((result) {
+      print("Esto contiene result en _saveUserDataUseCase: ${result.error}");
       switch (result.status) {
         case ResultStatus.success:
           return Result.success(entity);

@@ -1,8 +1,8 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/managers/businessManager/Decodables/business_list_decodable.dart';
 import 'package:easy_solutions/src/managers/businessManager/Interfaces/business_manager_interfaces.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Interfaces/interface.dart';
-import 'package:easy_solutions/src/services/FirebaseServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
+import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
 import 'package:easy_solutions/src/services/GeolocationService/Interfaces/geolocation_service_interfaces.dart';
 import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_helpers_service.dart';
 import 'package:easy_solutions/src/services/GeolocationService/Service/mock_geolocation_service.dart';

@@ -4,27 +4,33 @@ class SaveUserDataUseCaseParameters {
   SaveUserDataUseCaseParameters(
       {this.localId,
       this.role,
-      this.username,
+      this.fullName,
       this.email,
       this.phone,
+      this.departmentId,
+      this.municipalityId,
       this.startDate,
-      this.idToken});
+      this.accessToken});
 
   String? localId;
   UserRole? role;
-  String? username;
+  String? fullName;
   String? email;
   String? phone;
+  int? departmentId;
+  int? municipalityId;
   String? startDate;
-  String? idToken;
+  String? accessToken;
 
   Map<String, dynamic> toMap() => {
         "localId": localId,
         "role": role,
-        "username": username,
+        "fullName": fullName,
         "email": email,
         "phone": phone,
+        "departmentId": departmentId,
+        "municipalityId": municipalityId,
         "startDate": startDate,
-        "idToken": idToken
+        "accessToken": accessToken,
       };
 }

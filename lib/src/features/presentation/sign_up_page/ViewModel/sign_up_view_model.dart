@@ -55,18 +55,21 @@ class DefaultSignUpViewModel extends SignUpViewModel {
     return _signUpUseCase
         .execute(
             params: SignUpUseCaseParameters(
-                username: signUpModel?.username ?? "",
+                fullName: signUpModel?.username ?? "",
                 email: signUpModel?.email ?? "",
                 phone: signUpModel?.phone ?? "",
-                password: signUpModel?.password ?? "",
-                repeatPassword: signUpModel?.repeatPassword ?? ""))
+                departmentId: signUpModel?.departmentId ?? 1,
+                municipalityId: signUpModel?.municipalityId ?? 1,
+                role: "USER",
+                isActive: true,
+                password: signUpModel?.password ?? ""))
         .then((result) async {
       switch (result.status) {
         case ResultStatus.success:
           await _saveLocalStorageUseCase.execute(
               parameters: SaveLocalStorageParameters(
-                  key: LocalStorageKeys.idToken,
-                  value: result.value?.idToken ?? ""));
+                  key: LocalStorageKeys.accessToken,
+                  value: result.value?.accessToken ?? ""));
           loadingState.setLoadingState(isLoading: false);
           return Result.success(true);
         case ResultStatus.error:

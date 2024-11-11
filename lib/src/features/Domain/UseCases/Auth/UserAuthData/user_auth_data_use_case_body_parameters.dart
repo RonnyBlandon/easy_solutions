@@ -1,9 +1,9 @@
 class GetUserDataUseCaseParameters {
-  GetUserDataUseCaseParameters({required this.idToken});
+  GetUserDataUseCaseParameters({required this.accessToken});
 
-  final String idToken;
+  final String accessToken;
 
   Map<String, dynamic> toMap() => {
-        "idToken": idToken,
+        "accessToken": accessToken,
       };
 }

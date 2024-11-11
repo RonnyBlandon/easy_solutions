@@ -26,11 +26,11 @@ class DefaultSaveUserDataUseCase extends SaveUserDataUseCase {
     UserBodyParameters params = UserBodyParameters(
         localId: parameters.localId,
         role: parameters.role?.toShortString(),
-        username: parameters.username,
+        username: parameters.fullName,
         email: parameters.email,
         phone: parameters.phone,
         startDate: parameters.startDate,
-        idToken: parameters.idToken);
+        accessToken: parameters.accessToken);
 
     return _saveUserDataRepository
         .saveUserData(parameters: params)

@@ -1,14 +1,20 @@
 class SignUpUseCaseParameters {
-  final String username;
+  final String fullName;
   final String email;
   final String phone;
+  final int departmentId;
+  final int municipalityId;
+  final String role;
+  final bool isActive;
   final String password;
-  final String repeatPassword;
 
   SignUpUseCaseParameters(
-      {required this.username,
+      {required this.fullName,
       required this.email,
       required this.phone,
-      required this.password,
-      required this.repeatPassword});
+      required this.departmentId,
+      required this.municipalityId,
+      required this.role,
+      required this.isActive,
+      required this.password});
 }

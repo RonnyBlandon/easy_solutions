@@ -1,4 +1,4 @@
 class LocalStorageKeys {
-  static String idToken = "idToken";
+  static String accessToken = "accessToken";
   static String recentSearches = "recentSearches";
 }

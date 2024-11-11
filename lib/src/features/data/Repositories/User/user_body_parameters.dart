@@ -6,7 +6,7 @@ class UserBodyParameters {
       this.email,
       this.phone,
       this.startDate,
-      this.idToken});
+      this.accessToken});
 
   String? localId;
   String? role;
@@ -14,7 +14,7 @@ class UserBodyParameters {
   String? email;
   String? phone;
   String? startDate;
-  String? idToken;
+  String? accessToken;
 
   Map<String, dynamic> toMap() => {
         "localId": localId,
@@ -23,6 +23,6 @@ class UserBodyParameters {
         "email": email,
         "phone": phone,
         "startDate": startDate,
-        "idToken": idToken
+        "idToken": accessToken
       };
 }

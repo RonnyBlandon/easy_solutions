@@ -7,7 +7,7 @@ class UserDecodable {
   String? email;
   String? phone;
   String? startDate;
-  String? idToken;
+  String? accessToken;
 
   UserDecodable({
     this.localId,
@@ -16,7 +16,7 @@ class UserDecodable {
     this.email,
     this.phone,
     this.startDate,
-    this.idToken,
+    this.accessToken,
   });
 
   factory UserDecodable.fromJson(String str) =>
@@ -31,7 +31,7 @@ class UserDecodable {
         email: json["email"],
         phone: json["phone"],
         startDate: json["startDate"],
-        idToken: json["idToken"],
+        accessToken: json["accessToken"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -41,6 +41,6 @@ class UserDecodable {
         "email": email,
         "phone": phone,
         "startDate": startDate,
-        "idToken": idToken,
+        "accessToken": accessToken,
       };
 }

@@ -18,6 +18,6 @@ class DefaultSignOutUseCase extends SignOutUseCase {
   Future<void> execute() async {
     return _removeLocalStorageUseCase.execute(
         parameters:
-            RemoveLocalStorageParameters(key: LocalStorageKeys.idToken));
+            RemoveLocalStorageParameters(key: LocalStorageKeys.accessToken));
   }
 }
