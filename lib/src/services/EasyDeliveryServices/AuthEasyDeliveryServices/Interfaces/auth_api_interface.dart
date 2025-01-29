@@ -2,7 +2,7 @@ import 'package:easy_solutions/src/base/ApiService/api_service.dart';
 
 abstract class BaseApiService {
   ApiService apiService = DefaultApiService();
-  static String baseUrl = "http://192.168.0.7:8000/";
+  static String baseUrl = "http://192.168.0.4:8000/";
   static String singUpEndpoint = "auth/signUp";
   static String singInEndpoint = "auth/signIn";
   static String resetPasswordEndpoint = "auth/request-password-reset";

@@ -4,39 +4,40 @@ import 'package:easy_solutions/src/managers/businessManager/Interfaces/business_
 import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
 import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
 import 'package:easy_solutions/src/services/GeolocationService/Interfaces/geolocation_service_interfaces.dart';
-import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_helpers_service.dart';
-import 'package:easy_solutions/src/services/GeolocationService/Service/mock_geolocation_service.dart';
 
 class DefaultBusinessManager extends BusinessManager {
-  final String _businessListPath = "businessList";
+  final String _businessListPath = "businesses/";
+  //final double _distanceRange = 10.0;
 
   // Dependencies
   final RealtimeDatabaseService _realtimeDatabaseService;
-  final GeolocationService _geolocationService;
-  final GeolocationHelpersService _geolocationHelpersService;
+  //final GeolocationHelpersService _geolocationHelpersService;
 
   DefaultBusinessManager(
       {RealtimeDatabaseService? realtimeDataBaseService,
       GeolocationService? geolocationService,
       GeolocationHelpersService? geolocationHelpersService})
       : _realtimeDatabaseService =
-            realtimeDataBaseService ?? DefaultRealtimeDatabaseService(),
-        _geolocationService = geolocationService ??
-            MockGeolocationService(), // Bueno: DefaultGeolocationService() Mock: MockGeolocationService()
-        _geolocationHelpersService =
-            geolocationHelpersService ?? DefaultGeolocationHelpersService();
+            realtimeDataBaseService ?? DefaultRealtimeDatabaseService();
 
   @override
   Future<BusinessListDecodable> fetchBusinessList() async {
     try {
+      print("Este es una prueba de print en fetchBusinessList");
       final response =
           await _realtimeDatabaseService.getData(path: _businessListPath);
-      final userPosition = await _geolocationService.getCurrentPosition();
+      print("Esto contiene response en fetchBusinessList: $response");
       BusinessListDecodable decodable =
-          _mapToDefaultBusinessManager(response: response);
-      decodable.businessList =
-          _mapMunicipalityPlaceList(businessList: decodable.businessList ?? []);
-
+          _mapToBusinessListDecodable(response: response);
+      var decodable_debug = decodable.businessList;
+      print(
+          "Esto contiene decodable_debug en fetchBusinessList: $decodable_debug");
+      decodable.businessList = _mapMunicipalityBusinessList(
+          businessList: decodable.businessList ?? [], municipalityId: 1);
+      decodable_debug = decodable.businessList;
+      print(
+          "Esto contiene decodable_debug en fetchBusinessList: $decodable_debug");
+      print("Esto se imprime antes de retornar decodable en fetchBusinessList");
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -54,29 +55,36 @@ class DefaultBusinessManager extends BusinessManager {
   @override
   Future<BusinessListDecodable> fetchPopularBusinessList() async {
     final fullBusinessList = await fetchBusinessList();
-    fullBusinessList.businessList =
-        _mapPopularPlaceList(businessList: fullBusinessList.businessList ?? []);
+    fullBusinessList.businessList = _mapPopularBusinessList(
+        businessList: fullBusinessList.businessList ?? []);
     return fullBusinessList;
   }
 
   @override
-  Future<BusinessListDecodable> fetchBusinessListByCategory(
-      {required int categoryId}) async {
-    final fullBusinessList = await fetchBusinessList();
-    fullBusinessList.businessList = _mapPlaceListByCategory(
-        businessList: fullBusinessList.businessList ?? [],
-        categoryId: categoryId);
-
-    return fullBusinessList;
+  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
+      {required int typeBusinessId}) async {
+    try {
+      print(
+          "Este es el primer print de prueba en fetchBusinessListByTypeBusiness:");
+      final fullBusinessList = await fetchBusinessList();
+      print(
+          "Esto contiene fullBusinessList en fetchBusinessListByTypeBusiness: $fullBusinessList");
+      fullBusinessList.businessList = _mapBusinessListByTypeBusiness(
+          businessList: fullBusinessList.businessList ?? [],
+          typeBusinessId: typeBusinessId);
+      return fullBusinessList;
+    } on Exception catch (e) {
+      print("Error en fetchBusinessListByTypeBusiness desde catch: $e");
+      rethrow;
+    }
   }
 
   @override
   Future<BusinessListDecodable> fetchBusinessListByQuery(
       {required String query}) async {
     final fullBusinessList = await fetchBusinessList();
-    fullBusinessList.businessList = _mapPlaceListByQuery(
+    fullBusinessList.businessList = _mapBusinessListByQuery(
         businessList: fullBusinessList.businessList ?? [], query: query);
-
     return fullBusinessList;
   }
 
@@ -84,89 +92,90 @@ class DefaultBusinessManager extends BusinessManager {
   Future<BusinessListDecodable> fetchBusinessListByRecentSearches(
       {required List<String> businessIds}) async {
     final fullBusinessList = await fetchBusinessList();
-    fullBusinessList.businessList = _mapPlaceListByRecentSearches(
+    fullBusinessList.businessList = _mapBusinessListByRecentSearches(
         businessList: fullBusinessList.businessList ?? [],
         businessIds: businessIds);
-
     return fullBusinessList;
   }
 }
 
 extension Mappers on DefaultBusinessManager {
-  BusinessListDecodable _mapToDefaultBusinessManager(
-      {required Map<String, dynamic> response}) {
-    List<BusinessList> businessList = [];
-    response.forEach((key, value) {
-      businessList.add(BusinessList.fromJson(value));
+  BusinessListDecodable _mapToBusinessListDecodable(
+      {required List<dynamic> response}) {
+    List<BusinessDetailDecodable>? businessList = [];
+    response.forEach((value) {
+      businessList.add(BusinessDetailDecodable.fromMap(value));
     });
 
     return BusinessListDecodable(businessList: businessList);
   }
 
-  List<BusinessList> _mapMunicipalityPlaceList(
-      {required List<BusinessList> businessList}) {
-    List<BusinessList> businessListFiltered = [];
-    businessList.forEach((place) {
-      String municipality = "Barcelona";
-      if (municipality == place.municipality) {
-        businessListFiltered.add(place);
+  List<BusinessDetailDecodable> _mapMunicipalityBusinessList(
+      {required List<BusinessDetailDecodable> businessList,
+      required int municipalityId}) {
+    List<BusinessDetailDecodable> businessListFiltered = [];
+    businessList.forEach((business) {
+      if (business.municipalityId == municipalityId) {
+        businessListFiltered.add(business);
       }
     });
     return businessListFiltered;
   }
 
-  List<BusinessList> _mapNoveltyBusinessList(
-      {required List<BusinessList> businessList}) {
-    List<BusinessList> businessListFiltered = [];
-    businessList.forEach((place) {
-      if (place.isNovelty) {
-        businessListFiltered.add(place);
+  List<BusinessDetailDecodable> _mapNoveltyBusinessList(
+      {required List<BusinessDetailDecodable> businessList}) {
+    List<BusinessDetailDecodable> businessListFiltered = [];
+    businessList.forEach((business) {
+      if (business.isNovelty) {
+        businessListFiltered.add(business);
       }
     });
     return businessListFiltered;
   }
 
-  List<BusinessList> _mapPopularPlaceList(
-      {required List<BusinessList> businessList}) {
-    List<BusinessList> businessListFiltered = [];
-    businessList.forEach((place) {
-      if (place.isPopularThisWeek) {
-        businessListFiltered.add(place);
+  List<BusinessDetailDecodable> _mapPopularBusinessList(
+      {required List<BusinessDetailDecodable> businessList}) {
+    List<BusinessDetailDecodable> businessListFiltered = [];
+    businessList.forEach((business) {
+      if (business.isPopularThisWeek) {
+        businessListFiltered.add(business);
       }
     });
     return businessListFiltered;
   }
 
-  List<BusinessList> _mapPlaceListByCategory(
-      {required List<BusinessList> businessList, required int categoryId}) {
-    List<BusinessList> businessListFiltered = [];
-    businessList.forEach((place) {
-      if (place.categoryId == categoryId) {
-        businessListFiltered.add(place);
+  List<BusinessDetailDecodable> _mapBusinessListByTypeBusiness(
+      {required List<BusinessDetailDecodable> businessList,
+      required int typeBusinessId}) {
+    List<BusinessDetailDecodable> businessListFiltered = [];
+    businessList.forEach((business) {
+      if (business.typeBusiness.id == typeBusinessId) {
+        businessListFiltered.add(business);
       }
     });
     return businessListFiltered;
   }
 
-  List<BusinessList> _mapPlaceListByQuery(
-      {required List<BusinessList> businessList, required String query}) {
-    List<BusinessList> businessListFiltered = [];
-    businessList.forEach((place) {
+  List<BusinessDetailDecodable> _mapBusinessListByQuery(
+      {required List<BusinessDetailDecodable> businessList,
+      required String query}) {
+    List<BusinessDetailDecodable> businessListFiltered = [];
+    businessList.forEach((business) {
       if (query.isNotEmpty &&
-          place.businessName.toLowerCase().contains(query.toLowerCase())) {
-        businessListFiltered.add(place);
+          business.businessName.toLowerCase().contains(query.toLowerCase())) {
+        businessListFiltered.add(business);
       }
     });
     return businessListFiltered;
   }
 
-  List<BusinessList> _mapPlaceListByRecentSearches(
-      {required List<BusinessList> businessList,
+  List<BusinessDetailDecodable> _mapBusinessListByRecentSearches(
+      {required List<BusinessDetailDecodable> businessList,
       required List<String> businessIds}) {
-    List<BusinessList> businessListFiltered = [];
+    List<BusinessDetailDecodable> businessListFiltered = [];
     for (var businessId in businessIds) {
       businessList.forEach((business) {
-        if (business.businessId == businessId) {
+        if (business.id == businessId) {
           businessListFiltered.add(business);
         }
       });

@@ -49,24 +49,16 @@ class DefaultGoogleSignInService extends GoogleSignInService {
     // Obtener los detalles de autenticación del usuario
     final GoogleSignInAuthentication? googleAuth =
         await googleUser.authentication;
-    if (googleAuth == null ||
-        (googleAuth.idToken == null && googleAuth.accessToken == null)) {
-      throw Exception(
-          "Error: No se pudo obtener ni el ID token ni el access token de Google.");
+    if (googleAuth == null || (googleAuth.accessToken == null)) {
+      throw Exception("Error: No se pudo obtener el access token de Google.");
     }
 
-    // Preparar el token que se usará para la autenticación en el backend
-    final tokenToUse = googleAuth.idToken ?? googleAuth.accessToken;
-
-    print("Esto contiene tokenToUse: $tokenToUse");
-
     // Enviar el token de ID al backend en FastAPI
-    return googleSignIn(bodyParameters: {"access_token": tokenToUse})
+    return googleSignIn(
+            bodyParameters: {"access_token": googleAuth.accessToken})
         .then((result) {
-      print("Esto contiene result.status: ${result.status}");
       switch (result.status) {
         case ResultStatus.success:
-          print("Esto contiene result.value: ${result.value!}");
           return result.value!;
         case ResultStatus.error:
           throw Exception(

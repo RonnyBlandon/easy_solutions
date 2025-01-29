@@ -16,9 +16,10 @@ class DefaultBusinessListRepository extends BusinessListRepository {
   }
 
   @override
-  Future<BusinessListDecodable> fetchBusinessListByCategory(
-      {required int categoryId}) {
-    return _businessManager.fetchBusinessListByCategory(categoryId: categoryId);
+  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
+      {required int typeBusinessId}) {
+    return _businessManager.fetchBusinessListByTypeBusiness(
+        typeBusinessId: typeBusinessId);
   }
 
   @override

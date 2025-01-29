@@ -16,15 +16,12 @@ void main() {
           accessToken: LocalStorageKeys.accessToken);
       // WHEN
       var result = await sut.execute(parameters: parameters);
-      print("Esto contiene result: ${result.status}");
       switch (result.status) {
         // THEN
         case ResultStatus.success:
-          print("Esto contiene result success: ${result.value}");
           expect(result.value, isA<UserAuthDataEntity>());
           break;
         case ResultStatus.error:
-          print("Esto contiene result success: ${result.error}");
           expect(result.error, isA<Failure>());
           break;
       }

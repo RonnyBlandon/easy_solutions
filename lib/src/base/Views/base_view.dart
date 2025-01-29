@@ -5,8 +5,8 @@ import 'package:easy_solutions/src/features/presentation/StateProviders/loading_
 import 'package:flutter/material.dart';
 
 mixin BaseView {
-  final MainCoordinator coordinator = MainCoordinator();
   final Widget loadingView = const LoadingView();
+  final MainCoordinator coordinator = MainCoordinator();
   final ErrorStateProvider errorStateProvider = ErrorStateProvider();
 }
 

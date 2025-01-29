@@ -32,15 +32,12 @@ void main() {
 
       // WHEN
       final result = await sut.execute(params: params);
-      print("Esto contiene result: ${result.status}");
       switch (result.status) {
         case ResultStatus.success:
-          print("Esto contiene result success: ${result.value}");
           // THEN
           expect(result.value, isA<SignUpEntity>());
           break;
         case ResultStatus.error:
-          print("Esto contiene result error: ${result.error}");
           // THEN
           expect(result.error, isA<Failure>());
           break;

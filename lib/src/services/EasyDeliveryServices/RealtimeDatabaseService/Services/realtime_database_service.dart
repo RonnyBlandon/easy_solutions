@@ -9,13 +9,15 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
       : _apiService = apiService ?? DefaultApiService();
 
   @override
-  Future<Map<String, dynamic>> getData({required String path}) async {
-    var endpoint = baseUrl + path + endUrl;
+  Future<dynamic> getData({required String path}) async {
+    var endpoint = baseUrl + path;
 
     try {
       final result = await _apiService.getDataFromGetRequest(url: endpoint);
       return result;
     } on Failure catch (f) {
+      var variable = f.error;
+      print("Esto contiene f.error $variable");
       return f.error;
     }
   }
@@ -24,7 +26,7 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
   Future<Map<String, dynamic>> postData(
       {required Map<String, dynamic> bodyParameters,
       required String path}) async {
-    var endpoint = baseUrl + path + endUrl;
+    var endpoint = baseUrl + path;
 
     try {
       final result = await _apiService.getDataFromPostRequest(
@@ -39,7 +41,7 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
   Future<Map<String, dynamic>> putData(
       {required Map<String, dynamic> bodyParameters,
       required String path}) async {
-    var endpoint = baseUrl + path + endUrl;
+    var endpoint = baseUrl + path;
 
     try {
       final result = await _apiService.getDataFromPutRequest(

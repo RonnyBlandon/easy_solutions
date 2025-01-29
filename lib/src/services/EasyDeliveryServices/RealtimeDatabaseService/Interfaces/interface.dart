@@ -1,6 +1,5 @@
 abstract class BaseRealtimeDatabaseService {
-  String baseUrl = "https://easy-delivery-78b08-default-rtdb.firebaseio.com/";
-  String endUrl = ".json";
+  String baseUrl = "http://192.168.0.4:8000/";
 }
 
 abstract class RealtimeDatabaseService extends BaseRealtimeDatabaseService {
@@ -8,5 +7,5 @@ abstract class RealtimeDatabaseService extends BaseRealtimeDatabaseService {
       {required Map<String, dynamic> bodyParameters, required String path});
   Future<Map<String, dynamic>> putData(
       {required Map<String, dynamic> bodyParameters, required String path});
-  Future<Map<String, dynamic>> getData({required String path});
+  Future<dynamic> getData({required String path});
 }

@@ -1,10 +1,23 @@
+import 'package:easy_solutions/src/base/Views/loading_view.dart';
+import 'package:easy_solutions/src/features/presentation/restaurant_list_page/View/Components/restaurant_list_content_view.dart';
+import 'package:easy_solutions/src/features/presentation/restaurant_list_page/ViewModel/restaurante_list_view_model.dart';
+import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_service.dart';
 import 'package:flutter/material.dart';
 
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
 
-class RestaurantListPage extends StatelessWidget {
+class RestaurantListPage extends StatefulWidget {
   const RestaurantListPage({super.key});
+
+  @override
+  State<RestaurantListPage> createState() => _RestaurantListPageState();
+}
+
+class _RestaurantListPageState extends State<RestaurantListPage> {
+  final RestaurantListViewModel viewModel;
+  _RestaurantListPageState({RestaurantListViewModel? restaurantListViewModel})
+      : viewModel = restaurantListViewModel ?? DefaultRestaurantListViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -28,63 +41,36 @@ class RestaurantListPage extends StatelessWidget {
                 )),
           ])),
       body: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Elige tu restaurante:',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            _gridRestaurantList(context),
-          ],
-        ),
-      ),
+          child: FutureBuilder(
+              future: viewModel.viewInitState(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<RestaurantListViewModelState> snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const LoadingView();
+                  case ConnectionState.done:
+                    if (snapshot.error ==
+                            GeoLocationFailureMessages
+                                .locationPermissionsDenied ||
+                        snapshot.error ==
+                            GeoLocationFailureMessages
+                                .locationPermissionsDeniedForever) {
+                      //var errorView = const LoadingView();
+                      //errorView.isLocationDeniedError = true;
+                      return const LoadingView(); //errorView;  <---- Este es el bueno
+                    }
+                    switch (snapshot.data) {
+                      case RestaurantListViewModelState.viewLoadedState:
+                        return RestaurantListContentView(viewModel: viewModel);
+                      default:
+                        var variable = snapshot.data;
+                        print("Esto contiene snapshot.data: $variable");
+                        return const LoadingView();
+                    }
+                  default:
+                    return const LoadingView();
+                }
+              })),
     );
   }
-}
-
-Widget _gridRestaurantList(BuildContext context) {
-  return Expanded(
-      child: GridView.count(
-    crossAxisCount: 3,
-    children: List.generate(20, (index) {
-      return _cardRestaurant(context);
-    }),
-  ));
-}
-
-Widget _cardRestaurant(BuildContext context) {
-  return Column(
-    children: [
-      GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, 'restaurant_menu');
-        },
-        child: Container(
-          width: 80.0,
-          height: 80.0,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black,
-                  offset: Offset(3.0, 3.0), // Desplazamiento de la sombra
-                  blurRadius: 4.0, // Difuminación de la sombra
-                )
-              ],
-              image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                      'assets/images/restaurants/logos/jaguar_logo.png'))),
-        ),
-      ),
-      const Text(
-        'Jaguar King',
-        style: TextStyle(
-            color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.bold),
-      )
-    ],
-  );
 }

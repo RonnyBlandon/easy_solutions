@@ -4,8 +4,8 @@ abstract class BusinessManager {
   Future<BusinessListDecodable> fetchBusinessList();
   Future<BusinessListDecodable> fetchNoveltyBusinessList();
   Future<BusinessListDecodable> fetchPopularBusinessList();
-  Future<BusinessListDecodable> fetchBusinessListByCategory(
-      {required int categoryId});
+  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
+      {required int typeBusinessId});
   Future<BusinessListDecodable> fetchBusinessListByQuery(
       {required String query});
   Future<BusinessListDecodable> fetchBusinessListByRecentSearches(

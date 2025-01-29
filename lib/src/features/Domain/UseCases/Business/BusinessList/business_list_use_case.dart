@@ -6,8 +6,8 @@ abstract class BusinessListUseCase {
   Future<BusinessListEntity> fetchBusinessList();
   Future<BusinessListEntity> fetchNoveltyBusinessList();
   Future<BusinessListEntity> fetchPopularBusinessList();
-  Future<BusinessListEntity> fetchBusinessListByCategory(
-      {required int categoryId});
+  Future<BusinessListEntity> fetchBusinessListByTypeBusiness(
+      {required int typeBusinessId});
   Future<BusinessListEntity> fetchBusinessListByQuery({required String query});
   Future<BusinessListEntity> fetchBusinessListByRecentSearches(
       {required List<String> businessIds});
@@ -29,10 +29,10 @@ class DefaultBusinessListUseCase extends BusinessListUseCase {
   }
 
   @override
-  Future<BusinessListEntity> fetchBusinessListByCategory(
-      {required int categoryId}) async {
+  Future<BusinessListEntity> fetchBusinessListByTypeBusiness(
+      {required int typeBusinessId}) async {
     final businessListDecodable = await _businessListRepository
-        .fetchBusinessListByCategory(categoryId: categoryId);
+        .fetchBusinessListByTypeBusiness(typeBusinessId: typeBusinessId);
     return BusinessListEntity.fromMap(businessListDecodable.toMap());
   }
 

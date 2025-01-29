@@ -20,7 +20,7 @@ abstract class ApiService {
     required String url,
     Map<String, String>? headers,
   });
-  Future<Map<String, dynamic>> getDataFromGetRequest({
+  Future<dynamic> getDataFromGetRequest({
     required String url,
     Map<String, String>? headers,
   });
@@ -29,7 +29,7 @@ abstract class ApiService {
 class DefaultApiService extends ApiService {
   // Método para solicitudes GET
   @override
-  Future<Map<String, dynamic>> getDataFromGetRequest({
+  Future<dynamic> getDataFromGetRequest({
     required String url,
     Map<String, String>? headers,
   }) async {
@@ -46,7 +46,7 @@ class DefaultApiService extends ApiService {
         if (jsonData == null) {
           throw Failure.fromMessage(message: _Exceptions.httpException);
         } else {
-          return jsonData;
+          return jsonData; // Puede ser un Map o una List
         }
       } else {
         throw Failure.fromBody(body: response.body);
@@ -75,8 +75,6 @@ class DefaultApiService extends ApiService {
           ...?headers, // Mezclar encabezados adicionales si existen
         },
         body: body);
-    print(
-        "Esto contiene response en apiService getDataFromPostRequest: ${response.body}");
     try {
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);

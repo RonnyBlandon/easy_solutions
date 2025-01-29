@@ -33,7 +33,6 @@ class MainCoordinator {
         parameters:
             FetchLocalStorageParameters(key: LocalStorageKeys.accessToken));
 
-    print("Esto contiene accessToken en el MainCoordinator: $accessToken");
     return accessToken;
 
     // Revisar si el usuario esta guardado
