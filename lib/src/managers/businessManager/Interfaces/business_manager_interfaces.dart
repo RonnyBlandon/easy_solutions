@@ -10,4 +10,5 @@ abstract class BusinessManager {
       {required String query});
   Future<BusinessListDecodable> fetchBusinessListByRecentSearches(
       {required List<String> businessIds});
+  Future<TypeBusinessListDecodable> fetchTypeBusinessList();
 }

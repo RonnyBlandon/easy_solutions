@@ -55,10 +55,19 @@ abstract class RemoveLocalStorageRepository {
 
 // Categories Repositories
 abstract class CategoriesRepository {
-  Future<CategoriesDecodable> fetchCategories();
+  Future<BusinessCategoryListDecodable> fetchCategories(
+      {required String businessId});
 }
 
+// Business Repositories
+abstract class BusinessDetailRepository {
+  Future<BusinessDetailDecodable> fetchBusinessDetailById(
+      {required String businessId});
+}
+
+// BusinessList Repositories
 abstract class BusinessListRepository {
+  Future<TypeBusinessListDecodable> fetchTypeBusinessList();
   Future<BusinessListDecodable> fetchBusinessList();
   Future<BusinessListDecodable> fetchNoveltyBusinessList();
   Future<BusinessListDecodable> fetchPopularBusinessList();

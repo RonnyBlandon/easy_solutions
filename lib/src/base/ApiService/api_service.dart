@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -7,6 +8,8 @@ abstract class _Exceptions {
   static const String socketExceptionMessage = "No internet Connection";
   static const String httpException = "Couldn't find the path";
   static const String formatException = "Bad response format";
+  static const String timeOutException =
+      "⏳ Tiempo de espera agotado, intenta de nuevo.";
 }
 
 abstract class ApiService {
@@ -34,11 +37,13 @@ class DefaultApiService extends ApiService {
     Map<String, String>? headers,
   }) async {
     final parsedUrl = Uri.parse(url);
-    final response = await http.get(parsedUrl,
-        headers: headers ??
-            {
-              "Content-Type": "application/json",
-            });
+    final response = await http
+        .get(parsedUrl,
+            headers: headers ??
+                {
+                  "Content-Type": "application/json",
+                })
+        .timeout(const Duration(seconds: 20));
 
     try {
       if (response.statusCode.toString().contains('20')) {
@@ -57,6 +62,8 @@ class DefaultApiService extends ApiService {
       throw Failure.fromMessage(message: _Exceptions.httpException);
     } on FormatException {
       throw Failure.fromMessage(message: _Exceptions.formatException);
+    } on TimeoutException {
+      throw Failure.fromMessage(message: _Exceptions.timeOutException);
     }
   }
 
@@ -69,12 +76,14 @@ class DefaultApiService extends ApiService {
   }) async {
     final parsedUrl = Uri.parse(url);
     final body = jsonEncode(bodyParameters); // Convertir el cuerpo a JSON
-    final response = await http.post(parsedUrl,
-        headers: {
-          "Content-Type": "application/json",
-          ...?headers, // Mezclar encabezados adicionales si existen
-        },
-        body: body);
+    final response = await http
+        .post(parsedUrl,
+            headers: {
+              "Content-Type": "application/json",
+              ...?headers, // Mezclar encabezados adicionales si existen
+            },
+            body: body)
+        .timeout(const Duration(seconds: 20));
     try {
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);
@@ -92,6 +101,8 @@ class DefaultApiService extends ApiService {
       throw Failure.fromMessage(message: _Exceptions.httpException);
     } on FormatException {
       throw Failure.fromMessage(message: _Exceptions.formatException);
+    } on TimeoutException {
+      throw Failure.fromMessage(message: _Exceptions.timeOutException);
     }
   }
 
@@ -104,12 +115,14 @@ class DefaultApiService extends ApiService {
   }) async {
     final parsedUrl = Uri.parse(url);
     final body = jsonEncode(bodyParameters);
-    final response = await http.put(parsedUrl,
-        headers: {
-          "Content-Type": "application/json",
-          ...?headers,
-        },
-        body: body);
+    final response = await http
+        .put(parsedUrl,
+            headers: {
+              "Content-Type": "application/json",
+              ...?headers,
+            },
+            body: body)
+        .timeout(const Duration(seconds: 20));
 
     try {
       if (response.statusCode.toString().contains('20')) {
@@ -128,6 +141,8 @@ class DefaultApiService extends ApiService {
       throw Failure.fromMessage(message: _Exceptions.httpException);
     } on FormatException {
       throw Failure.fromMessage(message: _Exceptions.formatException);
+    } on TimeoutException {
+      throw Failure.fromMessage(message: _Exceptions.timeOutException);
     }
   }
 }

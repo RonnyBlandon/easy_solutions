@@ -1,97 +1,56 @@
+import 'package:easy_solutions/src/base/Views/loading_view.dart';
+import 'package:easy_solutions/src/features/presentation/error_view/error_view.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/explore_tab/View/Components/explore_tab_content_view.dart';
+import 'package:easy_solutions/src/features/presentation/tabs/explore_tab/ViewModel/explore_tab_view_model.dart';
+import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_service.dart';
 import 'package:flutter/material.dart';
-// Widgets
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/button_categories.dart';
 
-class ExploreTab extends StatelessWidget {
+class ExploreTab extends StatefulWidget {
   const ExploreTab({super.key});
+
+  @override
+  State<ExploreTab> createState() => _ExploreTabState();
+}
+
+class _ExploreTabState extends State<ExploreTab> {
+  final ExploreTabViewModel viewModel;
+  _ExploreTabState({ExploreTabViewModel? exploreTabViewModel})
+      : viewModel = exploreTabViewModel ?? DefaultExploreTabViewModel();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Column(
-      children: [
-        headerText(text: '¿Qué necesitas?'),
-        Expanded(
-          child: CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    //_topBar(),
-                    const SizedBox(
-                      height: 5.0,
-                    ),
-                    const SizedBox(),
-                    _scrollCategories(context),
-                    //_sliderCards()
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ));
+        child: FutureBuilder(
+            future: viewModel.viewInitState(),
+            builder: (BuildContext context,
+                AsyncSnapshot<ExploreTabViewModelState> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const LoadingView();
+                case ConnectionState.done:
+                  //TODO: Gestionar error de geolocation con la feature de shipping addres
+                  if (snapshot.error ==
+                          GeoLocationFailureMessages
+                              .locationPermissionsDenied ||
+                      snapshot.error ==
+                          GeoLocationFailureMessages
+                              .locationPermissionsDeniedForever) {
+                    var errorView = ErrorView();
+                    errorView.isLocationDeniedError = true;
+                    return errorView;
+                  }
+                  switch (snapshot.data) {
+                    case ExploreTabViewModelState.viewLoadedState:
+                      return ExploreTabContentView(viewModel: viewModel);
+                    default:
+                      var variable = snapshot.data;
+                      print(
+                          "Este contiene variables en snapshot.data en explore_tab: $variable");
+                      return ErrorView();
+                  }
+                default:
+                  return const LoadingView();
+              }
+            }));
   }
-}
-
-Widget _scrollCategories(BuildContext context) {
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-    child: Column(
-      children: [
-        ButtonCategories(
-          onTap: () {
-            Navigator.pushNamed(context, 'restaurant_list');
-          },
-          text: 'RESTAURANTES',
-          assetsImage: 'assets/images/restaurant_categories.png',
-          decoration: TextDecoration.underline,
-          textColor: Colors.yellow,
-        ),
-        const SizedBox(height: 20.0),
-        ButtonCategories(
-          onTap: () {
-            Navigator.pushNamed(context, 'business_list');
-          },
-          text: 'SUPER MERCADOS',
-          assetsImage: 'assets/images/supermarket_categories.jpg',
-          decoration: TextDecoration.underline,
-          textColor: Colors.yellow,
-        ),
-        const SizedBox(height: 20.0),
-        ButtonCategories(
-          onTap: () {
-            Navigator.pushNamed(context, 'business_list');
-          },
-          text: 'FARMACIAS',
-          assetsImage: 'assets/images/pharmacy_categories.jpg',
-          decoration: TextDecoration.underline,
-          textColor: Colors.yellow,
-        ),
-        const SizedBox(height: 20.0),
-        ButtonCategories(
-          onTap: () {
-            Navigator.pushNamed(context, 'business_list');
-          },
-          text: 'FERRETERÍAS',
-          assetsImage: 'assets/images/hardware_store_categories.jpg',
-          decoration: TextDecoration.underline,
-          textColor: Colors.yellow,
-        ),
-        const SizedBox(height: 20.0),
-        ButtonCategories(
-          onTap: () {
-            Navigator.pushNamed(context, 'business_list');
-          },
-          text: 'FLORISTERÍAS',
-          assetsImage: 'assets/images/florist_categories.jpg',
-          decoration: TextDecoration.underline,
-          textColor: Colors.yellow,
-        ),
-        const SizedBox(height: 20.0)
-      ],
-    ),
-  );
 }

@@ -1,20 +1,25 @@
+import 'package:easy_solutions/src/base/Views/loading_view.dart';
+import 'package:easy_solutions/src/features/presentation/business_list_page/View/Components/business_list_content_view.dart';
+import 'package:easy_solutions/src/features/presentation/business_list_page/ViewModel/business_list_view_model.dart';
+import 'package:easy_solutions/src/features/presentation/error_view/error_view.dart';
+import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_service.dart';
 import 'package:flutter/material.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-//Styles
-import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
-//Extensions
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
 
 class BusinessListPage extends StatefulWidget {
-  const BusinessListPage({super.key});
+  final int typeBusinessId;
+  const BusinessListPage({super.key, required this.typeBusinessId});
 
   @override
   State<BusinessListPage> createState() => _BusinessListPageState();
 }
 
 class _BusinessListPageState extends State<BusinessListPage> {
+  final BusinessListViewModel viewModel;
+  _BusinessListPageState({BusinessListViewModel? restaurantListViewModel})
+      : viewModel = restaurantListViewModel ?? DefaultBusinessListViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,72 +42,36 @@ class _BusinessListPageState extends State<BusinessListPage> {
                 )),
           ])),
       body: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Elige el establecimiento:',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            _businessList(context),
-          ],
-        ),
+        child: FutureBuilder(
+            future:
+                viewModel.viewInitState(typeBusinessId: widget.typeBusinessId),
+            builder: (BuildContext context,
+                AsyncSnapshot<BusinessListViewModelState> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const LoadingView();
+                case ConnectionState.done:
+                  if (snapshot.error ==
+                          GeoLocationFailureMessages
+                              .locationPermissionsDenied ||
+                      snapshot.error ==
+                          GeoLocationFailureMessages
+                              .locationPermissionsDeniedForever) {
+                    var errorView = ErrorView();
+                    errorView.isLocationDeniedError = true;
+                    return errorView;
+                  }
+                  switch (snapshot.data) {
+                    case BusinessListViewModelState.viewLoadedState:
+                      return BusinessListContentView(viewModel: viewModel);
+                    default:
+                      return ErrorView();
+                  }
+                default:
+                  return const LoadingView();
+              }
+            }),
       ),
     );
   }
-}
-
-Widget _businessList(BuildContext context) {
-  return SizedBox(
-    height: screenHeight.getScreenHeight(context: context, multiplier: 0.84),
-    child: ListView.builder(
-      itemCount: 3,
-      itemBuilder: (BuildContext context, index) {
-        return _cardBusinnes(context);
-      },
-    ),
-  );
-}
-
-Widget _cardBusinnes(BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.pushNamed(context, 'product_categories');
-    },
-    child: Container(
-      padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.all(10.0),
-      decoration: createBoxDecorationWithShadows(
-          borderRadius: BorderRadius.circular(10.0)),
-      child: Row(
-        children: [
-          const Image(
-              width: 80.0,
-              height: 80.0,
-              image: AssetImage('assets/images/business/logo_business.png')),
-          const SizedBox(width: 10.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerText(
-                text: 'Jaguar King',
-                color: Colors.black,
-                fontsize: 18.0,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7.0),
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(30.0)),
-                child: headerText(
-                    text: 'Abierto', color: Colors.white, fontsize: 16.0),
-              )
-            ],
-          )
-        ],
-      ),
-    ),
-  );
 }

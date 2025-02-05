@@ -23,7 +23,7 @@ class DefaultGeolocationUseCase extends GeolocationUseCase {
       {GeolocationService? geolocationService,
       GeolocationHelpersService? geolocationHelpersService})
       : _geolocationService = geolocationService ??
-            DefaultGeolocationService(), // Producción: DefaultGeolocationService() Pruebas: MockSuccessGeolocationService
+            DefaultGeolocationService(), // Producción: DefaultGeolocationService() Pruebas: MockGeolocationService
         _geolocationHelpersService =
             geolocationHelpersService ?? DefaultGeolocationHelpersService();
 

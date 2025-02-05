@@ -37,7 +37,7 @@ class BusinessDetailDecodable {
   final double long;
   final String phoneNumber;
   final String zipCode;
-  final bool status;
+  final bool isActive;
   final bool isPopularThisWeek;
   final bool isNovelty;
   final bool hasFreeDelivery;
@@ -46,8 +46,8 @@ class BusinessDetailDecodable {
   final double averagePrice;
   final String averageDelivery;
   final String id;
-  final TypeBusiness typeBusiness;
-  final List<Image> images;
+  final TypeBusinessDetailDecodable typeBusiness;
+  final List<BusinessImage> businessImages;
 
   BusinessDetailDecodable({
     required this.address,
@@ -61,7 +61,7 @@ class BusinessDetailDecodable {
     required this.long,
     required this.phoneNumber,
     required this.zipCode,
-    required this.status,
+    required this.isActive,
     required this.isPopularThisWeek,
     required this.isNovelty,
     required this.hasFreeDelivery,
@@ -71,7 +71,7 @@ class BusinessDetailDecodable {
     required this.averageDelivery,
     required this.id,
     required this.typeBusiness,
-    required this.images,
+    required this.businessImages,
   });
 
   factory BusinessDetailDecodable.fromJson(String str) =>
@@ -92,7 +92,7 @@ class BusinessDetailDecodable {
         long: json["long"]?.toDouble(),
         phoneNumber: json["phone_number"],
         zipCode: json["zip_code"],
-        status: json["status"],
+        isActive: json["is_active"],
         isPopularThisWeek: json["is_popular_this_week"],
         isNovelty: json["is_novelty"],
         hasFreeDelivery: json["has_free_delivery"],
@@ -101,8 +101,10 @@ class BusinessDetailDecodable {
         averagePrice: json["average_price"]?.toDouble(),
         averageDelivery: json["average_delivery"],
         id: json["id"],
-        typeBusiness: TypeBusiness.fromMap(json["type_business"]),
-        images: List<Image>.from(json["images"].map((x) => Image.fromMap(x))),
+        typeBusiness:
+            TypeBusinessDetailDecodable.fromMap(json["type_business"]),
+        businessImages: List<BusinessImage>.from(
+            json["business_images"].map((x) => BusinessImage.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -117,7 +119,7 @@ class BusinessDetailDecodable {
         "long": long,
         "phone_number": phoneNumber,
         "zip_code": zipCode,
-        "status": status,
+        "is_active": isActive,
         "is_popular_this_week": isPopularThisWeek,
         "is_novelty": isNovelty,
         "has_free_delivery": hasFreeDelivery,
@@ -127,26 +129,28 @@ class BusinessDetailDecodable {
         "average_delivery": averageDelivery,
         "id": id,
         "type_business": typeBusiness.toMap(),
-        "images": List<dynamic>.from(images.map((x) => x.toMap())),
+        "business_images":
+            List<dynamic>.from(businessImages.map((x) => x.toMap())),
       };
 }
 
-class Image {
+class BusinessImage {
   final String imageUrl;
   final String imageType;
-  final String id;
+  final int id;
 
-  Image({
+  BusinessImage({
     required this.imageUrl,
     required this.imageType,
     required this.id,
   });
 
-  factory Image.fromJson(String str) => Image.fromMap(json.decode(str));
+  factory BusinessImage.fromJson(String str) =>
+      BusinessImage.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Image.fromMap(Map<String, dynamic> json) => Image(
+  factory BusinessImage.fromMap(Map<String, dynamic> json) => BusinessImage(
         imageUrl: json["image_url"],
         imageType: json["image_type"],
         id: json["id"],
@@ -159,27 +163,57 @@ class Image {
       };
 }
 
-class TypeBusiness {
-  final String name;
-  final int id;
-
-  TypeBusiness({
-    required this.name,
-    required this.id,
+class TypeBusinessListDecodable {
+  TypeBusinessListDecodable({
+    required this.typeBusinessList,
   });
-
-  factory TypeBusiness.fromJson(String str) =>
-      TypeBusiness.fromMap(json.decode(str));
+  List<TypeBusinessDetailDecodable>? typeBusinessList;
+  factory TypeBusinessListDecodable.fromJson(String str) =>
+      TypeBusinessListDecodable.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory TypeBusiness.fromMap(Map<String, dynamic> json) => TypeBusiness(
+  factory TypeBusinessListDecodable.fromMap(Map<String, dynamic> json) =>
+      TypeBusinessListDecodable(
+        typeBusinessList: json["type_business_list"] == null
+            ? null
+            : List<TypeBusinessDetailDecodable>.from(json["type_business_list"]
+                .map((x) => TypeBusinessDetailDecodable.fromMap(x))),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "type_business_list": typeBusinessList == null
+            ? null
+            : List<dynamic>.from(typeBusinessList!.map((x) => x.toMap())),
+      };
+}
+
+class TypeBusinessDetailDecodable {
+  final String name;
+  final String imageUrl;
+  final int id;
+
+  TypeBusinessDetailDecodable({
+    required this.name,
+    required this.imageUrl,
+    required this.id,
+  });
+
+  factory TypeBusinessDetailDecodable.fromJson(String str) =>
+      TypeBusinessDetailDecodable.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory TypeBusinessDetailDecodable.fromMap(Map<String, dynamic> json) =>
+      TypeBusinessDetailDecodable(
         name: json["name"],
+        imageUrl: json["image_url"],
         id: json["id"],
       );
 
   Map<String, dynamic> toMap() => {
         "name": name,
+        "image_url": imageUrl,
         "id": id,
       };
 }

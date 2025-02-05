@@ -1,4 +1,5 @@
 import 'package:easy_solutions/src/base/Views/loading_view.dart';
+import 'package:easy_solutions/src/features/presentation/error_view/error_view.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_list_page/View/Components/restaurant_list_content_view.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_list_page/ViewModel/restaurante_list_view_model.dart';
 import 'package:easy_solutions/src/services/GeolocationService/Service/geolocation_service.dart';
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
 
 class RestaurantListPage extends StatefulWidget {
-  const RestaurantListPage({super.key});
+  final int typeBusinessId;
+  const RestaurantListPage({super.key, required this.typeBusinessId});
 
   @override
   State<RestaurantListPage> createState() => _RestaurantListPageState();
@@ -42,7 +44,8 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           ])),
       body: Center(
           child: FutureBuilder(
-              future: viewModel.viewInitState(),
+              future: viewModel.viewInitState(
+                  typeBusinessId: widget.typeBusinessId),
               builder: (BuildContext context,
                   AsyncSnapshot<RestaurantListViewModelState> snapshot) {
                 switch (snapshot.connectionState) {
@@ -55,17 +58,15 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                         snapshot.error ==
                             GeoLocationFailureMessages
                                 .locationPermissionsDeniedForever) {
-                      //var errorView = const LoadingView();
-                      //errorView.isLocationDeniedError = true;
-                      return const LoadingView(); //errorView;  <---- Este es el bueno
+                      var errorView = ErrorView();
+                      errorView.isLocationDeniedError = true;
+                      return errorView;
                     }
                     switch (snapshot.data) {
                       case RestaurantListViewModelState.viewLoadedState:
                         return RestaurantListContentView(viewModel: viewModel);
                       default:
-                        var variable = snapshot.data;
-                        print("Esto contiene snapshot.data: $variable");
-                        return const LoadingView();
+                        return ErrorView();
                     }
                   default:
                     return const LoadingView();

@@ -88,7 +88,6 @@ class _WelcomePageState extends State<WelcomePage> with BaseView {
 extension UserActions on _WelcomePageState {
   _googleSignInTapped(BuildContext context) {
     viewModel.signInWithGoogle().then((result) {
-      print("Esto contiene result.status: ${result.status}");
       switch (result.status) {
         case ResultStatus.success:
           coordinator.showTabsPage(context: context);

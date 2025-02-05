@@ -7,6 +7,7 @@ import 'package:easy_solutions/src/services/GeolocationService/Interfaces/geoloc
 
 class DefaultBusinessManager extends BusinessManager {
   final String _businessListPath = "businesses/";
+  final String _typesBusinessPath = "businesses/types_business/";
   //final double _distanceRange = 10.0;
 
   // Dependencies
@@ -21,23 +22,27 @@ class DefaultBusinessManager extends BusinessManager {
             realtimeDataBaseService ?? DefaultRealtimeDatabaseService();
 
   @override
+  Future<TypeBusinessListDecodable> fetchTypeBusinessList() async {
+    try {
+      final response =
+          await _realtimeDatabaseService.getData(path: _typesBusinessPath);
+      TypeBusinessListDecodable decodable =
+          _mapToTypeBusinessListDecodable(response: response);
+      return decodable;
+    } on Failure catch (f) {
+      return Future.error(f);
+    }
+  }
+
+  @override
   Future<BusinessListDecodable> fetchBusinessList() async {
     try {
-      print("Este es una prueba de print en fetchBusinessList");
       final response =
           await _realtimeDatabaseService.getData(path: _businessListPath);
-      print("Esto contiene response en fetchBusinessList: $response");
       BusinessListDecodable decodable =
           _mapToBusinessListDecodable(response: response);
-      var decodable_debug = decodable.businessList;
-      print(
-          "Esto contiene decodable_debug en fetchBusinessList: $decodable_debug");
       decodable.businessList = _mapMunicipalityBusinessList(
           businessList: decodable.businessList ?? [], municipalityId: 1);
-      decodable_debug = decodable.businessList;
-      print(
-          "Esto contiene decodable_debug en fetchBusinessList: $decodable_debug");
-      print("Esto se imprime antes de retornar decodable en fetchBusinessList");
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -64,11 +69,7 @@ class DefaultBusinessManager extends BusinessManager {
   Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
       {required int typeBusinessId}) async {
     try {
-      print(
-          "Este es el primer print de prueba en fetchBusinessListByTypeBusiness:");
       final fullBusinessList = await fetchBusinessList();
-      print(
-          "Esto contiene fullBusinessList en fetchBusinessListByTypeBusiness: $fullBusinessList");
       fullBusinessList.businessList = _mapBusinessListByTypeBusiness(
           businessList: fullBusinessList.businessList ?? [],
           typeBusinessId: typeBusinessId);
@@ -100,13 +101,22 @@ class DefaultBusinessManager extends BusinessManager {
 }
 
 extension Mappers on DefaultBusinessManager {
+  TypeBusinessListDecodable _mapToTypeBusinessListDecodable(
+      {required List<dynamic> response}) {
+    List<TypeBusinessDetailDecodable>? typeBusinessList = [];
+    response.forEach((value) {
+      typeBusinessList.add(TypeBusinessDetailDecodable.fromMap(value));
+    });
+
+    return TypeBusinessListDecodable(typeBusinessList: typeBusinessList);
+  }
+
   BusinessListDecodable _mapToBusinessListDecodable(
       {required List<dynamic> response}) {
     List<BusinessDetailDecodable>? businessList = [];
     response.forEach((value) {
       businessList.add(BusinessDetailDecodable.fromMap(value));
     });
-
     return BusinessListDecodable(businessList: businessList);
   }
 

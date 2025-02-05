@@ -1,5 +1,5 @@
 abstract class BaseRealtimeDatabaseService {
-  String baseUrl = "http://192.168.0.4:8000/";
+  String baseUrl = "http://192.168.0.3:8000/";
 }
 
 abstract class RealtimeDatabaseService extends BaseRealtimeDatabaseService {

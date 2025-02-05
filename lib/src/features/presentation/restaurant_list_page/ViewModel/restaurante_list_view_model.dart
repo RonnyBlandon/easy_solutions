@@ -4,13 +4,14 @@ import 'package:easy_solutions/src/features/Domain/UseCases/Categories/categorie
 
 enum RestaurantListViewModelState { viewLoadedState, errorState }
 
-abstract class RestaurantViewModelInput {
-  Future<RestaurantListViewModelState> viewInitState();
+abstract class RestaurantListViewModelInput {
+  Future<RestaurantListViewModelState> viewInitState(
+      {required int typeBusinessId});
   List<BusinessDetailEntity> restaurantList = [];
 }
 
 // Crear ViewModel
-abstract class RestaurantListViewModel extends RestaurantViewModelInput {}
+abstract class RestaurantListViewModel extends RestaurantListViewModelInput {}
 
 class DefaultRestaurantListViewModel extends RestaurantListViewModel {
   final BusinessListUseCase _businessListUseCase;
@@ -22,15 +23,15 @@ class DefaultRestaurantListViewModel extends RestaurantListViewModel {
             businessListUseCase ?? DefaultBusinessListUseCase();
 
   @override
-  Future<RestaurantListViewModelState> viewInitState() async {
+  Future<RestaurantListViewModelState> viewInitState(
+      {required int typeBusinessId}) async {
     final restaurantListResult = await _businessListUseCase
-        .fetchBusinessListByTypeBusiness(typeBusinessId: 1);
+        .fetchBusinessListByTypeBusiness(typeBusinessId: typeBusinessId);
     if (restaurantListResult.businessList == null) {
       throw Exception("Lista de restaurantes no válida.");
     }
 
     restaurantList = restaurantListResult.businessList ?? [];
-    print("Esto contiene restaurantList en viewInitState: $restaurantList");
     if (restaurantList.isNotEmpty) {
       return RestaurantListViewModelState.viewLoadedState;
     } else {

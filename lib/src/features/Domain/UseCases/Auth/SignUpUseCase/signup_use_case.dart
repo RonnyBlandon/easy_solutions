@@ -72,10 +72,8 @@ extension on DefaultSignUpUseCase {
         municipalityId: params.municipalityId,
         startDate: DateHelpers.getStartDate(),
         accessToken: entity.accessToken);
-    print("Esto contiene parameters: ${parameters.toMap()}");
 
     return _saveUserDataUseCase.execute(parameters: parameters).then((result) {
-      print("Esto contiene result en _saveUserDataUseCase: ${result.error}");
       switch (result.status) {
         case ResultStatus.success:
           return Result.success(entity);

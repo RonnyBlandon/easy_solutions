@@ -59,7 +59,7 @@ class ServicesPage extends StatelessWidget {
                           Navigator.pushNamed(context, 'tabs');
                         },
                         text: 'ENTREGA A DOMICILIO',
-                        assetsImage: 'assets/images/delivery_service.jpg',
+                        networkImage: 'assets/images/delivery_service.jpg',
                         height: 220.0,
                         marginBottom: 20.0,
                         fontSize: 28.0,

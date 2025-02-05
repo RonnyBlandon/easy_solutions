@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import '../ViewModel/forgot_password_view_model.dart';
 
 class ForgotPassword extends StatefulWidget {
-  ForgotPassword({super.key});
+  const ForgotPassword({super.key});
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();

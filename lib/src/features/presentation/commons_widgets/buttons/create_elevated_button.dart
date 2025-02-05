@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 Widget createElevatedButton(
-    {double width = 300.0,
+    {BuildContext? context,
+    double width = 300.0,
     double height = 40.0,
     double radius = 20.0,
     double fontSize = 16.0,

@@ -1,9 +1,9 @@
-import 'package:easy_solutions/src/features/Domain/Entities/Categories/category_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Categories/categories_entity.dart';
 import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Categories/categories_repository.dart';
 
 abstract class FetchCategoryUseCase {
-  Future<CategoriesEntity> execute();
+  Future<BusinessCategoryListEntity> execute({required String businessId});
 }
 
 class DefaultFetchCategoryUseCase extends FetchCategoryUseCase {
@@ -15,8 +15,10 @@ class DefaultFetchCategoryUseCase extends FetchCategoryUseCase {
             categoriesRepository ?? DefaultCategoriesRepository();
 
   @override
-  Future<CategoriesEntity> execute() async {
-    final decodable = await _categoriesRepository.fetchCategories();
-    return CategoriesEntity.fromMap(decodable.toMap());
+  Future<BusinessCategoryListEntity> execute(
+      {required String businessId}) async {
+    final decodable =
+        await _categoriesRepository.fetchCategories(businessId: businessId);
+    return BusinessCategoryListEntity.fromMap(decodable.toMap());
   }
 }

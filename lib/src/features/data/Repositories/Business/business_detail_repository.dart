@@ -1,26 +1,24 @@
-import 'package:easy_solutions/src/features/data/Decodables/CategoriesDecodable/categories_decodable.dart';
 import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
+import 'package:easy_solutions/src/managers/businessManager/Decodables/business_list_decodable.dart';
 import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Interfaces/interface.dart';
 import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabaseService/Services/realtime_database_service.dart';
 
-class DefaultCategoriesRepository extends CategoriesRepository {
-  final String _path = "categories";
+class DefaultBusinessDetailRepository extends BusinessDetailRepository {
+  final String _path = "businesses/";
 
   //Dependencias
   final RealtimeDatabaseService _realtimeDatabaseService;
 
-  DefaultCategoriesRepository(
+  DefaultBusinessDetailRepository(
       {RealtimeDatabaseService? realtimeDatabaseService})
       : _realtimeDatabaseService =
             realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
 
   @override
-  Future<BusinessCategoryListDecodable> fetchCategories(
+  Future<BusinessDetailDecodable> fetchBusinessDetailById(
       {required String businessId}) async {
-    String path = "$_path/$businessId/";
+    String path = _path + businessId;
     final response = await _realtimeDatabaseService.getData(path: path);
-    BusinessCategoryListDecodable decodable =
-        BusinessCategoryListDecodable.fromMap(response);
-    return decodable;
+    return BusinessDetailDecodable.fromMap(response);
   }
 }

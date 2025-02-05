@@ -44,4 +44,9 @@ class DefaultBusinessListRepository extends BusinessListRepository {
   Future<BusinessListDecodable> fetchPopularBusinessList() {
     return _businessManager.fetchPopularBusinessList();
   }
+
+  @override
+  Future<TypeBusinessListDecodable> fetchTypeBusinessList() {
+    return _businessManager.fetchTypeBusinessList();
+  }
 }

@@ -3,6 +3,7 @@ import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Business/business_list_repository.dart';
 
 abstract class BusinessListUseCase {
+  Future<TypeBusinessListEntity> fetchTypeBusinessList();
   Future<BusinessListEntity> fetchBusinessList();
   Future<BusinessListEntity> fetchNoveltyBusinessList();
   Future<BusinessListEntity> fetchPopularBusinessList();
@@ -20,6 +21,13 @@ class DefaultBusinessListUseCase extends BusinessListUseCase {
   DefaultBusinessListUseCase({BusinessListRepository? businessListRepository})
       : _businessListRepository =
             businessListRepository ?? DefaultBusinessListRepository();
+
+  @override
+  Future<TypeBusinessListEntity> fetchTypeBusinessList() async {
+    final typeBusinessListDecodable =
+        await _businessListRepository.fetchTypeBusinessList();
+    return TypeBusinessListEntity.fromMap(typeBusinessListDecodable.toMap());
+  }
 
   @override
   Future<BusinessListEntity> fetchBusinessList() async {

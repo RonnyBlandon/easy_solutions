@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ButtonCategories extends StatelessWidget {
   final void Function()? onTap;
   final String text;
-  final String assetsImage;
+  final String networkImage;
   final double height;
   final double fontSize;
   final double marginBottom;
@@ -16,7 +16,7 @@ class ButtonCategories extends StatelessWidget {
       {super.key,
       this.onTap,
       required this.text,
-      required this.assetsImage,
+      required this.networkImage,
       this.height = 180.0,
       this.fontSize = 26.0,
       this.marginBottom = 15.0,
@@ -36,7 +36,7 @@ class ButtonCategories extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.0),
               image: DecorationImage(
-                  fit: BoxFit.cover, image: AssetImage(assetsImage))),
+                  fit: BoxFit.cover, image: NetworkImage(networkImage))),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             margin: EdgeInsets.only(bottom: marginBottom),
