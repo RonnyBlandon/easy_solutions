@@ -73,11 +73,19 @@ class FieldsProfileDetailView extends StatelessWidget
     switch (customTextFormFieldType) {
       case CustomTextFormFieldType.username:
         delegate?.userDataChanged(
-          newUser: userData?.copyWith(fullName: newValue),
+          newUser: userData?.copyWith(
+            fullName: newValue,
+            phone: userData?.phone,
+          ),
         );
         break;
       case CustomTextFormFieldType.phone:
-        delegate?.userDataChanged(newUser: userData?.copyWith(phone: newValue));
+        delegate?.userDataChanged(
+          newUser: userData?.copyWith(
+            fullName: userData?.fullName,
+            phone: newValue,
+          ),
+        );
         break;
       default:
         break;

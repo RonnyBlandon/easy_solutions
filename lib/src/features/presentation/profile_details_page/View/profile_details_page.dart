@@ -40,13 +40,11 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: headerText(text: 'Editar Perfil', fontsize: 18.0),
+        title: headerText(text: 'Perfil', fontsize: 18.0),
         centerTitle: true,
         actions: [
           GestureDetector(
-            onTap: () {
-              updateUserData();
-            },
+            onTap: updateUserData,
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
               child: headerText(
@@ -121,10 +119,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
               (context).setLoadingState(isLoading: false);
               (context).showErrorAlert(
                 context: context,
-                message:
-                    e.toString().isNotEmpty
-                        ? e.toString()
-                        : AppFailureMessages.unExpectedErrorMessage,
+                message: AppFailureMessages.unExpectedErrorMessage,
               );
             });
           },
