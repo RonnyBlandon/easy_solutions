@@ -21,29 +21,42 @@ class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
   final SaveLocalStorageUseCase _saveLocalStorageUseCase;
   final SaveUserDataUseCase _saveUserDataUseCase;
 
-  DefaultGoogleSignInUseCase(
-      {GoogleSignInService? googleSignInService,
-      SaveLocalStorageUseCase? saveLocalStorageUseCase,
-      SaveUserDataUseCase? saveUserDataUseCase})
-      : _googleSignInService =
-            googleSignInService ?? DefaultGoogleSignInService(),
-        _saveLocalStorageUseCase =
-            saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase(),
-        _saveUserDataUseCase =
-            saveUserDataUseCase ?? DefaultSaveUserDataUseCase();
+  DefaultGoogleSignInUseCase({
+    GoogleSignInService? googleSignInService,
+    SaveLocalStorageUseCase? saveLocalStorageUseCase,
+    SaveUserDataUseCase? saveUserDataUseCase,
+  }) : _googleSignInService =
+           googleSignInService ?? DefaultGoogleSignInService(),
+       _saveLocalStorageUseCase =
+           saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase(),
+       _saveUserDataUseCase =
+           saveUserDataUseCase ?? DefaultSaveUserDataUseCase();
 
   @override
   Future<Result<UserEntity, Failure>> execute() async {
     // Hacer el Google SignIn
     final user = await _googleSignInService.signInWithGoogle();
-
     // Mantener la sesión del usuario
     _saveLocalStorageUseCase.execute(
-        parameters: SaveLocalStorageParameters(
-            key: LocalStorageKeys.accessToken, value: user.accessToken ?? ""));
+      parameters: SaveLocalStorageParameters(
+        key: LocalStorageKeys.localId,
+        value: user.localId ?? "",
+      ),
+    );
+    _saveLocalStorageUseCase.execute(
+      parameters: SaveLocalStorageParameters(
+        key: LocalStorageKeys.accessToken,
+        value: user.accessToken ?? "",
+      ),
+    );
+    _saveLocalStorageUseCase.execute(
+      parameters: SaveLocalStorageParameters(
+        key: LocalStorageKeys.refreshToken,
+        value: user.refreshToken ?? "",
+      ),
+    );
 
-    final isUserInDatabase =
-        await _googleSignInService.isUserInDatabase(uid: user.localId ?? "");
+    final isUserInDatabase = await _googleSignInService.isUserInDatabase();
     if (isUserInDatabase) {
       return Result.success(_mapUserEntity(user: user));
     } else {
@@ -55,27 +68,30 @@ class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
 extension Mapper on DefaultGoogleSignInUseCase {
   UserEntity _mapUserEntity({required GoogleSignInUserEntity user}) {
     return UserEntity(
-        localId: user.localId,
-        role: UserRole.user.toShortString(),
-        fullName: user.fullName,
-        email: user.email,
-        phone: user.phone,
-        startDate: DateHelpers.getStartDate(),
-        accessToken: user.accessToken);
+      localId: user.localId,
+      roles: user.roles,
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phoneNumber,
+      startDate: DateHelpers.getStartDate(),
+      accessToken: user.accessToken,
+    );
   }
 }
 
 extension PrivateMethods on DefaultGoogleSignInUseCase {
-  Future<Result<UserEntity, Failure>> _saveUserDataInDataBase(
-      {required GoogleSignInUserEntity user}) {
+  Future<Result<UserEntity, Failure>> _saveUserDataInDataBase({
+    required GoogleSignInUserEntity user,
+  }) {
     SaveUserDataUseCaseParameters parameters = SaveUserDataUseCaseParameters(
-        localId: user.localId,
-        role: UserRole.user,
-        fullName: user.fullName,
-        email: user.email,
-        phone: user.phone,
-        startDate: DateHelpers.getStartDate(),
-        accessToken: user.accessToken);
+      localId: user.localId,
+      roles: user.roles,
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phoneNumber,
+      startDate: DateHelpers.getStartDate(),
+      accessToken: user.accessToken,
+    );
 
     return _saveUserDataUseCase.execute(parameters: parameters);
   }

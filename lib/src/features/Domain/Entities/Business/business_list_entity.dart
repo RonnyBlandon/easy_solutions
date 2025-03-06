@@ -12,14 +12,14 @@ class BusinessListEntity {
 
   factory BusinessListEntity.fromMap(Map<String, dynamic> json) =>
       BusinessListEntity(
-        businessList: json["businessList"] == null
+        businessList: json["business_list"] == null
             ? null
-            : List<BusinessDetailEntity>.from(json["businessList"]
+            : List<BusinessDetailEntity>.from(json["business_list"]
                 .map((x) => BusinessDetailEntity.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "businessList": businessList == null
+        "business_list": businessList == null
             ? null
             : List<dynamic>.from(businessList!.map((x) => x.toMap())),
       };
@@ -46,6 +46,7 @@ class BusinessDetailEntity {
   final double averagePrice;
   final String averageDelivery;
   final String id;
+  bool? isFavorite;
   final TypeBusinessDetailEntity typeBusiness;
   final List<BusinessImageEntity> businessImages;
 
@@ -70,6 +71,7 @@ class BusinessDetailEntity {
     required this.averagePrice,
     required this.averageDelivery,
     required this.id,
+    required this.isFavorite,
     required this.typeBusiness,
     required this.businessImages,
   });
@@ -101,6 +103,7 @@ class BusinessDetailEntity {
         averagePrice: json["average_price"]?.toDouble(),
         averageDelivery: json["average_delivery"],
         id: json["id"],
+        isFavorite: json["is_favorite"],
         typeBusiness: TypeBusinessDetailEntity.fromMap(json["type_business"]),
         businessImages: List<BusinessImageEntity>.from(
             json["business_images"].map((x) => BusinessImageEntity.fromMap(x))),
@@ -127,6 +130,7 @@ class BusinessDetailEntity {
         "average_price": averagePrice,
         "average_delivery": averageDelivery,
         "id": id,
+        "is_favorite": isFavorite,
         "type_business": typeBusiness.toMap(),
         "business_images":
             List<dynamic>.from(businessImages.map((x) => x.toMap())),

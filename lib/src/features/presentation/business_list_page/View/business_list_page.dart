@@ -74,6 +74,7 @@ class _BusinessListPageState extends State<BusinessListPage> {
                     case BusinessListViewModelState.viewLoadedState:
                       return BusinessListContentView(viewModel: viewModel);
                     default:
+                    print("Esto tiene snapshot.error en buisness_list_page: ${snapshot.error}");
                       return ErrorView(
                         onButtonPressed: () {
                           MainCoordinator().showTabsPage(context: context);

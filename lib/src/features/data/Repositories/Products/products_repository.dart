@@ -17,7 +17,7 @@ class DefaultProductRepository extends ProductRepository {
       {required List<String> productIds}) async {
     String path = "$_path/search_by_ids/";
     final response = await _realtimeDatabaseService
-        .postData(path: path, bodyParameters: {"product_ids": productIds});
+        .postData(path: path, bodyParameters: {"product_ids": productIds}, requiresAuth: true);
     ProductListDecodable decodable = ProductListDecodable.fromMap(response);
     return decodable;
   }
@@ -26,7 +26,7 @@ class DefaultProductRepository extends ProductRepository {
   Future<ProductListDecodable> fetchProductListByQuery(
       {required String businessId, required String query}) async {
     String path = "$_path/search?business_id=$businessId&query=$query";
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: true);
     ProductListDecodable decodable = ProductListDecodable.fromMap(response);
     return decodable;
   }

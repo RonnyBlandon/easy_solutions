@@ -1,4 +1,6 @@
 class LocalStorageKeys {
-  static String accessToken = "accessToken";
-  static String recentSearches = "recentSearches";
+  static const String localId = "localId";
+  static const String accessToken = "accessToken";
+  static const String refreshToken = "refreshToken";
+  static const String recentSearches = "recentSearches";
 }

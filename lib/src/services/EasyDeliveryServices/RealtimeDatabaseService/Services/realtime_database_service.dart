@@ -9,11 +9,11 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
       : _apiService = apiService ?? DefaultApiService();
 
   @override
-  Future<dynamic> getData({required String path}) async {
+  Future<Map<String, dynamic>> getData({required String path, required bool requiresAuth}) async {
     var endpoint = baseUrl + path;
 
     try {
-      final result = await _apiService.getDataFromGetRequest(url: endpoint);
+      final result = await _apiService.getDataFromGetRequest(url: endpoint, requiresAuth: requiresAuth);
       return result;
     } on Failure catch (f) {
       return f.error;
@@ -23,11 +23,11 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
   @override
   Future<Map<String, dynamic>> postData(
       {required Map<String, dynamic> bodyParameters,
-      required String path}) async {
+      required String path, required bool requiresAuth}) async {
     var endpoint = baseUrl + path;
     try {
       final result = await _apiService.getDataFromPostRequest(
-          bodyParameters: bodyParameters, url: endpoint);
+          bodyParameters: bodyParameters, url: endpoint, requiresAuth: requiresAuth);
       return result;
     } on Failure catch (f) {
       return f.error;
@@ -37,12 +37,24 @@ class DefaultRealtimeDatabaseService extends RealtimeDatabaseService {
   @override
   Future<Map<String, dynamic>> putData(
       {required Map<String, dynamic> bodyParameters,
-      required String path}) async {
+      required String path, required bool requiresAuth}) async {
     var endpoint = baseUrl + path;
 
     try {
       final result = await _apiService.getDataFromPutRequest(
-          bodyParameters: bodyParameters, url: endpoint);
+          bodyParameters: bodyParameters, url: endpoint, requiresAuth: requiresAuth);
+      return result;
+    } on Failure catch (f) {
+      return f.error;
+    }
+  }
+  
+  @override
+  Future<Map<String, dynamic>> deleteData({required String path, required bool requiresAuth}) async {
+    var endpoint = baseUrl + path;
+
+    try {
+      final result = await _apiService.getDataFromDeleteRequest(url: endpoint, requiresAuth: requiresAuth);
       return result;
     } on Failure catch (f) {
       return f.error;

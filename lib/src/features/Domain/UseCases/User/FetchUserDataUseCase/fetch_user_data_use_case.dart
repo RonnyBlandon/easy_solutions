@@ -6,32 +6,37 @@ import 'package:easy_solutions/src/features/data/Repositories/User/fetch_user_da
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 abstract class FetchUserDataUseCase {
-  Future<Result<UserEntity, Failure>> execute({required String localId});
+  Future<UserEntity> execute();
 }
 
 class DefaultFetchUserDataUseCase extends FetchUserDataUseCase {
   // Dependencias
   final FetchUserDataRepository _fetchUserDataRepository;
 
-  DefaultFetchUserDataUseCase(
-      {FetchUserDataRepository? fetchUserDataRepository})
-      : _fetchUserDataRepository =
-            fetchUserDataRepository ?? DefaultFetchUserDataRepository();
+  DefaultFetchUserDataUseCase({
+    FetchUserDataRepository? fetchUserDataRepository,
+  }) : _fetchUserDataRepository =
+           fetchUserDataRepository ?? DefaultFetchUserDataRepository();
 
   @override
-  Future<Result<UserEntity, Failure>> execute({required String localId}) {
-    return _fetchUserDataRepository
-        .fetchUserData(localId: localId)
-        .then((result) {
+  Future<UserEntity> execute() {
+    return _fetchUserDataRepository.fetchUserData().then((result) {
       switch (result.status) {
         case ResultStatus.success:
           if (result.value == null) {
-            return Result.failure(Failure.fromMessage(
-                message: AppFailureMessages.unExpectedErrorMessage));
+            return Future.error(
+              Failure.fromMessage(
+                message: AppFailureMessages.unExpectedErrorMessage,
+              ),
+            );
           }
-          return Result.success(UserEntity.fromMap(result.value!.toMap()));
+          return UserEntity.fromMap(result.value!.toMap());
         case ResultStatus.error:
-          return Result.failure(result.error);
+          return Future.error(
+            Failure.fromMessage(
+              message: AppFailureMessages.unExpectedErrorMessage,
+            ),
+          );
       }
     });
   }

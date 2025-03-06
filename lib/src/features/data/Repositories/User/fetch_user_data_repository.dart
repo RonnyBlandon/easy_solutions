@@ -13,18 +13,18 @@ class DefaultFetchUserDataRepository extends FetchUserDataRepository {
   // Dependencias
   final RealtimeDatabaseService _realtimeDatabaseService;
 
-  DefaultFetchUserDataRepository(
-      {RealtimeDatabaseService? realtimeDatabaseService})
-      : _realtimeDatabaseService =
-            realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+  DefaultFetchUserDataRepository({
+    RealtimeDatabaseService? realtimeDatabaseService,
+  }) : _realtimeDatabaseService =
+           realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
 
   @override
-  Future<Result<UserDecodable, Failure>> fetchUserData(
-      {required String localId}) async {
-    var fullpath = path + localId;
-
+  Future<Result<UserDecodable, Failure>> fetchUserData() async {
     try {
-      final result = await _realtimeDatabaseService.getData(path: fullpath);
+      final result = await _realtimeDatabaseService.getData(
+        path: path,
+        requiresAuth: true,
+      );
       UserDecodable decodable = UserDecodable.fromMap(result);
       return Result.success(decodable);
     } on Failure catch (f) {

@@ -1,4 +1,4 @@
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/data/Interfaces/interfaces.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Products/products_repository.dart';
 

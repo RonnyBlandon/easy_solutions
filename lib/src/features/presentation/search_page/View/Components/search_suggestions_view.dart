@@ -1,5 +1,5 @@
 import 'package:easy_solutions/src/base/Views/base_view.dart';
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/texts/DoubleTextView/View/double_text_view.dart';
 import 'package:easy_solutions/src/features/presentation/error_view/error_view.dart';

@@ -1,7 +1,7 @@
 import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Categories/categories_entity.dart';
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/MainCoordinator/main_coordinator.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';

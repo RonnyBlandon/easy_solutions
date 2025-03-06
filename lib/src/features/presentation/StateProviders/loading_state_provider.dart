@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class LoadingStateProviderDelegate {
   bool isLoading = false;
@@ -15,4 +16,14 @@ class LoadingStateProvider extends ChangeNotifier
     this.isLoading = isLoading;
     notifyListeners();
   }
+}
+
+extension LoadingStateProviderExtension on BuildContext {
+  setLoadingState({required bool isLoading}) =>
+      Provider.of<LoadingStateProvider>(
+        this,
+        listen: false,
+      ).setLoadingState(isLoading: isLoading);
+  isLoading() =>
+      Provider.of<LoadingStateProvider>(this, listen: false).isLoading;
 }

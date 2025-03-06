@@ -1,4 +1,4 @@
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/carousel/product_list_carousel.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
 import 'package:flutter/material.dart';

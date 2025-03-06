@@ -51,7 +51,7 @@ class _BusinessCategoryPageState extends State<BusinessCategoryPage> {
           actions: [searchProduct(context: context, businessId: widget.businessId)],
         ),
         body: FutureBuilder(
-          future: _future, // 🔹 Usamos el Future almacenado
+          future: _future, // Usamos el Future almacenado
           builder: (BuildContext context,
               AsyncSnapshot<BusinessCategoryViewModelState> snapshot) {
             switch (snapshot.connectionState) {

@@ -1,4 +1,6 @@
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/colors/colors.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
 import 'package:flutter/material.dart';
 //Extension
 import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
@@ -26,34 +28,43 @@ class _BusinessProductPageState extends State<BusinessProductPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: backButton(context, Colors.black),
-          title:
-              headerText(text: widget.productDetailEntity.name, fontsize: 18.0),
+          title: headerText(
+            text: widget.productDetailEntity.name,
+            fontsize: 18.0,
+          ),
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'shopping_cart');
-                },
-                color: Colors.black,
-                icon: const Icon(Icons.shopping_cart))
+              onPressed: () {
+                Navigator.pushNamed(context, 'shopping_cart');
+              },
+              color: Colors.black,
+              icon: const Icon(Icons.shopping_cart),
+            ),
           ],
         ),
-        body: CustomScrollView(slivers: [
-          SliverList(
+        body: CustomScrollView(
+          slivers: [
+            SliverList(
               delegate: SliverChildListDelegate([
-            _productImage(context, widget.productDetailEntity.productImageUrl),
-            Container(
-                color: Colors.white,
-                child: _productInfoContainer(
-                  productName: widget.productDetailEntity.name,
-                  productDescription: widget.productDetailEntity.description,
-                  productPrice: widget.productDetailEntity.price,
-                  productDiscount: widget.productDetailEntity.discount,
-                )),
-            _productOptions(context, widget.productDetailEntity.options)
-          ]))
-        ]),
-        bottomNavigationBar:
-            _addCart(context, widget.productDetailEntity.price),
+                _productImage(
+                  context,
+                  widget.productDetailEntity.productImageUrl,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: _productInfoContainer(
+                    product: widget.productDetailEntity,
+                  ),
+                ),
+                _productOptions(context, widget.productDetailEntity.options),
+              ]),
+            ),
+          ],
+        ),
+        bottomNavigationBar: _addCart(
+          context,
+          widget.productDetailEntity.price,
+        ),
       ),
     );
   }
@@ -69,11 +80,14 @@ extension PrivateMethods on _BusinessProductPageState {
             SizedBox(
               width: double.infinity,
               height: screenHeight.getScreenHeight(
-                  context: context, multiplier: 0.35),
+                context: context,
+                multiplier: 0.35,
+              ),
               child: AnotherCarousel(
-                  dotSize: 4.0,
-                  indicatorBgPadding: 3.0,
-                  images: [NetworkImage(imageUrl)]),
+                dotSize: 4.0,
+                indicatorBgPadding: 3.0,
+                images: [NetworkImage(imageUrl)],
+              ),
             ),
           ],
         ),
@@ -81,27 +95,27 @@ extension PrivateMethods on _BusinessProductPageState {
     );
   }
 
-  Widget _productInfoContainer(
-      {required String productName,
-      required String productDescription,
-      required double productPrice,
-      required double productDiscount}) {
+  Widget _productInfoContainer({required ProductDetailEntity product}) {
     return Padding(
       padding: const EdgeInsets.only(
-          top: 12.0, left: 15.0, bottom: 15.0, right: 15.0),
+        top: 12.0,
+        left: 15.0,
+        bottom: 15.0,
+        right: 15.0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          headerText(text: productName, fontsize: 21.0),
+          headerText(text: product.name, fontsize: 21.0),
           const SizedBox(height: 5.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (productDiscount > 0)
+              if (product.discount > 0)
                 Row(
                   children: [
                     Text(
-                      "L ${productPrice.toStringAsFixed(2)}",
+                      "L ${product.price.toStringAsFixed(2)}",
                       style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -112,7 +126,7 @@ extension PrivateMethods on _BusinessProductPageState {
                     ),
                     const SizedBox(width: 5.0),
                     Text(
-                      "L ${(productPrice - productDiscount).toStringAsFixed(2)}",
+                      "L ${(product.price - product.discount).toStringAsFixed(2)}",
                       style: const TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -123,26 +137,42 @@ extension PrivateMethods on _BusinessProductPageState {
                 )
               else
                 headerText(
-                    text: "L ${productPrice.toStringAsFixed(2)}",
-                    color: Colors.green,
-                    fontsize: 24.0),
+                  text: "L ${product.price.toStringAsFixed(2)}",
+                  color: Colors.green,
+                  fontsize: 24.0,
+                ),
               IconButton(
-                  onPressed: () {},
-                  iconSize: 30.0,
-                  icon: const Icon(Icons.favorite_border))
+                onPressed: () {
+                  setState(() {
+                    product.isFavorite = !(product.isFavorite ?? true);
+                    (context).favouriteProductIconTapped(
+                      product.isFavorite ?? true,
+                      product.id,
+                    );
+                  });
+                },
+                iconSize: 30.0,
+                icon: Icon(
+                  product.isFavorite ?? true
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: product.isFavorite ?? true ? red : black,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 10.0),
           headerText(
-              text: 'Descripción y Especificaciones',
-              color: Colors.black,
-              fontsize: 20.0,
-              fontWeight: FontWeight.w500),
+            text: 'Descripción y Especificaciones',
+            color: Colors.black,
+            fontsize: 20.0,
+            fontWeight: FontWeight.w500,
+          ),
           const SizedBox(height: 2.0),
           headerText(text: '-', fontWeight: FontWeight.w400),
           const SizedBox(height: 2.0),
           headerText(
-            text: productDescription,
+            text: product.description,
             fontsize: 16.0,
             fontWeight: FontWeight.w400,
             textAling: TextAlign.start,
@@ -157,21 +187,27 @@ extension PrivateMethods on _BusinessProductPageState {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(
-          top: 5.0, right: 10.0, bottom: 10.0, left: 10.0),
+        top: 5.0,
+        right: 10.0,
+        bottom: 10.0,
+        left: 10.0,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
               headerText(
-                  text: "Tu pedido",
-                  fontsize: 20.0,
-                  fontWeight: FontWeight.w600),
+                text: "Tu pedido",
+                fontsize: 20.0,
+                fontWeight: FontWeight.w600,
+              ),
               const Spacer(),
               headerText(
-                  text: "L ${totalPrice.toStringAsFixed(2)}",
-                  fontsize: 20.0,
-                  fontWeight: FontWeight.w600),
+                text: "L ${totalPrice.toStringAsFixed(2)}",
+                fontsize: 20.0,
+                fontWeight: FontWeight.w600,
+              ),
             ],
           ),
           Row(
@@ -179,26 +215,32 @@ extension PrivateMethods on _BusinessProductPageState {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10.0)),
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: Row(
                   children: [
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.remove)),
+                      onPressed: () {},
+                      icon: const Icon(Icons.remove),
+                    ),
                     headerText(text: ' 1 ', fontsize: 16.0),
                     IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
                   ],
                 ),
               ),
               createElevatedButton(
-                  onPressed: () {},
-                  width: screenWidth.getScreenWidth(
-                      context: context, multiplier: 0.5),
-                  height: 49.0,
-                  radius: 10.0,
-                  backgroundColor: Colors.blue,
-                  labelButton: 'Agregar',
-                  fontSize: 18.0),
+                onPressed: () {},
+                width: screenWidth.getScreenWidth(
+                  context: context,
+                  multiplier: 0.5,
+                ),
+                height: 49.0,
+                radius: 10.0,
+                backgroundColor: Colors.blue,
+                labelButton: 'Agregar',
+                fontSize: 18.0,
+              ),
             ],
           ),
         ],
@@ -228,10 +270,7 @@ extension PrivateMethods on _BusinessProductPageState {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Colors.grey,
-            height: 5.0,
-          ),
+          Container(color: Colors.grey, height: 5.0),
           Row(
             children: [
               headerText(
@@ -242,77 +281,89 @@ extension PrivateMethods on _BusinessProductPageState {
               const Spacer(),
               if (option.isRequired)
                 Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 2.0, horizontal: 5.0),
-                    decoration: BoxDecoration(
-                        color: _selectedExtras[option.title]!.length ==
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 2.0,
+                    horizontal: 5.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color:
+                        _selectedExtras[option.title]!.length ==
                                 option.maxExtras
                             ? Colors.green
                             : Colors.red,
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: headerText(
-                        text: _selectedExtras[option.title]!.length ==
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: headerText(
+                    text:
+                        _selectedExtras[option.title]!.length ==
                                 option.maxExtras
                             ? "Completado"
                             : "Requisito*",
-                        fontsize: 14.0,
-                        color: Colors.white)),
+                    fontsize: 14.0,
+                    color: Colors.white,
+                  ),
+                ),
             ],
           ),
           if (option.maxExtras > 1)
             SizedBox(
               width: double.infinity,
               child: headerText(
-                  text: "Elige ${option.maxExtras} opciones",
-                  fontWeight: FontWeight.w500,
-                  fontsize: 14.0),
+                text: "Elige ${option.maxExtras} opciones",
+                fontWeight: FontWeight.w500,
+                fontsize: 14.0,
+              ),
             )
           else
             SizedBox(
               width: double.infinity,
               child: headerText(
-                  text: "Elige 1 opción",
-                  fontWeight: FontWeight.w500,
-                  fontsize: 14.0),
+                text: "Elige 1 opción",
+                fontWeight: FontWeight.w500,
+                fontsize: 14.0,
+              ),
             ),
           const SizedBox(height: 5.0),
-          ...option.extras.map((extra) => CheckboxListTile(
-                title: Row(
-                  children: [
-                    headerText(
-                        text: extra.title,
-                        fontsize: 16.0,
-                        fontWeight: FontWeight.w400,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
-                    const Spacer(),
-                    if (extra.price > 0)
-                      Text("+ L ${extra.price.toStringAsFixed(2)}"),
-                  ],
-                ),
-                value: _selectedExtras[option.title]!.contains(extra.title),
-                onChanged: (isChecked) {
-                  setState(() {
-                    if (isChecked == true) {
-                      if (option.maxExtras == 1) {
-                        // Si solo se permite un extra, reemplaza el seleccionado anterior
-                        _selectedExtras[option.title]!.clear();
-                        _selectedExtras[option.title]!.add(extra.title);
-                      } else {
-                        // Si hay un límite mayor a 1, solo permite hasta maxExtras elementos
-                        if (_selectedExtras[option.title]!.length <
-                            option.maxExtras) {
-                          _selectedExtras[option.title]!.add(extra.title);
-                        }
-                      }
+          ...option.extras.map(
+            (extra) => CheckboxListTile(
+              title: Row(
+                children: [
+                  headerText(
+                    text: extra.title,
+                    fontsize: 16.0,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const Spacer(),
+                  if (extra.price > 0)
+                    Text("+ L ${extra.price.toStringAsFixed(2)}"),
+                ],
+              ),
+              value: _selectedExtras[option.title]!.contains(extra.title),
+              onChanged: (isChecked) {
+                setState(() {
+                  if (isChecked == true) {
+                    if (option.maxExtras == 1) {
+                      // Si solo se permite un extra, reemplaza el seleccionado anterior
+                      _selectedExtras[option.title]!.clear();
+                      _selectedExtras[option.title]!.add(extra.title);
                     } else {
-                      // Si el usuario deselecciona, simplemente elimina el extra
-                      _selectedExtras[option.title]!.remove(extra.title);
+                      // Si hay un límite mayor a 1, solo permite hasta maxExtras elementos
+                      if (_selectedExtras[option.title]!.length <
+                          option.maxExtras) {
+                        _selectedExtras[option.title]!.add(extra.title);
+                      }
                     }
-                  });
-                },
-                controlAffinity: ListTileControlAffinity.leading,
-              )),
+                  } else {
+                    // Si el usuario deselecciona, simplemente elimina el extra
+                    _selectedExtras[option.title]!.remove(extra.title);
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+            ),
+          ),
         ],
       ),
     );

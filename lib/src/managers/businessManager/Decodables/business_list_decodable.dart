@@ -12,14 +12,14 @@ class BusinessListDecodable {
 
   factory BusinessListDecodable.fromMap(Map<String, dynamic> json) =>
       BusinessListDecodable(
-        businessList: json["businessList"] == null
+        businessList: json["business_list"] == null
             ? null
-            : List<BusinessDetailDecodable>.from(json["businessList"]
+            : List<BusinessDetailDecodable>.from(json["business_list"]
                 .map((x) => BusinessDetailDecodable.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "businessList": businessList == null
+        "business_list": businessList == null
             ? null
             : List<dynamic>.from(businessList!.map((x) => x.toMap())),
       };
@@ -46,6 +46,7 @@ class BusinessDetailDecodable {
   final double averagePrice;
   final String averageDelivery;
   final String id;
+  bool? isFavorite;
   final TypeBusinessDetailDecodable typeBusiness;
   final List<BusinessImage> businessImages;
 
@@ -70,6 +71,7 @@ class BusinessDetailDecodable {
     required this.averagePrice,
     required this.averageDelivery,
     required this.id,
+    required this.isFavorite,
     required this.typeBusiness,
     required this.businessImages,
   });
@@ -101,8 +103,10 @@ class BusinessDetailDecodable {
         averagePrice: json["average_price"]?.toDouble(),
         averageDelivery: json["average_delivery"],
         id: json["id"],
+        isFavorite: json["is_favorite"],
         typeBusiness:
             TypeBusinessDetailDecodable.fromMap(json["type_business"]),
+        
         businessImages: List<BusinessImage>.from(
             json["business_images"].map((x) => BusinessImage.fromMap(x))),
       );
@@ -128,6 +132,7 @@ class BusinessDetailDecodable {
         "average_price": averagePrice,
         "average_delivery": averageDelivery,
         "id": id,
+        "is_favorite": isFavorite,
         "type_business": typeBusiness.toMap(),
         "business_images":
             List<dynamic>.from(businessImages.map((x) => x.toMap())),

@@ -15,7 +15,7 @@ class DefaultCartRepository extends CartRepository {
   @override
   Future<CartsListDecodable> fetchCartsList({required String userId}) async {
     String path = "$_path/restaurant/$userId/";
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: false);
     CartsListDecodable decodable = CartsListDecodable.fromMap(response);
     return decodable;
   }

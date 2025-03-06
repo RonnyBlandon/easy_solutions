@@ -29,12 +29,12 @@ class DefaultSignUpViewModel extends SignUpViewModel {
   final SignUpUseCase _signUpUseCase;
   final SaveLocalStorageUseCase _saveLocalStorageUseCase;
 
-  DefaultSignUpViewModel(
-      {SignUpUseCase? signUpUseCase,
-      SaveLocalStorageUseCase? saveLocalStorageUseCase})
-      : _signUpUseCase = signUpUseCase ?? DefaultSignUpUseCase(),
-        _saveLocalStorageUseCase =
-            saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase();
+  DefaultSignUpViewModel({
+    SignUpUseCase? signUpUseCase,
+    SaveLocalStorageUseCase? saveLocalStorageUseCase,
+  }) : _signUpUseCase = signUpUseCase ?? DefaultSignUpUseCase(),
+       _saveLocalStorageUseCase =
+           saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase();
 
   @override
   void initState({required LoadingStateProvider loadingStateProvider}) {
@@ -54,35 +54,40 @@ class DefaultSignUpViewModel extends SignUpViewModel {
     // Retornar el Future directamente
     return _signUpUseCase
         .execute(
-            params: SignUpUseCaseParameters(
-                fullName: signUpModel?.username ?? "",
-                email: signUpModel?.email ?? "",
-                phone: signUpModel?.phone ?? "",
-                departmentId: signUpModel?.departmentId ?? 1,
-                municipalityId: signUpModel?.municipalityId ?? 1,
-                role: "USER",
-                isActive: true,
-                password: signUpModel?.password ?? ""))
+          params: SignUpUseCaseParameters(
+            fullName: signUpModel?.username ?? "",
+            email: signUpModel?.email ?? "",
+            phone: signUpModel?.phone ?? "",
+            departmentId: signUpModel?.departmentId ?? 1,
+            municipalityId: signUpModel?.municipalityId ?? 1,
+            roles: "USER",
+            isActive: true,
+            password: signUpModel?.password ?? "",
+          ),
+        )
         .then((result) async {
-      switch (result.status) {
-        case ResultStatus.success:
-          await _saveLocalStorageUseCase.execute(
-              parameters: SaveLocalStorageParameters(
+          switch (result.status) {
+            case ResultStatus.success:
+              await _saveLocalStorageUseCase.execute(
+                parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.accessToken,
-                  value: result.value?.accessToken ?? ""));
-          loadingState.setLoadingState(isLoading: false);
-          return Result.success(true);
-        case ResultStatus.error:
-          loadingState.setLoadingState(isLoading: false);
-          return Result.failure(result.error);
-      }
-    });
+                  value: result.value?.accessToken ?? "",
+                ),
+              );
+              loadingState.setLoadingState(isLoading: false);
+              return Result.success(true);
+            case ResultStatus.error:
+              loadingState.setLoadingState(isLoading: false);
+              return Result.failure(result.error);
+          }
+        });
   }
 
   @override
-  onChanged(
-      {required String newValue,
-      required CustomTextFormFieldType customTextFormFieldType}) {
+  onChanged({
+    required String newValue,
+    required CustomTextFormFieldType customTextFormFieldType,
+  }) {
     switch (customTextFormFieldType) {
       case CustomTextFormFieldType.email:
         signUpModel?.email = newValue;

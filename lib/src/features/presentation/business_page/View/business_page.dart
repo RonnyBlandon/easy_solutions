@@ -48,7 +48,7 @@ class _BusinessPageState extends State<BusinessPage> {
           actions: [searchProduct(context: context, businessId: widget.businessId)],
         ),
         body: FutureBuilder(
-            future: _future, // 🔹 Usa el Future almacenado
+            future: _future, // Usa el Future almacenado
             builder: (BuildContext context,
                 AsyncSnapshot<BusinessCategoriesViewModelState> snapshot) {
               switch (snapshot.connectionState) {

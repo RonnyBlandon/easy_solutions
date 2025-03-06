@@ -22,12 +22,13 @@ class _WelcomePageState extends State<WelcomePage> with BaseView {
   final WelcomePageViewModel viewModel;
 
   _WelcomePageState({WelcomePageViewModel? welcomePageViewModel})
-      : viewModel = welcomePageViewModel ?? DefaultWelcomePageViewModel();
+    : viewModel = welcomePageViewModel ?? DefaultWelcomePageViewModel();
 
   @override
   Widget build(BuildContext context) {
     viewModel.initState(
-        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+    );
 
     return Stack(
       children: [
@@ -36,41 +37,46 @@ class _WelcomePageState extends State<WelcomePage> with BaseView {
             image: DecorationImage(
               fit: BoxFit.cover,
               image: AssetImage(
-                  'assets/images/welcome_image.jpg'), // Paréntesis de cierre añadido
+                'assets/images/welcome_image.jpg',
+              ), // Paréntesis de cierre añadido
             ),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-            child: Container(
-              color: Colors.black.withValues(),
-            ),
+            child: Container(color: const Color.fromARGB(51, 0, 0, 0)),
           ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Padding(
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: headerText(
-                  text: 'ENTREGAS A DOMICILIO HASTA LA PUERTA DE TU CASA',
-                  color: white)),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Text(
-              'Proporcione su ubicación exacta para encontrar los servicios de entrega más adecuados cerca de usted',
-              style: TextStyle(
+                text: 'ENTREGAS A DOMICILIO HASTA LA PUERTA DE TU CASA',
+                color: white,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              child: Text(
+                'Proporcione su ubicación exacta para encontrar los servicios de entrega más adecuados cerca de usted',
+                style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
-                  decoration: TextDecoration.none),
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ),
-          ),
-          createElevatedButton(
+            createElevatedButton(
               isWithIcon: false,
               labelButton: 'Iniciar Sesión',
               onPressed: () {
                 Navigator.pushNamed(context, 'login');
-              }),
-          const SizedBox(height: 20),
-          createElevatedButton(
+              },
+            ),
+            const SizedBox(height: 20),
+            createElevatedButton(
               isWithIcon: true,
               icon: const AssetImage('assets/images/google_icono.png'),
               labelButton: 'Iniciar Sesión con Google',
@@ -78,14 +84,16 @@ class _WelcomePageState extends State<WelcomePage> with BaseView {
               foregroundColor: Colors.black,
               onPressed: () {
                 _googleSignInTapped(context);
-              })
-        ]),
+              },
+            ),
+          ],
+        ),
       ],
     );
   }
 }
 
-extension UserActions on _WelcomePageState {
+extension _UserActions on _WelcomePageState {
   _googleSignInTapped(BuildContext context) {
     viewModel.signInWithGoogle().then((result) {
       switch (result.status) {

@@ -14,41 +14,48 @@ import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 
 //Auth Repositories
 abstract class SignInRepository {
-  Future<Result<SignInDecodable, Failure>> signIn(
-      {required SignInBodyParameters params});
+  Future<Result<SignInDecodable, Failure>> signIn({
+    required SignInBodyParameters params,
+  });
 }
 
 abstract class ResetPasswordRepository {
-  Future<Result<ResetPasswordDecodable, Failure>> resetPassword(
-      {required String email});
+  Future<Result<ResetPasswordDecodable, Failure>> resetPassword({
+    required String email,
+  });
 }
 
 abstract class UserAuthDataRepository {
-  Future<Result<UserAuthDataDecodable, Failure>> getUserAuthData(
-      {required GetUserDataBodyParameters parameters});
+  Future<Result<UserAuthDataDecodable, Failure>> getUserAuthData({
+    required GetUserDataBodyParameters parameters,
+  });
 }
 
 // User Database Repositories
 abstract class SaveUserDataRepository {
-  Future<Result<UserDecodable, Failure>> saveUserData(
-      {required UserBodyParameters parameters});
+  Future<Result<UserDecodable, Failure>> saveUserData({
+    required UserBodyParameters parameters,
+  });
 }
 
 abstract class FetchUserDataRepository {
-  Future<Result<UserDecodable, Failure>> fetchUserData(
-      {required String localId});
+  Future<Result<UserDecodable, Failure>> fetchUserData();
 }
 
 // Local Storage
 abstract class SaveLocalStorageRepository {
   Future<void> saveInLocalStorage({required String key, required String value});
-  Future<void> saveRecentSearchInLocalStorage(
-      {required String key, required List<String> value});
+  Future<void> saveRecentSearchInLocalStorage({
+    required String key,
+    required List<String> value,
+  });
 }
 
 abstract class FetchLocalStorageRepository {
   Future<String?> fetchInLocalStorage({required String key});
-  Future<List<String>?> fetchRecentProductSearches({required String businessId});
+  Future<List<String>?> fetchRecentProductSearches({
+    required String businessId,
+  });
 }
 
 abstract class RemoveLocalStorageRepository {
@@ -57,8 +64,9 @@ abstract class RemoveLocalStorageRepository {
 
 // Business Repositories
 abstract class BusinessDetailRepository {
-  Future<BusinessDetailDecodable> fetchBusinessDetailById(
-      {required String businessId});
+  Future<BusinessDetailDecodable> fetchBusinessDetailById({
+    required String businessId,
+  });
 }
 
 // BusinessList Repositories
@@ -67,30 +75,49 @@ abstract class BusinessListRepository {
   Future<BusinessListDecodable> fetchBusinessList();
   Future<BusinessListDecodable> fetchNoveltyBusinessList();
   Future<BusinessListDecodable> fetchPopularBusinessList();
-  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
-      {required int typeBusinessId});
-  Future<BusinessListDecodable> fetchBusinessListByQuery(
-      {required String query});
-  Future<BusinessListDecodable> fetchBusinessListByRecentSearches(
-      {required List<String> businessIds});
+  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness({
+    required int typeBusinessId,
+  });
+  Future<BusinessListDecodable> fetchBusinessListByQuery({
+    required String query,
+  });
+  Future<BusinessListDecodable> fetchBusinessListByRecentSearches({
+    required List<String> businessIds,
+  });
 }
 
 // Categories Repositories
 abstract class CategoriesRepository {
-  Future<BusinessCategoryDecodable> fetchCategory(
-      {required int businessCategoryId});
-  Future<BusinessCategoryListDecodable> fetchRestaurantCategories(
-      {required String businessId});
-  Future<BusinessCategoryListDecodable> fetchBusinessCategories(
-      {required String businessId});
+  Future<BusinessCategoryDecodable> fetchCategory({
+    required int businessCategoryId,
+  });
+  Future<BusinessCategoryListDecodable> fetchRestaurantCategories({
+    required String businessId,
+  });
+  Future<BusinessCategoryListDecodable> fetchBusinessCategories({
+    required String businessId,
+  });
 }
 
 // Products Repositories
 abstract class ProductRepository {
-  Future<ProductListDecodable> fetchProductListByQuery(
-      {required String businessId, required String query});
-  Future<ProductListDecodable> fetchProductListByRecentSearches(
-      {required List<String> productIds});
+  Future<ProductListDecodable> fetchProductListByQuery({
+    required String businessId,
+    required String query,
+  });
+  Future<ProductListDecodable> fetchProductListByRecentSearches({
+    required List<String> productIds,
+  });
+}
+
+// Favorites Repositories
+abstract class FavoriteRepository {
+  Future<BusinessListDecodable> fetchBuisnessFavoritesList();
+  Future<ProductListDecodable> fetchProductFavoritesList();
+  Future<bool> addBusinessFavorite({required String businessId});
+  Future<bool> addProductFavorite({required String productId});
+  Future<bool> removeBusinessFavorite({required String businessId});
+  Future<bool> removeProductFavorite({required String productId});
 }
 
 // Carts Repositories

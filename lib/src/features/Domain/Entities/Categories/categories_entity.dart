@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:easy_solutions/src/features/Domain/Entities/Business/business_list_entity.dart';
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 
 class BusinessCategoryListEntity {
   final BusinessDetailEntity business;

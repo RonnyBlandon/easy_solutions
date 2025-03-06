@@ -25,9 +25,8 @@ class DefaultBusinessManager extends BusinessManager {
   Future<TypeBusinessListDecodable> fetchTypeBusinessList() async {
     try {
       final response =
-          await _realtimeDatabaseService.getData(path: _typesBusinessPath);
-      TypeBusinessListDecodable decodable =
-          _mapToTypeBusinessListDecodable(response: response);
+          await _realtimeDatabaseService.getData(path: _typesBusinessPath, requiresAuth: false);
+      TypeBusinessListDecodable decodable = TypeBusinessListDecodable.fromMap(response);
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -38,9 +37,8 @@ class DefaultBusinessManager extends BusinessManager {
   Future<BusinessListDecodable> fetchBusinessList() async {
     try {
       final response =
-          await _realtimeDatabaseService.getData(path: _businessListPath);
-      BusinessListDecodable decodable =
-          _mapToBusinessListDecodable(response: response);
+          await _realtimeDatabaseService.getData(path: _businessListPath, requiresAuth: false);
+      BusinessListDecodable decodable = BusinessListDecodable.fromMap(response);
       decodable.businessList = _mapMunicipalityBusinessList(
           businessList: decodable.businessList ?? [], municipalityId: 1);
       return decodable;
@@ -68,15 +66,16 @@ class DefaultBusinessManager extends BusinessManager {
   @override
   Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
       {required int typeBusinessId}) async {
+    String path = _typesBusinessPath + typeBusinessId.toString();
     try {
-      final fullBusinessList = await fetchBusinessList();
-      fullBusinessList.businessList = _mapBusinessListByTypeBusiness(
-          businessList: fullBusinessList.businessList ?? [],
-          typeBusinessId: typeBusinessId);
-      return fullBusinessList;
-    } on Exception catch (e) {
-      print("Error en fetchBusinessListByTypeBusiness desde catch: $e");
-      rethrow;
+      final response =
+          await _realtimeDatabaseService.getData(path: path, requiresAuth: false);
+      BusinessListDecodable decodable = BusinessListDecodable.fromMap(response);
+      decodable.businessList = _mapMunicipalityBusinessList(
+          businessList: decodable.businessList ?? [], municipalityId: 1);
+      return decodable;
+    } on Failure catch (f) {
+      return Future.error(f);
     }
   }
 
@@ -101,25 +100,6 @@ class DefaultBusinessManager extends BusinessManager {
 }
 
 extension Mappers on DefaultBusinessManager {
-  TypeBusinessListDecodable _mapToTypeBusinessListDecodable(
-      {required List<dynamic> response}) {
-    List<TypeBusinessDetailDecodable>? typeBusinessList = [];
-    response.forEach((value) {
-      typeBusinessList.add(TypeBusinessDetailDecodable.fromMap(value));
-    });
-
-    return TypeBusinessListDecodable(typeBusinessList: typeBusinessList);
-  }
-
-  BusinessListDecodable _mapToBusinessListDecodable(
-      {required List<dynamic> response}) {
-    List<BusinessDetailDecodable>? businessList = [];
-    response.forEach((value) {
-      businessList.add(BusinessDetailDecodable.fromMap(value));
-    });
-    return BusinessListDecodable(businessList: businessList);
-  }
-
   List<BusinessDetailDecodable> _mapMunicipalityBusinessList(
       {required List<BusinessDetailDecodable> businessList,
       required int municipalityId}) {
@@ -148,18 +128,6 @@ extension Mappers on DefaultBusinessManager {
     List<BusinessDetailDecodable> businessListFiltered = [];
     businessList.forEach((business) {
       if (business.isPopularThisWeek) {
-        businessListFiltered.add(business);
-      }
-    });
-    return businessListFiltered;
-  }
-
-  List<BusinessDetailDecodable> _mapBusinessListByTypeBusiness(
-      {required List<BusinessDetailDecodable> businessList,
-      required int typeBusinessId}) {
-    List<BusinessDetailDecodable> businessListFiltered = [];
-    businessList.forEach((business) {
-      if (business.typeBusiness.id == typeBusinessId) {
         businessListFiltered.add(business);
       }
     });

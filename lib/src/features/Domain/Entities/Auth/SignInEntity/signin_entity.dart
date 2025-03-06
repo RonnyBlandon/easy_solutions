@@ -2,21 +2,17 @@ import 'dart:convert';
 
 class SignInEntity {
   String? localId;
-  String? email;
-  String? displayName;
-  String? idToken;
-  bool? registered;
+  String? accessToken;
   String? refreshToken;
-  String? expiresIn;
+  String? tokenType;
+  String? roles;
 
   SignInEntity({
     this.localId,
-    this.email,
-    this.displayName,
-    this.idToken,
-    this.registered,
+    this.accessToken,
     this.refreshToken,
-    this.expiresIn,
+    this.tokenType,
+    this.roles,
   });
 
   factory SignInEntity.fromJson(String str) =>
@@ -25,22 +21,18 @@ class SignInEntity {
   String toJson() => json.encode(toMap());
 
   factory SignInEntity.fromMap(Map<String, dynamic> json) => SignInEntity(
-        localId: json["localId"],
-        email: json["email"],
-        displayName: json["displayName"],
-        idToken: json["idToken"],
-        registered: json["registered"],
-        refreshToken: json["refreshToken"],
-        expiresIn: json["expiresIn"],
-      );
+    localId: json["local_id"],
+    accessToken: json["access_token"],
+    refreshToken: json["refresh_token"],
+    tokenType: json["token_type"],
+    roles: json["roles"],
+  );
 
   Map<String, dynamic> toMap() => {
-        "localId": localId,
-        "email": email,
-        "displayName": displayName,
-        "idToken": idToken,
-        "registered": registered,
-        "refreshToken": refreshToken,
-        "expiresIn": expiresIn,
-      };
+    "local_id": localId,
+    "access_token": accessToken,
+    "refresh_token": refreshToken,
+    "token_type": tokenType,
+    "roles": roles,
+  };
 }

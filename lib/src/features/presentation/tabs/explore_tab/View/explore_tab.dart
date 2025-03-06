@@ -51,9 +51,8 @@ class _ExploreTabState extends State<ExploreTab> {
                     case ExploreTabViewModelState.viewLoadedState:
                       return ExploreTabContentView(viewModel: viewModel);
                     default:
-                      var variable = snapshot.data;
                       print(
-                          "Este contiene variables en snapshot.data en explore_tab: $variable");
+                          "Este contiene variables en snapshot.error en explore_tab: ${snapshot.error}");
                       return ErrorView(
                         onButtonPressed: () {
                           MainCoordinator().showTabsPage(context: context);

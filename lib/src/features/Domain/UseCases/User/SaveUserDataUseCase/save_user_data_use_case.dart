@@ -8,8 +8,9 @@ import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'save_user_data_use_case_parameters.dart';
 
 abstract class SaveUserDataUseCase {
-  Future<Result<UserEntity, Failure>> execute(
-      {required SaveUserDataUseCaseParameters parameters});
+  Future<Result<UserEntity, Failure>> execute({
+    required SaveUserDataUseCaseParameters parameters,
+  });
 }
 
 class DefaultSaveUserDataUseCase extends SaveUserDataUseCase {
@@ -17,33 +18,36 @@ class DefaultSaveUserDataUseCase extends SaveUserDataUseCase {
   final SaveUserDataRepository _saveUserDataRepository;
 
   DefaultSaveUserDataUseCase({SaveUserDataRepository? saveUserDataRepository})
-      : _saveUserDataRepository =
-            saveUserDataRepository ?? DefaultSaveUserDataRepository();
+    : _saveUserDataRepository =
+          saveUserDataRepository ?? DefaultSaveUserDataRepository();
 
   @override
-  Future<Result<UserEntity, Failure>> execute(
-      {required SaveUserDataUseCaseParameters parameters}) {
+  Future<Result<UserEntity, Failure>> execute({
+    required SaveUserDataUseCaseParameters parameters,
+  }) {
     UserBodyParameters params = UserBodyParameters(
-        localId: parameters.localId,
-        role: parameters.role?.toShortString(),
-        username: parameters.fullName,
-        email: parameters.email,
-        phone: parameters.phone,
-        startDate: parameters.startDate,
-        accessToken: parameters.accessToken);
+      localId: parameters.localId,
+      roles: parameters.roles,
+      fullName: parameters.fullName,
+      email: parameters.email,
+      phone: parameters.phone,
+      startDate: parameters.startDate,
+      accessToken: parameters.accessToken,
+    );
 
-    return _saveUserDataRepository
-        .saveUserData(parameters: params)
-        .then((result) {
+    return _saveUserDataRepository.saveUserData(parameters: params).then((
+      result,
+    ) {
       switch (result.status) {
         case ResultStatus.success:
           if (result.value == null) {
-            return Result.failure(Failure.fromMessage(
-                message: AppFailureMessages.unExpectedErrorMessage));
+            return Result.failure(
+              Failure.fromMessage(
+                message: AppFailureMessages.unExpectedErrorMessage,
+              ),
+            );
           }
-          var entity = UserEntity.fromMap(result.value!.toMap());
-          return Result.success(entity);
-
+          return Result.success(UserEntity.fromMap(result.value!.toMap()));
         case ResultStatus.error:
           return Result.failure(result.error);
       }

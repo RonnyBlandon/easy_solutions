@@ -1,20 +1,18 @@
 import 'dart:convert';
 
 class SignInDecodable {
-  String? kind;
   String? localId;
-  String? email;
-  String? displayName;
-  String? idToken;
-  bool? registered;
+  String? accessToken;
+  String? refreshToken;
+  String? tokenType;
+  String? role;
 
   SignInDecodable({
-    this.kind,
     this.localId,
-    this.email,
-    this.displayName,
-    this.idToken,
-    this.registered,
+    this.accessToken,
+    this.refreshToken,
+    this.tokenType,
+    this.role,
   });
 
   factory SignInDecodable.fromJson(String str) =>
@@ -23,20 +21,18 @@ class SignInDecodable {
   String toJson() => json.encode(toMap());
 
   factory SignInDecodable.fromMap(Map<String, dynamic> json) => SignInDecodable(
-        kind: json["kind"],
-        localId: json["localId"],
-        email: json["email"],
-        displayName: json["displayName"],
-        idToken: json["idToken"],
-        registered: json["registered"],
+        localId: json["local_id"],
+        accessToken: json["access_token"],
+        refreshToken: json["refresh_token"],
+        tokenType: json["token_type"],
+        role: json["role"],
       );
 
   Map<String, dynamic> toMap() => {
-        "kind": kind,
-        "localId": localId,
-        "email": email,
-        "displayName": displayName,
-        "idToken": idToken,
-        "registered": registered,
+        "local_id": localId,
+        "access_token": accessToken,
+        "refresh_token": refreshToken,
+        "token_type": tokenType,
+        "role": role,
       };
 }

@@ -1,9 +1,15 @@
+import 'package:easy_solutions/src/base/Constants/error_messages.dart';
+import 'package:easy_solutions/src/base/Views/base_view.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/User/user_entity.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/error_state_provider.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
 import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 // Components
-import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/avatar_view.dart';
-import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/textfields_view.dart';
+import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/avatar_profile_view.dart';
+import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/fields_profile_detail_view.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
@@ -19,9 +25,16 @@ class ProfileDetailsPage extends StatefulWidget {
   State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
 }
 
-class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+class _ProfileDetailsPageState extends State<ProfileDetailsPage>
+    with FieldsProfileDetailViewDelegate, BaseView {
+  String _actionText = "";
+  late DefaultUserStateProvider _defaultUserStateProvider;
+  UserEntity? newUser;
+
   @override
   Widget build(BuildContext context) {
+    _defaultUserStateProvider = (context).getDefaultUserStateProvider();
+
     return Scaffold(
       backgroundColor: bgGreyPage,
       appBar: AppBar(
@@ -32,18 +45,18 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              updateUserData();
             },
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
               child: headerText(
-                text: 'Guardar',
+                text: _actionText,
                 color: orange,
                 fontsize: 17.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
-          )
+          ),
         ],
       ),
       body: CustomScrollView(
@@ -53,26 +66,80 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
               Container(
                 width: screenWidth.getScreenWidth(context: context),
                 height: screenHeight.getScreenHeight(
-                    context: context, multiplier: 0.55),
+                  context: context,
+                  multiplier: 0.47,
+                ),
                 margin: EdgeInsets.only(
-                    top: screenHeight.getScreenHeight(
-                        context: context, multiplier: 0.1),
-                    left: 15.0,
-                    right: 15.0),
+                  top: screenHeight.getScreenHeight(
+                    context: context,
+                    multiplier: 0.1,
+                  ),
+                  left: 15.0,
+                  right: 15.0,
+                ),
                 decoration: createBoxDecorationWithShadows(),
                 child: Column(
                   children: [
                     Transform.translate(
-                        offset: const Offset(0.0, -60.0),
-                        child: const AvatarView()),
-                    const TextfieldsProfileDetailView(),
+                      offset: const Offset(0.0, -60.0),
+                      child: const AvatarProfileView(),
+                    ),
+                    FieldsProfileDetailView(
+                      delegate: this,
+                      userData: _defaultUserStateProvider.userData,
+                    ),
                   ],
                 ),
               ),
             ]),
-          )
+          ),
         ],
       ),
     );
+  }
+
+  updateUserData() {
+    if (newUser == null) {
+      return;
+    }
+
+    setState(() {
+      (context).setLoadingState(isLoading: true);
+    });
+
+    _defaultUserStateProvider
+        .updateUserData(user: newUser!)
+        .then(
+          (result) {
+            setState(() {
+              (context).setLoadingState(isLoading: false);
+              _actionText = "";
+            });
+          },
+          onError: (e) {
+            setState(() {
+              (context).setLoadingState(isLoading: false);
+              (context).showErrorAlert(
+                context: context,
+                message:
+                    e.toString().isNotEmpty
+                        ? e.toString()
+                        : AppFailureMessages.unExpectedErrorMessage,
+              );
+            });
+          },
+        );
+  }
+
+  @override
+  userDataChanged({required UserEntity? newUser}) {
+    setState(() {
+      if (newUser?.fullName?.isNotEmpty ?? false) {
+        this.newUser = newUser;
+        _actionText = "Guardar";
+      } else {
+        _actionText = "";
+      }
+    });
   }
 }

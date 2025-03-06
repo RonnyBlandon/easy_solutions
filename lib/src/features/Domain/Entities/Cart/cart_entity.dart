@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 
 class CartsListEntity {
   final List<CartEntity>? carts;

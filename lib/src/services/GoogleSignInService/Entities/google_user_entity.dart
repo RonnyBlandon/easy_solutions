@@ -4,21 +4,23 @@ class GoogleSignInUserEntity {
   final String? localId;
   final String? fullName;
   final String? email;
-  final String? phone;
+  final String? phoneNumber;
   final String? startDate;
-  final String? role;
+  final String? tokenType;
   final String? accessToken;
   final String? refreshToken;
+  final String? roles;
 
   GoogleSignInUserEntity({
     required this.localId,
     required this.fullName,
     required this.email,
-    required this.phone,
+    required this.phoneNumber,
     required this.startDate,
-    required this.role,
+    required this.tokenType,
     required this.accessToken,
     required this.refreshToken,
+    required this.roles,
   });
 
   factory GoogleSignInUserEntity.fromJson(String str) =>
@@ -28,24 +30,26 @@ class GoogleSignInUserEntity {
 
   factory GoogleSignInUserEntity.fromMap(Map<String, dynamic> json) =>
       GoogleSignInUserEntity(
-        localId: json["localId"],
-        fullName: json["fullName"],
+        localId: json["local_id"],
+        fullName: json["full_name"],
         email: json["email"],
-        phone: json["phone"],
-        startDate: json["startDate"],
-        role: json["role"],
-        accessToken: json["accessToken"],
-        refreshToken: json["refreshToken"],
+        phoneNumber: json["phone_number"],
+        startDate: json["start_date"],
+        tokenType: json["token_type"],
+        accessToken: json["access_token"],
+        refreshToken: json["refresh_token"],
+        roles: json["roles"],
       );
 
   Map<String, dynamic> toMap() => {
-        "localId": localId,
-        "fullName": fullName,
-        "email": email,
-        "phone": phone,
-        "startDate": startDate,
-        "role": role,
-        "accessToken": accessToken,
-        "refreshToken": refreshToken,
-      };
+    "local_id": localId,
+    "full_name": fullName,
+    "email": email,
+    "phone_number": phoneNumber,
+    "start_date": startDate,
+    "token_type": tokenType,
+    "access_token": accessToken,
+    "refresh_token": refreshToken,
+    "roles": roles,
+  };
 }

@@ -18,7 +18,7 @@ class DefaultCategoriesRepository extends CategoriesRepository {
   Future<BusinessCategoryListDecodable> fetchRestaurantCategories(
       {required String businessId}) async {
     String path = "$_path/restaurant/$businessId/";
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: true);
     BusinessCategoryListDecodable decodable =
         BusinessCategoryListDecodable.fromMap(response);
     return decodable;
@@ -28,7 +28,7 @@ class DefaultCategoriesRepository extends CategoriesRepository {
   Future<BusinessCategoryListDecodable> fetchBusinessCategories(
       {required String businessId}) async {
     String path = "$_path/business/$businessId/";
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: true);
     BusinessCategoryListDecodable decodable =
         BusinessCategoryListDecodable.fromMap(response);
     return decodable;
@@ -38,7 +38,7 @@ class DefaultCategoriesRepository extends CategoriesRepository {
   Future<BusinessCategoryDecodable> fetchCategory(
       {required int businessCategoryId}) async {
     String path = "$_path/category/$businessCategoryId/";
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: true);
     BusinessCategoryDecodable decodable =
         BusinessCategoryDecodable.fromMap(response);
     return decodable;

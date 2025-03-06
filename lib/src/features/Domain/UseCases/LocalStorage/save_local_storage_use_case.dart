@@ -36,17 +36,24 @@ class DefaultSaveLocalStorageUseCase extends SaveLocalStorageUseCase {
   }
 
   @override
-  Future<void> saveRecentProductSearchInLocalStorage(
-      {required String businessId, required String productId}) async {
+  Future<void> saveRecentProductSearchInLocalStorage({
+    required String businessId,
+    required String productId,}) async {
     final productIds = await _fetchLocalStorageUseCase.fetchRecentProductSearches(businessId: businessId);
-    if (!productIds.contains(productId)) {
-      productIds.add(productId);
-      // Mantener solo los últimos 10 elementos
-      if (productIds.length > 10) {
-        productIds.removeAt(0); // Eliminar el más antiguo (primer elemento)
-      }
-      return _saveLocalStorageRepository.saveRecentSearchInLocalStorage(
-          key: businessId, value: productIds);
+
+    // Si el producto ya está en la lista, se elimina para reinsertarlo al final
+    productIds.remove(productId);
+    productIds.add(productId);
+
+    // Mantener solo los últimos 10 elementos
+    if (productIds.length > 10) {
+    productIds.removeAt(0); // Eliminar el más antiguo (primer elemento)
     }
+
+    return _saveLocalStorageRepository.saveRecentSearchInLocalStorage(
+      key: businessId,
+      value: productIds,
+    );
   }
+
 }

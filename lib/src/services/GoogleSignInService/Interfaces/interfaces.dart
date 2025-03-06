@@ -7,8 +7,9 @@ abstract class GoogleSignInService extends BaseApiService {
   String endpoint =
       BaseApiService.baseUrl + BaseApiService.googleSignInEndpoint;
 
-  Future<Result<GoogleSignInUserEntity, Failure>> googleSignIn(
-      {required Map<String, dynamic> bodyParameters});
+  Future<Result<GoogleSignInUserEntity, Failure>> googleSignIn({
+    required Map<String, dynamic> bodyParameters,
+  });
   Future<GoogleSignInUserEntity> signInWithGoogle();
-  Future<bool> isUserInDatabase({required String uid});
+  Future<bool> isUserInDatabase();
 }

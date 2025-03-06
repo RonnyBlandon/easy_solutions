@@ -1,5 +1,5 @@
 import 'package:easy_solutions/src/base/Views/base_view.dart';
-import 'package:easy_solutions/src/features/Domain/Entities/Products/product_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/error_view/error_view.dart';
 import 'package:easy_solutions/src/features/presentation/search_page/View/Components/search_build_results_view.dart';
 import 'package:easy_solutions/src/features/presentation/search_page/View/Components/search_suggestions_view.dart';

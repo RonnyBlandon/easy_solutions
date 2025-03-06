@@ -61,8 +61,16 @@ class DefaultLoginViewModel extends LoginViewModel {
           loadingState.setLoadingState(isLoading: false);
           _saveLocalStorageUseCase.execute(
               parameters: SaveLocalStorageParameters(
+                  key: LocalStorageKeys.localId,
+                  value: result.value?.localId ?? ""));
+          _saveLocalStorageUseCase.execute(
+              parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.accessToken,
-                  value: result.value?.idToken ?? ""));
+                  value: result.value?.accessToken ?? ""));
+          _saveLocalStorageUseCase.execute(
+              parameters: SaveLocalStorageParameters(
+                  key: LocalStorageKeys.refreshToken,
+                  value: result.value?.refreshToken ?? ""));
 
           return Result.success(true);
         case ResultStatus.error:

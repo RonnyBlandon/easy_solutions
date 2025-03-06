@@ -11,6 +11,6 @@ const purple = Colors.purple;
 const grey = Colors.grey;
 const pink = Colors.pink;
 const primaryColor = Color.fromRGBO(10, 31, 68, 1.0);
-const bgInputs = Color.fromRGBO(142, 142, 147, 1.2);
+const bgInputs = Color.fromRGBO(210, 210, 218, 0.196);
 const bgGreyPage = Color.fromRGBO(247, 248, 250, 1.0);
 const bgGreyPage2 = Color.fromRGBO(216, 217, 219, 1);

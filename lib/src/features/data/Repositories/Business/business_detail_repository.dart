@@ -18,7 +18,7 @@ class DefaultBusinessDetailRepository extends BusinessDetailRepository {
   Future<BusinessDetailDecodable> fetchBusinessDetailById(
       {required String businessId}) async {
     String path = _path + businessId;
-    final response = await _realtimeDatabaseService.getData(path: path);
+    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: false);
     return BusinessDetailDecodable.fromMap(response);
   }
 }
