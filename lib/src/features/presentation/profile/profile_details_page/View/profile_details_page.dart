@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 // Components
-import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/avatar_profile_view.dart';
-import 'package:easy_solutions/src/features/presentation/profile_details_page/View/components/fields_profile_detail_view.dart';
+import 'package:easy_solutions/src/features/presentation/profile/profile_details_page/View/components/avatar_profile_view.dart';
+import 'package:easy_solutions/src/features/presentation/profile/profile_details_page/View/components/fields_profile_detail_view.dart';
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
@@ -30,6 +30,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
   String _actionText = "";
   late DefaultUserStateProvider _defaultUserStateProvider;
   UserEntity? newUser;
+  final _formKey = GlobalKey<FormState>(); // Clave para el formulario
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,12 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
         centerTitle: true,
         actions: [
           GestureDetector(
-            onTap: updateUserData,
+            onTap: () {
+              if (_formKey.currentState?.validate() ?? false) {
+                // Validar formulario antes de guardar
+                updateUserData();
+              }
+            },
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
               child: headerText(
@@ -57,41 +63,48 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                width: screenWidth.getScreenWidth(context: context),
-                height: screenHeight.getScreenHeight(
-                  context: context,
-                  multiplier: 0.47,
-                ),
-                margin: EdgeInsets.only(
-                  top: screenHeight.getScreenHeight(
-                    context: context,
-                    multiplier: 0.1,
-                  ),
-                  left: 15.0,
-                  right: 15.0,
-                ),
-                decoration: createBoxDecorationWithShadows(),
-                child: Column(
-                  children: [
-                    Transform.translate(
-                      offset: const Offset(0.0, -60.0),
-                      child: const AvatarProfileView(),
-                    ),
-                    FieldsProfileDetailView(
-                      delegate: this,
-                      userData: _defaultUserStateProvider.userData,
+      body: Form(
+        // Envolver en Form para validaciones
+        key: _formKey,
+        child:
+            (context).isLoading()
+                ? loadingView
+                : CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Container(
+                          width: screenWidth.getScreenWidth(context: context),
+                          height: screenHeight.getScreenHeight(
+                            context: context,
+                            multiplier: 0.48,
+                          ),
+                          margin: EdgeInsets.only(
+                            top: screenHeight.getScreenHeight(
+                              context: context,
+                              multiplier: 0.1,
+                            ),
+                            left: 15.0,
+                            right: 15.0,
+                          ),
+                          decoration: createBoxDecorationWithShadows(),
+                          child: Column(
+                            children: [
+                              Transform.translate(
+                                offset: const Offset(0.0, -60.0),
+                                child: const AvatarProfileView(),
+                              ),
+                              FieldsProfileDetailView(
+                                delegate: this,
+                                userData: _defaultUserStateProvider.userData,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
                     ),
                   ],
                 ),
-              ),
-            ]),
-          ),
-        ],
       ),
     );
   }

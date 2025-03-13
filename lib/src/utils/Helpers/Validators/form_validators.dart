@@ -12,7 +12,17 @@ class EmailFormValidator {
 class PasswordFormValidator {
   static String message = 'La password no es correcta';
   static String? validatePassword({required String password}) {
-    return password.isNotEmpty && password.length >= 6 ? null : message;
+    return password.isNotEmpty && password.length >= 8 ? null : message;
+  }
+}
+
+class PhoneFormValidator {
+  static String message = "Número de teléfono inválido";
+  static String? validatePhone({required String phone}) {
+    String pattern = r'^[389]\d{3}[-\s]?\d{4}$';
+    RegExp regExp = RegExp(pattern);
+
+    return regExp.hasMatch(phone) ? null : message;
   }
 }
 

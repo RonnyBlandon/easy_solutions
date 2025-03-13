@@ -75,6 +75,7 @@ extension Mapper on DefaultGoogleSignInUseCase {
       phone: user.phoneNumber,
       startDate: DateHelpers.getStartDate(),
       accessToken: user.accessToken,
+      providers: user.providers,
     );
   }
 }

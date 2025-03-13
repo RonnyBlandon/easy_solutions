@@ -60,7 +60,7 @@ class DefaultSignUpViewModel extends SignUpViewModel {
             phone: signUpModel?.phone ?? "",
             departmentId: signUpModel?.departmentId ?? 1,
             municipalityId: signUpModel?.municipalityId ?? 1,
-            roles: "USER",
+            roles: ["USER"],
             isActive: true,
             password: signUpModel?.password ?? "",
           ),

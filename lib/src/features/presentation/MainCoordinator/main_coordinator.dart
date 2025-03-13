@@ -169,4 +169,8 @@ class MainCoordinator {
       ),
     );
   }
+
+  showEditPasswordPage({required BuildContext context}) {
+    Navigator.pushNamed(context, 'edit_password');
+  }
 }

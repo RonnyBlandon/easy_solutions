@@ -1,6 +1,7 @@
 import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/utils/Helpers/Validators/form_validators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import necesario para inputFormatters
 
 mixin TextFormFieldDelegate {
   void onChanged({
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final Decoration? _decoration;
   final String? _initialValue;
   final Widget? _icon;
+  final List<TextInputFormatter>? inputFormatters; // Nuevo parámetro
 
   const CustomTextFormField({
     super.key,
@@ -29,6 +31,7 @@ class CustomTextFormField extends StatelessWidget {
     Decoration? decoration,
     String? initialValue,
     Widget? icon,
+    this.inputFormatters, // Inicializar aquí
   }) : _controller = controller,
        _decoration = decoration,
        _initialValue = initialValue,
@@ -62,7 +65,6 @@ class CustomTextFormField extends StatelessWidget {
               icon: _icon,
               hintText: hintext,
               border: const OutlineInputBorder(borderSide: BorderSide.none),
-              // Mostrar el icono de visibilidad solo para campos de contraseña
               suffixIcon:
                   textFormFieldType == CustomTextFormFieldType.password
                       ? IconButton(
@@ -77,6 +79,15 @@ class CustomTextFormField extends StatelessWidget {
                       )
                       : null,
             ),
+            // Aplicar los inputFormatters o por defecto para phone
+            inputFormatters:
+                inputFormatters ??
+                (textFormFieldType == CustomTextFormFieldType.phone
+                    ? [
+                      FilteringTextInputFormatter.digitsOnly, // Solo dígitos
+                      LengthLimitingTextInputFormatter(8), // Máximo 8 dígitos
+                    ]
+                    : null),
             onChanged:
                 (newValue) => delegate.onChanged(
                   newValue: newValue,
@@ -91,9 +102,7 @@ class CustomTextFormField extends StatelessWidget {
                     password: value ?? "",
                   );
                 case CustomTextFormFieldType.phone:
-                  return DefaultFormValidator.validateIsNotEmpty(
-                    value: value ?? "",
-                  );
+                  return PhoneFormValidator.validatePhone(phone: value ?? "");
                 case CustomTextFormFieldType.username:
                   return DefaultFormValidator.validateIsNotEmpty(
                     value: value ?? "",

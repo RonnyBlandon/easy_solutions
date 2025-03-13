@@ -9,7 +9,8 @@ class GoogleSignInUserEntity {
   final String? tokenType;
   final String? accessToken;
   final String? refreshToken;
-  final String? roles;
+  final List<String>? roles;
+  final List<String>? providers;
 
   GoogleSignInUserEntity({
     required this.localId,
@@ -21,6 +22,7 @@ class GoogleSignInUserEntity {
     required this.accessToken,
     required this.refreshToken,
     required this.roles,
+    required this.providers,
   });
 
   factory GoogleSignInUserEntity.fromJson(String str) =>
@@ -38,7 +40,8 @@ class GoogleSignInUserEntity {
         tokenType: json["token_type"],
         accessToken: json["access_token"],
         refreshToken: json["refresh_token"],
-        roles: json["roles"],
+        providers: List<String>.from(json['providers'] ?? []),
+        roles: List<String>.from(json['roles'] ?? []),
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,6 +53,7 @@ class GoogleSignInUserEntity {
     "token_type": tokenType,
     "access_token": accessToken,
     "refresh_token": refreshToken,
+    "providers": providers,
     "roles": roles,
   };
 }

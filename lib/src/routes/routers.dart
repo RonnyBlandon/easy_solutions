@@ -1,3 +1,4 @@
+import 'package:easy_solutions/src/features/presentation/profile/EditPasswordPage/View/edit_password_page.dart';
 import 'package:flutter/material.dart';
 
 //Pages
@@ -8,7 +9,7 @@ import 'package:easy_solutions/src/features/presentation/sign_up_page/View/sign_
 import 'package:easy_solutions/src/features/presentation/services_page/View/services_page.dart';
 import 'package:easy_solutions/src/features/presentation/tabs/TabsPage/View/tabs_page.dart';
 import 'package:easy_solutions/src/features/presentation/order_details_page/View/order_details_page.dart';
-import 'package:easy_solutions/src/features/presentation/profile_details_page/View/profile_details_page.dart';
+import 'package:easy_solutions/src/features/presentation/profile/profile_details_page/View/profile_details_page.dart';
 import 'package:easy_solutions/src/features/presentation/payment_methods_page/View/payment_methods_page.dart';
 import 'package:easy_solutions/src/features/presentation/add_card_credit_page/View/add_card_credit.dart';
 import 'package:easy_solutions/src/features/presentation/add_address_page/View/add_address_page.dart';
@@ -28,5 +29,6 @@ final routes = <String, WidgetBuilder>{
   'legal_info': (BuildContext context) => const LegalInfoPage(),
   'form_add_card_credit': (BuildContext context) => const FormAddCardCredit(),
   'add_address': (BuildContext context) => const AddAddressPage(),
-  'notifications': (BuildContext context) => const NotificationsPage()
+  'notifications': (BuildContext context) => const NotificationsPage(),
+  'edit_password': (BuildContext context) => const EditPasswordPage(),
 };

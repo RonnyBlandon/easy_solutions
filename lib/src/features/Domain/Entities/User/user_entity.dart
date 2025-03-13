@@ -2,13 +2,13 @@ import 'dart:convert';
 
 class UserEntity {
   String? localId;
-  String? roles;
+  List<String>? roles;
   String? fullName;
   String? email;
   String? phone;
   String? startDate;
   String? accessToken;
-  String? provider;
+  List<String>? providers;
 
   UserEntity({
     this.localId,
@@ -18,18 +18,18 @@ class UserEntity {
     this.phone,
     this.startDate,
     this.accessToken,
-    this.provider,
+    this.providers,
   });
 
   UserEntity copyWith({
     String? localId,
-    String? roles,
+    List<String>? roles,
     String? fullName,
     String? email,
     String? phone,
     String? startDate,
     String? accessToken,
-    String? provider,
+    List<String>? providers,
   }) {
     return UserEntity(
       localId: localId,
@@ -39,6 +39,7 @@ class UserEntity {
       phone: phone,
       startDate: startDate,
       accessToken: accessToken,
+      providers: providers,
     );
   }
 
@@ -55,7 +56,7 @@ class UserEntity {
     phone: json["phone_number"],
     startDate: json["start_date"],
     accessToken: json["access_token"],
-    provider: json["provider"],
+    providers: json["providers"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -66,11 +67,11 @@ class UserEntity {
     "phone_number": phone,
     "start_date": startDate,
     "access_token": accessToken,
-    "provider": provider,
+    "providers": providers,
   };
 }
 
 class UserAuthProvider {
-  static String google = "Google";
-  static String emailAndPassword = "emailAndPassword";
+  static String google = "GOOGLE";
+  static String email = "EMAIL";
 }

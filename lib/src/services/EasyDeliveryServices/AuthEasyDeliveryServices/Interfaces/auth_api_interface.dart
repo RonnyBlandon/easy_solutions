@@ -9,28 +9,32 @@ abstract class BaseApiService {
   static String getUserDataEndpoint = "auth/get-user-data";
   static String refreshTokenEndpoint = "auth/refreshToken";
   static String googleSignInEndpoint = "auth/googleSignIn";
+  static String updatePasswordEndpoint = "";
 }
 
 abstract class SignUpService extends BaseApiService {
   String endpoint = BaseApiService.baseUrl + BaseApiService.singUpEndpoint;
 
-  Future<Map<String, dynamic>> signUp(
-      {required Map<String, dynamic> bodyParameters});
+  Future<Map<String, dynamic>> signUp({
+    required Map<String, dynamic> bodyParameters,
+  });
 }
 
 abstract class SignInService extends BaseApiService {
   String endpoint = BaseApiService.baseUrl + BaseApiService.singInEndpoint;
 
-  Future<Map<String, dynamic>> signIn(
-      {required Map<String, dynamic> bodyParameters});
+  Future<Map<String, dynamic>> signIn({
+    required Map<String, dynamic> bodyParameters,
+  });
 }
 
 abstract class RefreshTokenService extends BaseApiService {
   String endpoint =
       BaseApiService.baseUrl + BaseApiService.refreshTokenEndpoint;
 
-  Future<Map<String, dynamic>> getRefreshToken(
-      {required Map<String, dynamic> bodyParameters});
+  Future<Map<String, dynamic>> getRefreshToken({
+    required Map<String, dynamic> bodyParameters,
+  });
 }
 
 abstract class ResetPasswordUserService extends BaseApiService {

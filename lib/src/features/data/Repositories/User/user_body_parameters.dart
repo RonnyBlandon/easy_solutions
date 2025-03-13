@@ -10,7 +10,7 @@ class UserBodyParameters {
   });
 
   String? localId;
-  String? roles;
+  List<String>? roles;
   String? fullName;
   String? email;
   String? phone;

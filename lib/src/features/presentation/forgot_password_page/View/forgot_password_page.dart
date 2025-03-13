@@ -24,67 +24,73 @@ class _ForgotPasswordState extends State<ForgotPassword> with BaseView {
   final ForgotPasswordViewModel _viewModel;
 
   _ForgotPasswordState({ForgotPasswordViewModel? viewModel})
-      : _viewModel = viewModel ?? DefaultForgotPasswordViewModel();
+    : _viewModel = viewModel ?? DefaultForgotPasswordViewModel();
 
   @override
   Widget build(BuildContext context) {
     _viewModel.initState(
-        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+    );
 
     return SafeArea(
-      child: _viewModel.loadingState.isLoading
-          ? loadingView
-          : Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0.0,
-                leading: backButton(context, Colors.black),
-              ),
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 10.0),
-                  child: Column(
-                    children: [
-                      headerText(
-                          text: 'Olvidaste tu contraseña', fontsize: 29.0),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Por favor, ingrese su correo electrónico para recuperar su contraseña.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+      child:
+          _viewModel.loadingState.isLoading
+              ? loadingView
+              : Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  leading: backButton(context, Colors.black),
+                ),
+                body: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 10.0,
+                    ),
+                    child: Column(
+                      children: [
+                        headerText(
+                          text: 'Olvidaste tu contraseña',
+                          fontsize: 29.0,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Por favor, ingrese su correo electrónico para recuperar su contraseña.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
-                              fontSize: 15.0),
+                              fontSize: 15.0,
+                            ),
+                          ),
                         ),
-                      ),
-                      TextFormFieldEmailResetPassword(
-                        viewModel: _viewModel,
-                      ),
-                      const SizedBox(height: 30.0),
-                      createElevatedButton(
+                        TextFormFieldEmailResetPassword(viewModel: _viewModel),
+                        const SizedBox(height: 30.0),
+                        createElevatedButton(
                           labelButton: "Enviar",
                           onPressed: () {
                             _ctaButtonTapped(context);
-                          })
-                    ],
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
     );
   }
 }
 
-extension UserActions on _ForgotPasswordState {
+extension _UserActions on _ForgotPasswordState {
   void _ctaButtonTapped(BuildContext context) {
     _viewModel.resetPassword().then((value) {
       return showAlertDialogWithImage(
         context,
         const AssetImage('assets/images/forgot_password.png'),
         'Tu contraseña ha sido restablecida',
-        'Recibirá un enlace en su correo electrónico para restablecer su contraseña.',
+        'Te hemos enviado un enlace a tu correo para restablecer tu contraseña. Por seguridad, este enlace será válido solo por 15 minutos. Si no lo usas a tiempo, deberás solicitar uno nuevo.',
         'Hecho',
         false,
         () {

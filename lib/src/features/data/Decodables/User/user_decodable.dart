@@ -2,13 +2,13 @@ import 'dart:convert';
 
 class UserDecodable {
   String? localId;
-  String? roles;
+  List<String>? roles;
   String? fullName;
   String? email;
   String? phone;
   String? startDate;
   String? accessToken;
-  String? provider;
+  List<String>? providers;
 
   UserDecodable({
     this.localId,
@@ -18,7 +18,7 @@ class UserDecodable {
     this.phone,
     this.startDate,
     this.accessToken,
-    this.provider,
+    this.providers,
   });
 
   factory UserDecodable.fromJson(String str) =>
@@ -28,13 +28,13 @@ class UserDecodable {
 
   factory UserDecodable.fromMap(Map<String, dynamic> json) => UserDecodable(
     localId: json["local_id"],
-    roles: json["roles"],
+    roles: List<String>.from(json['roles'] ?? []),
     fullName: json["full_name"],
     email: json["email"],
     phone: json["phone_number"],
     startDate: json["start_date"],
     accessToken: json["access_token"],
-    provider: json["provider"],
+    providers: List<String>.from(json['providers'] ?? []),
   );
 
   Map<String, dynamic> toMap() => {
@@ -45,6 +45,6 @@ class UserDecodable {
     "phone_number": phone,
     "start_date": startDate,
     "access_token": accessToken,
-    "provider": provider,
+    "providers": providers,
   };
 }

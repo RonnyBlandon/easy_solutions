@@ -4,7 +4,7 @@ class SignUpUseCaseParameters {
   final String phone;
   final int departmentId;
   final int municipalityId;
-  final String roles;
+  final List<String> roles;
   final bool isActive;
   final String password;
 
