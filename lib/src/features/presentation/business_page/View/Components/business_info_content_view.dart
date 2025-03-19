@@ -2,7 +2,7 @@ import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Business/business_list_entity.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
+import 'package:easy_solutions/src/utils/Helpers/ScreenSize/screen_size_helper.dart';
 import 'package:flutter/material.dart';
 
 class BusinessInfoContentView extends StatefulWidget {
@@ -128,10 +128,7 @@ Widget _buildBottomSheetBusinessInfo(
               icon: const Icon(Icons.close, size: 30.0),
             ),
             Container(
-              width: screenWidth.getScreenWidth(
-                context: context,
-                multiplier: 0.8,
-              ),
+              width: getScreenWidth(context: context, multiplier: 0.8),
               alignment: Alignment.center,
               child: headerText(
                 text: 'Información',

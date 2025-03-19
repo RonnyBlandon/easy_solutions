@@ -14,7 +14,7 @@ import 'package:easy_solutions/src/features/presentation/tabs/addresses_tab/View
 //Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_app_bar.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/main_drawer.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/AlertView/View/alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class TabsPage extends StatefulWidget {
@@ -29,7 +29,7 @@ class _TabsPageState extends State<TabsPage> with BaseView {
   final TabsViewModel _viewModel;
 
   _TabsPageState({TabsViewModel? tabsViewModel})
-      : _viewModel = tabsViewModel ?? DefaultTabsViewModel();
+    : _viewModel = tabsViewModel ?? DefaultTabsViewModel();
 
   @override
   void initState() {
@@ -66,86 +66,94 @@ class _TabsPageState extends State<TabsPage> with BaseView {
   @override
   Widget build(BuildContext context) {
     _viewModel.initState(
-        loadingStateProvider: Provider.of<LoadingStateProvider>(context));
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+    );
 
     return _viewModel.loadingState.isLoading
         ? loadingView
         : Scaffold(
-            appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: MainAppBar(actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'shopping_cart');
-                      },
-                      icon: const Icon(
-                        Icons.shopping_cart,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'notifications');
-                      },
-                      icon: const Icon(
-                        Icons.notifications,
-                      )),
-                ])),
-            body: _widgetOptions.elementAt(_selectedItemIndex),
-            drawer: MainDrawer(),
-            bottomNavigationBar: _bottomNavigationBar(),
-          );
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: MainAppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'shopping_cart');
+                  },
+                  icon: const Icon(Icons.shopping_cart),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'notifications');
+                  },
+                  icon: const Icon(Icons.notifications),
+                ),
+              ],
+            ),
+          ),
+          body: _widgetOptions.elementAt(_selectedItemIndex),
+          drawer: MainDrawer(),
+          bottomNavigationBar: _bottomNavigationBar(),
+        );
   }
 }
 
 extension PrivateMethods on _TabsPageState {
   Widget _bottomNavigationBar() {
     return BottomNavigationBar(
-        iconSize: 30.0,
-        selectedFontSize: 12,
-        unselectedFontSize: 10,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.black,
-        showUnselectedLabels: true,
-        currentIndex: _selectedItemIndex,
-        onTap: _changeTab,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explorar'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Pedidos'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favoritos'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.location_pin), label: 'Direcciones'),
-        ]);
+      iconSize: 30.0,
+      selectedFontSize: 12,
+      unselectedFontSize: 10,
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.black,
+      showUnselectedLabels: true,
+      currentIndex: _selectedItemIndex,
+      onTap: _changeTab,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explorar'),
+        BottomNavigationBarItem(icon: Icon(Icons.assignment), label: 'Pedidos'),
+        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoritos'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.location_pin),
+          label: 'Direcciones',
+        ),
+      ],
+    );
   }
 
   Future _getCurrentPosition(BuildContext context) async {
-    showAlertDialogWithImage(
-        context,
-        const AssetImage('assets/images/location_google.png'),
-        'Habilita tu localización',
-        '¡Habilita la Localización para un Servicio de Entrega Más Rápido y Preciso!',
-        'Habilitar Localización',
-        false, () {
-      _viewModel.getCurrentPosition().then((result) {
-        switch (result.status) {
-          case ResultStatus.success:
-            _closeAlertDialog(context);
-          case ResultStatus.error:
-            _closeAlertDialog(context);
-            errorStateProvider.setFailure(
-                context: context, value: result.error!);
-        }
-      });
-    });
+    AlertView.showAlertDialog(
+      context: context,
+      imagePath: const AssetImage('assets/images/location_google.png'),
+      headerTitle: 'Habilita tu localización',
+      headerSubTitle:
+          '¡Habilita la Localización para un Servicio de Entrega Más Rápido y Preciso!',
+      labelButton: 'Habilitar Localización',
+      isDismissible: false,
+      doneButtonFunc: () {
+        _viewModel.getCurrentPosition().then((result) {
+          switch (result.status) {
+            case ResultStatus.success:
+              _closeAlertDialog(context);
+            case ResultStatus.error:
+              _closeAlertDialog(context);
+              errorStateProvider.setFailure(
+                context: context,
+                value: result.error!,
+              );
+          }
+        });
+      },
+    );
   }
 
   _closeAlertDialog(BuildContext context) {
     _viewModel.loadingState.setLoadingState(isLoading: false);
-    Navigator.pop(context);
+    AlertView.closeAlertDialog(context);
   }
 }
 
-extension UserActions on _TabsPageState {
+extension _UserActions on _TabsPageState {
   void _changeTab(int index) {
     setState(() {
       _selectedItemIndex = index;

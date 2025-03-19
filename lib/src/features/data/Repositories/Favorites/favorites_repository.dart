@@ -12,11 +12,11 @@ class DefaultFavoriteRepository extends FavoriteRepository {
   final String _pathBusinessDeleteFavorite = "favourites/business/";
   final String _pathProductDeleteFavorite = "favourites/product/";
   //Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
 
-  DefaultFavoriteRepository({RealtimeDatabaseService? realtimeDatabaseService})
+  DefaultFavoriteRepository({RealtimeDataBaseService? realtimeDatabaseService})
     : _realtimeDatabaseService =
-          realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+          realtimeDatabaseService ?? DefaultRealtimeDataBaseService();
 
   @override
   Future<BusinessListDecodable> fetchBuisnessFavoritesList() async {

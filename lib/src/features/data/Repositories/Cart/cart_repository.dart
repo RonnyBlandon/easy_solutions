@@ -6,16 +6,19 @@ import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabas
 class DefaultCartRepository extends CartRepository {
   final String _path = "carts";
   //Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
 
-  DefaultCartRepository({RealtimeDatabaseService? realtimeDatabaseService})
-      : _realtimeDatabaseService =
-            realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+  DefaultCartRepository({RealtimeDataBaseService? realtimeDatabaseService})
+    : _realtimeDatabaseService =
+          realtimeDatabaseService ?? DefaultRealtimeDataBaseService();
 
   @override
   Future<CartsListDecodable> fetchCartsList({required String userId}) async {
     String path = "$_path/restaurant/$userId/";
-    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: false);
+    final response = await _realtimeDatabaseService.getData(
+      path: path,
+      requiresAuth: false,
+    );
     CartsListDecodable decodable = CartsListDecodable.fromMap(response);
     return decodable;
   }

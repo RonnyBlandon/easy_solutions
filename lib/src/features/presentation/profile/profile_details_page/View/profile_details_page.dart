@@ -13,8 +13,8 @@ import 'package:easy_solutions/src/features/presentation/profile/profile_details
 // Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-//Extensions
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
+//Helpers
+import 'package:easy_solutions/src/utils/Helpers/ScreenSize/screen_size_helper.dart';
 //Styles
 import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 
@@ -74,13 +74,13 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage>
                     SliverList(
                       delegate: SliverChildListDelegate([
                         Container(
-                          width: screenWidth.getScreenWidth(context: context),
-                          height: screenHeight.getScreenHeight(
+                          width: getScreenWidth(context: context),
+                          height: getScreenHeight(
                             context: context,
                             multiplier: 0.48,
                           ),
                           margin: EdgeInsets.only(
-                            top: screenHeight.getScreenHeight(
+                            top: getScreenHeight(
                               context: context,
                               multiplier: 0.1,
                             ),

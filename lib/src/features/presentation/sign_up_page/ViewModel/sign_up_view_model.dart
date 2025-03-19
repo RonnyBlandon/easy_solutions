@@ -97,6 +97,8 @@ class DefaultSignUpViewModel extends SignUpViewModel {
         signUpModel?.phone = newValue;
       case CustomTextFormFieldType.username:
         signUpModel?.username = newValue;
+      default:
+        break;
     }
   }
 }

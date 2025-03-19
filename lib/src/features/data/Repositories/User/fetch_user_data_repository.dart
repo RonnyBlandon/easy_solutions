@@ -11,12 +11,12 @@ extension Paths on DefaultFetchUserDataRepository {
 
 class DefaultFetchUserDataRepository extends FetchUserDataRepository {
   // Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
 
   DefaultFetchUserDataRepository({
-    RealtimeDatabaseService? realtimeDatabaseService,
+    RealtimeDataBaseService? realtimeDatabaseService,
   }) : _realtimeDatabaseService =
-           realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+           realtimeDatabaseService ?? DefaultRealtimeDataBaseService();
 
   @override
   Future<Result<UserDecodable, Failure>> fetchUserData() async {

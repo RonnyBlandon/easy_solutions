@@ -21,6 +21,10 @@ const _defectBoxShadowObject = [
 
 const BorderSide defaultBorderSide = BorderSide(color: orange);
 
+const BorderSide borderSideTextFieldError = BorderSide(color: Colors.red);
+
+const BorderSide borderSidePaymentCards = BorderSide(color: bgGreyCardsBorders);
+
 const Decoration defaultTextFieldDecoration = BoxDecoration(
   borderRadius: BorderRadius.all(Radius.circular(8)),
   border: Border(
@@ -42,6 +46,27 @@ Decoration createBoxDecorationWithShadows({
     boxShadow: boxShadows,
   );
 }
+
+const Decoration borderGrayDecoration = BoxDecoration(
+  color: bgGreyCards,
+  borderRadius: BorderRadius.all(Radius.circular(8)),
+  border: Border(
+    top: borderSidePaymentCards,
+    left: borderSidePaymentCards,
+    right: borderSidePaymentCards,
+    bottom: borderSidePaymentCards,
+  ),
+);
+
+const Decoration errorTextFieldDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(8)),
+  border: Border(
+    top: borderSideTextFieldError,
+    left: borderSideTextFieldError,
+    bottom: borderSideTextFieldError,
+    right: borderSideTextFieldError,
+  ),
+);
 
 BoxDecoration getBoxDecorationWithShadows({
   BorderRadiusGeometry borderRadius = borderRadius,

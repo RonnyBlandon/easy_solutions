@@ -8,6 +8,11 @@ mixin BaseView {
   final Widget loadingView = const LoadingView();
   final MainCoordinator coordinator = MainCoordinator();
   final ErrorStateProvider errorStateProvider = ErrorStateProvider();
+  BaseViewStateDelegate? viewStateDelegate;
+}
+
+mixin BaseViewStateDelegate {
+  void onChange();
 }
 
 mixin BaseViewModel {

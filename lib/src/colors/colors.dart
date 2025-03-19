@@ -22,5 +22,7 @@ const fbButtonColor = Color.fromRGBO(0, 122, 255, 1.0);
 
 // Backgrounds
 const bgInputs = Color.fromRGBO(210, 210, 218, 0.196);
+const bgGreyCards = Color.fromRGBO(248, 248, 248, 1.0);
 const bgGreyPage = Color.fromRGBO(247, 248, 250, 1.0);
 const bgGreyPage2 = Color.fromRGBO(216, 217, 219, 1);
+const bgGreyCardsBorders = Color.fromRGBO(239, 239, 244, 1.0);

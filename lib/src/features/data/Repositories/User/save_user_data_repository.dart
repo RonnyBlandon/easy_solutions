@@ -12,12 +12,12 @@ abstract class _Paths {
 
 class DefaultSaveUserDataRepository extends SaveUserDataRepository {
   // Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
 
   DefaultSaveUserDataRepository({
-    RealtimeDatabaseService? realtimeDatabaseService,
+    RealtimeDataBaseService? realtimeDatabaseService,
   }) : _realtimeDatabaseService =
-           realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+           realtimeDatabaseService ?? DefaultRealtimeDataBaseService();
 
   @override
   Future<Result<UserDecodable, Failure>> saveUserData({

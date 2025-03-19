@@ -15,8 +15,10 @@ abstract class LoginViewModelInput {
   late GlobalKey<FormState> formKey = GlobalKey<FormState>();
   LoginModel? loginModel = LoginModel(email: '', password: '');
 
-  Future<Result<bool, Failure>> login(
-      {required String email, required String password});
+  Future<Result<bool, Failure>> login({
+    required String email,
+    required String password,
+  });
   bool isFormValidate();
 }
 
@@ -30,12 +32,12 @@ class DefaultLoginViewModel extends LoginViewModel {
   final SignInUseCase _signInUseCase;
   final SaveLocalStorageUseCase _saveLocalStorageUseCase;
 
-  DefaultLoginViewModel(
-      {SignInUseCase? signInUseCase,
-      SaveLocalStorageUseCase? saveLocalStorageUseCase})
-      : _signInUseCase = signInUseCase ?? DefaultSignInUseCase(),
-        _saveLocalStorageUseCase =
-            saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase();
+  DefaultLoginViewModel({
+    SignInUseCase? signInUseCase,
+    SaveLocalStorageUseCase? saveLocalStorageUseCase,
+  }) : _signInUseCase = signInUseCase ?? DefaultSignInUseCase(),
+       _saveLocalStorageUseCase =
+           saveLocalStorageUseCase ?? DefaultSaveLocalStorageUseCase();
 
   @override
   void initState({required LoadingStateProvider loadingStateProvider}) {
@@ -48,51 +50,59 @@ class DefaultLoginViewModel extends LoginViewModel {
   }
 
   @override
-  Future<Result<bool, Failure>> login(
-      {required String email, required String password}) {
+  Future<Result<bool, Failure>> login({
+    required String email,
+    required String password,
+  }) {
     loadingState.setLoadingState(isLoading: true);
 
     return _signInUseCase
         .execute(
-            params: SigninUseCaseParameters(email: email, password: password))
+          params: SigninUseCaseParameters(email: email, password: password),
+        )
         .then((result) {
-      switch (result.status) {
-        case ResultStatus.success:
-          loadingState.setLoadingState(isLoading: false);
-          _saveLocalStorageUseCase.execute(
-              parameters: SaveLocalStorageParameters(
+          switch (result.status) {
+            case ResultStatus.success:
+              loadingState.setLoadingState(isLoading: false);
+              _saveLocalStorageUseCase.execute(
+                parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.localId,
-                  value: result.value?.localId ?? ""));
-          _saveLocalStorageUseCase.execute(
-              parameters: SaveLocalStorageParameters(
+                  value: result.value?.localId ?? "",
+                ),
+              );
+              _saveLocalStorageUseCase.execute(
+                parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.accessToken,
-                  value: result.value?.accessToken ?? ""));
-          _saveLocalStorageUseCase.execute(
-              parameters: SaveLocalStorageParameters(
+                  value: result.value?.accessToken ?? "",
+                ),
+              );
+              _saveLocalStorageUseCase.execute(
+                parameters: SaveLocalStorageParameters(
                   key: LocalStorageKeys.refreshToken,
-                  value: result.value?.refreshToken ?? ""));
+                  value: result.value?.refreshToken ?? "",
+                ),
+              );
 
-          return Result.success(true);
-        case ResultStatus.error:
-          loadingState.setLoadingState(isLoading: false);
-          return Result.failure(result.error);
-      }
-    });
+              return Result.success(true);
+            case ResultStatus.error:
+              loadingState.setLoadingState(isLoading: false);
+              return Result.failure(result.error);
+          }
+        });
   }
 
   @override
-  onChanged(
-      {required String newValue,
-      required CustomTextFormFieldType customTextFormFieldType}) {
+  onChanged({
+    required String newValue,
+    required CustomTextFormFieldType customTextFormFieldType,
+  }) {
     switch (customTextFormFieldType) {
       case CustomTextFormFieldType.email:
         loginModel?.email = newValue;
       case CustomTextFormFieldType.password:
         loginModel?.password = newValue;
-      case CustomTextFormFieldType.phone:
-      // Pass
-      case CustomTextFormFieldType.username:
-      // Pass
+      default:
+        break;
     }
   }
 }

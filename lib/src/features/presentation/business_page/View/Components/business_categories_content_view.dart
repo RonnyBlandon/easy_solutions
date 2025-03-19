@@ -4,7 +4,7 @@ import 'package:easy_solutions/src/features/Domain/Entities/Categories/categorie
 import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/MainCoordinator/main_coordinator.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
+import 'package:easy_solutions/src/utils/Helpers/ScreenSize/screen_size_helper.dart';
 import 'package:flutter/material.dart';
 
 class BusinessCategoriesContentView extends StatelessWidget with BaseView {
@@ -24,42 +24,50 @@ class BusinessCategoriesContentView extends StatelessWidget with BaseView {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 10.0, right: 10.0, bottom: 18.0),
+                  left: 10.0,
+                  right: 10.0,
+                  bottom: 18.0,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: headerText(
-                          text: businessCategories[index].name,
-                          fontsize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          textAling: TextAlign.start,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                        text: businessCategories[index].name,
+                        fontsize: 20.0,
+                        fontWeight: FontWeight.w500,
+                        textAling: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     const SizedBox(width: 10.0),
                     GestureDetector(
                       onTap: () {
                         MainCoordinator().showBusinessCategoryPage(
-                            context: context,
-                            businessCategoryId: businessCategories[index].id,
-                            businessId: businessCategories[index].businessId);
+                          context: context,
+                          businessCategoryId: businessCategories[index].id,
+                          businessId: businessCategories[index].businessId,
+                        );
                       },
                       child: Row(
                         children: [
                           headerText(
-                              text: 'Ver todos',
-                              fontsize: 14.0,
-                              fontWeight: FontWeight.w400),
-                          const Icon(Icons.arrow_right)
+                            text: 'Ver todos',
+                            fontsize: 14.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          const Icon(Icons.arrow_right),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
               _firstProductsCategory(
-                  context, businessCategories[index].products),
+                context,
+                businessCategories[index].products,
+              ),
             ],
           ),
         );
@@ -69,9 +77,11 @@ class BusinessCategoriesContentView extends StatelessWidget with BaseView {
 }
 
 Widget _firstProductsCategory(
-    BuildContext context, List<ProductDetailEntity> productList) {
+  BuildContext context,
+  List<ProductDetailEntity> productList,
+) {
   return SizedBox(
-    height: screenHeight.getScreenHeight(context: context, multiplier: 0.22),
+    height: getScreenHeight(context: context, multiplier: 0.22),
     child: ListView.builder(
       itemCount: productList.length,
       scrollDirection: Axis.horizontal,
@@ -83,13 +93,14 @@ Widget _firstProductsCategory(
 }
 
 _cardProduct(BuildContext context, {required ProductDetailEntity product}) {
-  double cardWidth =
-      screenWidth.getScreenWidth(context: context, multiplier: 0.35);
+  double cardWidth = getScreenWidth(context: context, multiplier: 0.35);
 
   return GestureDetector(
     onTap: () {
-      MainCoordinator()
-          .showBusinessProductPage(context: context, product: product);
+      MainCoordinator().showBusinessProductPage(
+        context: context,
+        product: product,
+      );
     },
     child: Container(
       width: cardWidth,
@@ -108,12 +119,12 @@ _cardProduct(BuildContext context, {required ProductDetailEntity product}) {
             ),
             child: Image(
               width: cardWidth,
-              height: screenHeight.getScreenHeight(
-                  context: context, multiplier: 0.15),
+              height: getScreenHeight(context: context, multiplier: 0.15),
               fit: BoxFit.cover,
-              image: product.productImageUrl.isNotEmpty
-                  ? NetworkImage(product.productImageUrl)
-                  : const AssetImage('assets/images/image_empty.png'),
+              image:
+                  product.productImageUrl.isNotEmpty
+                      ? NetworkImage(product.productImageUrl)
+                      : const AssetImage('assets/images/image_empty.png'),
             ),
           ),
           const SizedBox(height: 5.0),
@@ -135,37 +146,38 @@ _cardProduct(BuildContext context, {required ProductDetailEntity product}) {
             padding: const EdgeInsets.only(left: 5.0, right: 5.0),
             child: SizedBox(
               width: cardWidth - 10,
-              child: product.discount > 0
-                  ? Row(
-                      children: [
-                        Text(
-                          "L ${product.price.toStringAsFixed(2)}",
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            decoration:
-                                TextDecoration.lineThrough, // Precio tachado
+              child:
+                  product.discount > 0
+                      ? Row(
+                        children: [
+                          Text(
+                            "L ${product.price.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              decoration:
+                                  TextDecoration.lineThrough, // Precio tachado
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 5.0),
-                        headerText(
-                          text: "L ${product.price.toStringAsFixed(2)}",
-                          color: green,
-                          fontsize: 16.0,
-                          fontWeight: FontWeight.w500,
-                          textAling: TextAlign.start,
-                        ),
-                      ],
-                    )
-                  : headerText(
-                      text: "L ${product.price.toStringAsFixed(2)}",
-                      fontsize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      textAling: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                          const SizedBox(width: 5.0),
+                          headerText(
+                            text: "L ${product.price.toStringAsFixed(2)}",
+                            color: green,
+                            fontsize: 16.0,
+                            fontWeight: FontWeight.w500,
+                            textAling: TextAlign.start,
+                          ),
+                        ],
+                      )
+                      : headerText(
+                        text: "L ${product.price.toStringAsFixed(2)}",
+                        fontsize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        textAling: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
             ),
           ),
         ],

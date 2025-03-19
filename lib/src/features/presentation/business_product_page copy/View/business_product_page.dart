@@ -2,8 +2,8 @@ import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
 import 'package:flutter/material.dart';
-//Extension
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
+//Helpers
+import 'package:easy_solutions/src/utils/Helpers/ScreenSize/screen_size_helper.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
@@ -79,10 +79,7 @@ extension PrivateMethods on _BusinessProductPageState {
           children: [
             SizedBox(
               width: double.infinity,
-              height: screenHeight.getScreenHeight(
-                context: context,
-                multiplier: 0.35,
-              ),
+              height: getScreenHeight(context: context, multiplier: 0.35),
               child: AnotherCarousel(
                 dotSize: 4.0,
                 indicatorBgPadding: 3.0,
@@ -231,10 +228,7 @@ extension PrivateMethods on _BusinessProductPageState {
               ),
               createElevatedButton(
                 onPressed: () {},
-                width: screenWidth.getScreenWidth(
-                  context: context,
-                  multiplier: 0.5,
-                ),
+                width: getScreenWidth(context: context, multiplier: 0.5),
                 height: 49.0,
                 radius: 10.0,
                 backgroundColor: Colors.blue,

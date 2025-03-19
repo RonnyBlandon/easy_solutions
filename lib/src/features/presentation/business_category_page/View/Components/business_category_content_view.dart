@@ -5,7 +5,7 @@ import 'package:easy_solutions/src/features/presentation/MainCoordinator/main_co
 import 'package:easy_solutions/src/features/presentation/business_category_page/ViewModel/business_category_view_model.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/cards/product_cards/business_product_card_view.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/utils/extensions/screen_size.dart';
+import 'package:easy_solutions/src/utils/Helpers/ScreenSize/screen_size_helper.dart';
 import 'package:flutter/material.dart';
 
 class BusinessCategoryContentView extends StatelessWidget with BaseView {
@@ -61,7 +61,7 @@ Widget _categoryProductList(
   required MainCoordinator coordinator,
 }) {
   return SizedBox(
-    height: screenHeight.getScreenHeight(context: context, multiplier: 0.788),
+    height: getScreenHeight(context: context, multiplier: 0.788),
     child: GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

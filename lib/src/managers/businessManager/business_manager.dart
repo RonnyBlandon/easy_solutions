@@ -11,22 +11,26 @@ class DefaultBusinessManager extends BusinessManager {
   //final double _distanceRange = 10.0;
 
   // Dependencies
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
   //final GeolocationHelpersService _geolocationHelpersService;
 
-  DefaultBusinessManager(
-      {RealtimeDatabaseService? realtimeDataBaseService,
-      GeolocationService? geolocationService,
-      GeolocationHelpersService? geolocationHelpersService})
-      : _realtimeDatabaseService =
-            realtimeDataBaseService ?? DefaultRealtimeDatabaseService();
+  DefaultBusinessManager({
+    RealtimeDataBaseService? realtimeDataBaseService,
+    GeolocationService? geolocationService,
+    GeolocationHelpersService? geolocationHelpersService,
+  }) : _realtimeDatabaseService =
+           realtimeDataBaseService ?? DefaultRealtimeDataBaseService();
 
   @override
   Future<TypeBusinessListDecodable> fetchTypeBusinessList() async {
     try {
-      final response =
-          await _realtimeDatabaseService.getData(path: _typesBusinessPath, requiresAuth: false);
-      TypeBusinessListDecodable decodable = TypeBusinessListDecodable.fromMap(response);
+      final response = await _realtimeDatabaseService.getData(
+        path: _typesBusinessPath,
+        requiresAuth: false,
+      );
+      TypeBusinessListDecodable decodable = TypeBusinessListDecodable.fromMap(
+        response,
+      );
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -36,11 +40,15 @@ class DefaultBusinessManager extends BusinessManager {
   @override
   Future<BusinessListDecodable> fetchBusinessList() async {
     try {
-      final response =
-          await _realtimeDatabaseService.getData(path: _businessListPath, requiresAuth: false);
+      final response = await _realtimeDatabaseService.getData(
+        path: _businessListPath,
+        requiresAuth: false,
+      );
       BusinessListDecodable decodable = BusinessListDecodable.fromMap(response);
       decodable.businessList = _mapMunicipalityBusinessList(
-          businessList: decodable.businessList ?? [], municipalityId: 1);
+        businessList: decodable.businessList ?? [],
+        municipalityId: 1,
+      );
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -51,7 +59,8 @@ class DefaultBusinessManager extends BusinessManager {
   Future<BusinessListDecodable> fetchNoveltyBusinessList() async {
     final fullBusinessList = await fetchBusinessList();
     fullBusinessList.businessList = _mapNoveltyBusinessList(
-        businessList: fullBusinessList.businessList ?? []);
+      businessList: fullBusinessList.businessList ?? [],
+    );
     return fullBusinessList;
   }
 
@@ -59,20 +68,26 @@ class DefaultBusinessManager extends BusinessManager {
   Future<BusinessListDecodable> fetchPopularBusinessList() async {
     final fullBusinessList = await fetchBusinessList();
     fullBusinessList.businessList = _mapPopularBusinessList(
-        businessList: fullBusinessList.businessList ?? []);
+      businessList: fullBusinessList.businessList ?? [],
+    );
     return fullBusinessList;
   }
 
   @override
-  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness(
-      {required int typeBusinessId}) async {
+  Future<BusinessListDecodable> fetchBusinessListByTypeBusiness({
+    required int typeBusinessId,
+  }) async {
     String path = _typesBusinessPath + typeBusinessId.toString();
     try {
-      final response =
-          await _realtimeDatabaseService.getData(path: path, requiresAuth: false);
+      final response = await _realtimeDatabaseService.getData(
+        path: path,
+        requiresAuth: false,
+      );
       BusinessListDecodable decodable = BusinessListDecodable.fromMap(response);
       decodable.businessList = _mapMunicipalityBusinessList(
-          businessList: decodable.businessList ?? [], municipalityId: 1);
+        businessList: decodable.businessList ?? [],
+        municipalityId: 1,
+      );
       return decodable;
     } on Failure catch (f) {
       return Future.error(f);
@@ -80,29 +95,35 @@ class DefaultBusinessManager extends BusinessManager {
   }
 
   @override
-  Future<BusinessListDecodable> fetchBusinessListByQuery(
-      {required String query}) async {
+  Future<BusinessListDecodable> fetchBusinessListByQuery({
+    required String query,
+  }) async {
     final fullBusinessList = await fetchBusinessList();
     fullBusinessList.businessList = _mapBusinessListByQuery(
-        businessList: fullBusinessList.businessList ?? [], query: query);
+      businessList: fullBusinessList.businessList ?? [],
+      query: query,
+    );
     return fullBusinessList;
   }
 
   @override
-  Future<BusinessListDecodable> fetchBusinessListByRecentSearches(
-      {required List<String> businessIds}) async {
+  Future<BusinessListDecodable> fetchBusinessListByRecentSearches({
+    required List<String> businessIds,
+  }) async {
     final fullBusinessList = await fetchBusinessList();
     fullBusinessList.businessList = _mapBusinessListByRecentSearches(
-        businessList: fullBusinessList.businessList ?? [],
-        businessIds: businessIds);
+      businessList: fullBusinessList.businessList ?? [],
+      businessIds: businessIds,
+    );
     return fullBusinessList;
   }
 }
 
 extension Mappers on DefaultBusinessManager {
-  List<BusinessDetailDecodable> _mapMunicipalityBusinessList(
-      {required List<BusinessDetailDecodable> businessList,
-      required int municipalityId}) {
+  List<BusinessDetailDecodable> _mapMunicipalityBusinessList({
+    required List<BusinessDetailDecodable> businessList,
+    required int municipalityId,
+  }) {
     List<BusinessDetailDecodable> businessListFiltered = [];
     businessList.forEach((business) {
       if (business.municipalityId == municipalityId) {
@@ -112,8 +133,9 @@ extension Mappers on DefaultBusinessManager {
     return businessListFiltered;
   }
 
-  List<BusinessDetailDecodable> _mapNoveltyBusinessList(
-      {required List<BusinessDetailDecodable> businessList}) {
+  List<BusinessDetailDecodable> _mapNoveltyBusinessList({
+    required List<BusinessDetailDecodable> businessList,
+  }) {
     List<BusinessDetailDecodable> businessListFiltered = [];
     businessList.forEach((business) {
       if (business.isNovelty) {
@@ -123,8 +145,9 @@ extension Mappers on DefaultBusinessManager {
     return businessListFiltered;
   }
 
-  List<BusinessDetailDecodable> _mapPopularBusinessList(
-      {required List<BusinessDetailDecodable> businessList}) {
+  List<BusinessDetailDecodable> _mapPopularBusinessList({
+    required List<BusinessDetailDecodable> businessList,
+  }) {
     List<BusinessDetailDecodable> businessListFiltered = [];
     businessList.forEach((business) {
       if (business.isPopularThisWeek) {
@@ -134,9 +157,10 @@ extension Mappers on DefaultBusinessManager {
     return businessListFiltered;
   }
 
-  List<BusinessDetailDecodable> _mapBusinessListByQuery(
-      {required List<BusinessDetailDecodable> businessList,
-      required String query}) {
+  List<BusinessDetailDecodable> _mapBusinessListByQuery({
+    required List<BusinessDetailDecodable> businessList,
+    required String query,
+  }) {
     List<BusinessDetailDecodable> businessListFiltered = [];
     businessList.forEach((business) {
       if (query.isNotEmpty &&
@@ -147,9 +171,10 @@ extension Mappers on DefaultBusinessManager {
     return businessListFiltered;
   }
 
-  List<BusinessDetailDecodable> _mapBusinessListByRecentSearches(
-      {required List<BusinessDetailDecodable> businessList,
-      required List<String> businessIds}) {
+  List<BusinessDetailDecodable> _mapBusinessListByRecentSearches({
+    required List<BusinessDetailDecodable> businessList,
+    required List<String> businessIds,
+  }) {
     List<BusinessDetailDecodable> businessListFiltered = [];
     for (var businessId in businessIds) {
       businessList.forEach((business) {

@@ -3,7 +3,7 @@ import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/colors/colors.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/AlertView/View/alert_dialog.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
@@ -98,15 +98,16 @@ class _EditPasswordPageState extends State<EditPasswordPage> with BaseView {
 
     _viewModel.email = (context).getUserData()?.email ?? "";
     _viewModel.resetPassword().then((value) {
-      showAlertDialogWithImage(
-        context,
-        const AssetImage('assets/images/forgot_password.png'),
-        'Enlace enviado',
-        'Te hemos enviado un enlace a tu correo para restablecer tu contraseña. Por seguridad, este enlace será válido solo por 15 minutos. Si no lo usas a tiempo, deberás solicitar uno nuevo.',
-        'Hecho',
-        false,
-        () {
-          Navigator.of(context).pop();
+      AlertView.showAlertDialog(
+        context: context,
+        imagePath: const AssetImage('assets/images/forgot_password.png'),
+        headerTitle: 'Enlace enviado',
+        headerSubTitle:
+            'Te hemos enviado un enlace a tu correo para restablecer tu contraseña. Por seguridad, este enlace será válido solo por 15 minutos. Si no lo usas a tiempo, deberás solicitar uno nuevo.',
+        labelButton: 'Hecho',
+        isDismissible: false,
+        doneButtonFunc: () {
+          AlertView.closeAlertDialog(context);
         },
       );
     });

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
+import 'package:easy_solutions/src/features/presentation/StateProviders/user_state_provider.dart';
 import 'package:easy_solutions/src/features/presentation/welcome_page/ViewModel/welcome_page_view_model.dart';
 import 'package:easy_solutions/src/utils/Helpers/ResultType/result_type.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,10 @@ extension _UserActions on _WelcomePageState {
     viewModel.signInWithGoogle().then((result) {
       switch (result.status) {
         case ResultStatus.success:
+          Provider.of<DefaultUserStateProvider>(
+            context,
+            listen: false,
+          ).fetchUserData();
           coordinator.showTabsPage(context: context);
         case ResultStatus.error:
           errorStateProvider.setFailure(context: context, value: result.error!);

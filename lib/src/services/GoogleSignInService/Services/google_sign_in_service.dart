@@ -12,14 +12,14 @@ class DefaultGoogleSignInService extends GoogleSignInService {
   final String _path = "users/";
 
   // Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
   final ApiService _apiService;
 
   DefaultGoogleSignInService({
-    RealtimeDatabaseService? realtimeDatabaseService,
+    RealtimeDataBaseService? realtimeDatabaseService,
     ApiService? apiService,
   }) : _realtimeDatabaseService =
-           realtimeDatabaseService ?? DefaultRealtimeDatabaseService(),
+           realtimeDatabaseService ?? DefaultRealtimeDataBaseService(),
        _apiService = apiService ?? DefaultApiService();
 
   @override

@@ -10,7 +10,23 @@ mixin TextFormFieldDelegate {
   });
 }
 
-enum CustomTextFormFieldType { email, password, phone, username }
+enum CustomTextFormFieldType {
+  email,
+  password,
+  phone,
+  username,
+  nameInTheCard,
+  cardNumber,
+  monthAndYearInCard,
+  cvc,
+  country,
+  street,
+  floor,
+  city,
+  cp,
+  notes,
+  alias,
+}
 
 class CustomTextFormField extends StatelessWidget {
   final CustomTextFormFieldType textFormFieldType;
@@ -59,7 +75,9 @@ class CustomTextFormField extends StatelessWidget {
           return TextFormField(
             controller: _controller,
             initialValue: _initialValue,
-            keyboardType: getKeyBoardType(textFormFieldType: textFormFieldType),
+            keyboardType: _getKeyBoardType(
+              textFormFieldType: textFormFieldType,
+            ),
             obscureText: obscureText,
             decoration: InputDecoration(
               icon: _icon,
@@ -107,6 +125,8 @@ class CustomTextFormField extends StatelessWidget {
                   return DefaultFormValidator.validateIsNotEmpty(
                     value: value ?? "",
                   );
+                default:
+                  return null;
               }
             },
           );
@@ -115,7 +135,7 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 
-  TextInputType? getKeyBoardType({
+  TextInputType? _getKeyBoardType({
     required CustomTextFormFieldType textFormFieldType,
   }) {
     switch (textFormFieldType) {
@@ -126,6 +146,12 @@ class CustomTextFormField extends StatelessWidget {
       case CustomTextFormFieldType.phone:
         return TextInputType.phone;
       case CustomTextFormFieldType.username:
+        return TextInputType.text;
+      case CustomTextFormFieldType.cardNumber:
+        return TextInputType.number;
+      case CustomTextFormFieldType.cvc:
+        return TextInputType.number;
+      default:
         return TextInputType.text;
     }
   }

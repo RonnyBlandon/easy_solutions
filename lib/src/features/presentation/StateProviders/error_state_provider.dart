@@ -1,5 +1,5 @@
 import 'package:easy_solutions/src/base/ApiService/app_error.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/error_alert_view.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/ErrorAlertView/View/error_alert_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

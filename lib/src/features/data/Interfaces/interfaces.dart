@@ -2,10 +2,12 @@ import 'package:easy_solutions/src/base/ApiService/app_error.dart';
 import 'package:easy_solutions/src/features/data/Decodables/Auth/UserAuthData/user_auth_data_decodable.dart';
 import 'package:easy_solutions/src/features/data/Decodables/CartDecodable/cart_decodable.dart';
 import 'package:easy_solutions/src/features/data/Decodables/CategoriesDecodable/categories_decodable.dart';
+import 'package:easy_solutions/src/features/data/Decodables/PaymentMethods/payment_methods_decodable.dart';
 import 'package:easy_solutions/src/features/data/Decodables/ProductDecodable/products_decodable.dart';
 import 'package:easy_solutions/src/features/data/Decodables/User/user_decodable.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/SignInRepository/signin_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/Auth/UserAuthData/user_auth_data_repository_body_parameters.dart';
+import 'package:easy_solutions/src/features/data/Repositories/PaymentMethods/BodyParameters/payment_methods_body_parameters.dart';
 import 'package:easy_solutions/src/features/data/Repositories/User/user_body_parameters.dart';
 import 'package:easy_solutions/src/managers/businessManager/Decodables/business_list_decodable.dart';
 import 'package:easy_solutions/src/services/EasyDeliveryServices/AuthEasyDeliveryServices/Decodables/reset_password_decodable.dart';
@@ -123,4 +125,16 @@ abstract class FavoriteRepository {
 // Carts Repositories
 abstract class CartRepository {
   Future<CartsListDecodable> fetchCartsList({required String userId});
+}
+
+// Payment Methods Repositories
+abstract class PaymentMethodsRepository {
+  Future<PaymentMethodListDecodable> getPaymentMethods();
+  Future<PaymentMethodDecodable> addPaymentMethod({
+    required PaymentMethodBodyParameters bodyParameters,
+  });
+  Future<PaymentMethodDecodable> updatePaymentMethod({
+    required PaymentMethodBodyParameters bodyParameters,
+  });
+  Future<bool> deletePaymentMethod({required String paymentMethodId});
 }

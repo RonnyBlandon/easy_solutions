@@ -1,12 +1,13 @@
+import 'package:easy_solutions/src/base/Views/base_view.dart';
 import 'package:easy_solutions/src/features/presentation/StateProviders/loading_state_provider.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/AlertView/View/alert_dialog.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/menus/ViewModel/menu_view_model.dart';
 import 'package:easy_solutions/src/features/presentation/welcome_page/View/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatelessWidget with BaseView {
   final MenuViewModel _viewModel;
 
   MainDrawer({super.key, MenuViewModel? viewModel})
@@ -42,7 +43,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.pushNamed(context, 'payment_methods');
+              coordinator.showPaymentMethodsPage(context: context);
             },
             title: const Text('Formas de pago'),
             leading: const Icon(Icons.payment),
@@ -110,14 +111,14 @@ class MainDrawer extends StatelessWidget {
 
 extension UserActions on MainDrawer {
   Future<void> _signOut(BuildContext context) async {
-    showAlertDialogWithImage(
-      context,
-      const AssetImage('assets/images/logout.png'),
-      "Cierre de Sesión en curso",
-      "¿Desea salir de la sesión?",
-      "Cerrar Sesión",
-      true,
-      () {
+    AlertView.showAlertDialog(
+      context: context,
+      imagePath: const AssetImage('assets/images/logout.png'),
+      headerTitle: "Cierre de Sesión en curso",
+      headerSubTitle: "¿Desea salir de la sesión?",
+      labelButton: "Cerrar Sesión",
+      isDismissible: true,
+      doneButtonFunc: () {
         _viewModel.signOut().then((_) {
           Navigator.pushReplacement(
             context,

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/back_button.dart';
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/alert_dialog_with_image.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/alerts/AlertView/View/alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../ViewModel/forgot_password_view_model.dart';
@@ -86,15 +86,16 @@ class _ForgotPasswordState extends State<ForgotPassword> with BaseView {
 extension _UserActions on _ForgotPasswordState {
   void _ctaButtonTapped(BuildContext context) {
     _viewModel.resetPassword().then((value) {
-      return showAlertDialogWithImage(
-        context,
-        const AssetImage('assets/images/forgot_password.png'),
-        'Tu contraseña ha sido restablecida',
-        'Te hemos enviado un enlace a tu correo para restablecer tu contraseña. Por seguridad, este enlace será válido solo por 15 minutos. Si no lo usas a tiempo, deberás solicitar uno nuevo.',
-        'Hecho',
-        false,
-        () {
-          Navigator.of(context).pop();
+      return AlertView.showAlertDialog(
+        context: context,
+        imagePath: const AssetImage('assets/images/forgot_password.png'),
+        headerTitle: 'Tu contraseña ha sido restablecida',
+        headerSubTitle:
+            'Te hemos enviado un enlace a tu correo para restablecer tu contraseña. Por seguridad, este enlace será válido solo por 15 minutos. Si no lo usas a tiempo, deberás solicitar uno nuevo.',
+        labelButton: 'Hecho',
+        isDismissible: false,
+        doneButtonFunc: () {
+          AlertView.closeAlertDialog(context);
           Navigator.pushNamed(context, 'login');
         },
       );

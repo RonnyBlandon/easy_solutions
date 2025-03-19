@@ -6,27 +6,36 @@ import 'package:easy_solutions/src/services/EasyDeliveryServices/RealtimeDatabas
 class DefaultProductRepository extends ProductRepository {
   final String _path = "products";
   //Dependencias
-  final RealtimeDatabaseService _realtimeDatabaseService;
+  final RealtimeDataBaseService _realtimeDatabaseService;
 
-  DefaultProductRepository({RealtimeDatabaseService? realtimeDatabaseService})
-      : _realtimeDatabaseService =
-            realtimeDatabaseService ?? DefaultRealtimeDatabaseService();
+  DefaultProductRepository({RealtimeDataBaseService? realtimeDatabaseService})
+    : _realtimeDatabaseService =
+          realtimeDatabaseService ?? DefaultRealtimeDataBaseService();
 
   @override
-  Future<ProductListDecodable> fetchProductListByRecentSearches(
-      {required List<String> productIds}) async {
+  Future<ProductListDecodable> fetchProductListByRecentSearches({
+    required List<String> productIds,
+  }) async {
     String path = "$_path/search_by_ids/";
-    final response = await _realtimeDatabaseService
-        .postData(path: path, bodyParameters: {"product_ids": productIds}, requiresAuth: true);
+    final response = await _realtimeDatabaseService.postData(
+      path: path,
+      bodyParameters: {"product_ids": productIds},
+      requiresAuth: true,
+    );
     ProductListDecodable decodable = ProductListDecodable.fromMap(response);
     return decodable;
   }
 
   @override
-  Future<ProductListDecodable> fetchProductListByQuery(
-      {required String businessId, required String query}) async {
+  Future<ProductListDecodable> fetchProductListByQuery({
+    required String businessId,
+    required String query,
+  }) async {
     String path = "$_path/search?business_id=$businessId&query=$query";
-    final response = await _realtimeDatabaseService.getData(path: path, requiresAuth: true);
+    final response = await _realtimeDatabaseService.getData(
+      path: path,
+      requiresAuth: true,
+    );
     ProductListDecodable decodable = ProductListDecodable.fromMap(response);
     return decodable;
   }
