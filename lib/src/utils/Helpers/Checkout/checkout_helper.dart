@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:core';
 
-import 'package:easy_solutions/src/features/Domain/Entities/DeliveryAddress/delivery_address_entity.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Address/address_entity.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/PaymentMethods/payment_methods_entity.dart';
 import 'package:easy_solutions/src/utils/extensions/Iterable/iterable_extension.dart';
 import 'package:flutter/services.dart';
@@ -67,14 +67,6 @@ class CheckoutHelper {
   static bool isValidCardName(String name) {
     // Remove leading and trailing whitespace and check if the result is not empty
     return name.trim().isNotEmpty && RegExp(r'^[a-zA-Z\s]*$').hasMatch(name);
-  }
-
-  /// Validates the alias on the credit card.
-  /// Returns "true" if the alias is not empty and only contains alphabetic characters, tilde, umlaut, and the "ñ".
-  static bool isValidCardAlias(String alias) {
-    // Remove leading and trailing whitespace and check if the result is not empty
-    return alias.trim().isNotEmpty &&
-        RegExp(r'^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]*$').hasMatch(alias);
   }
 
   /// Validates the credit card number.
@@ -175,14 +167,14 @@ class CheckoutHelper {
     return "${price.toStringAsFixed(2)} €";
   }
 
-  static DeliveryAddressListEntity getMainDeliveryAddress({
-    required DeliveryAddressListEntity entity,
+  static AddressListEntity getMainDeliveryAddress({
+    required AddressListEntity entity,
   }) {
     var newEntity = entity;
-    newEntity.deliveryAddressList =
-        entity.deliveryAddressList
+    newEntity.addressList =
+        entity.addressList
             .map((address) {
-              if (address.isMainDeliveryAddress) {
+              if (address.isMainAddress) {
                 return address;
               } else {
                 return null;

@@ -40,7 +40,6 @@ class PaymentMethodDecodable {
   final String cvc;
   final String? cardProvider;
   final String id;
-  final String cardAlias;
   final bool isMainPaymentMethod;
 
   PaymentMethodDecodable({
@@ -50,7 +49,6 @@ class PaymentMethodDecodable {
     required this.cvc,
     required this.cardProvider,
     required this.id,
-    required this.cardAlias,
     required this.isMainPaymentMethod,
   });
 
@@ -67,7 +65,6 @@ class PaymentMethodDecodable {
       cvc: json['cvc'],
       cardProvider: json['card_provider'],
       id: json['id'],
-      cardAlias: json['card_alias'],
       isMainPaymentMethod: json['is_main_payment_method'] ?? false,
     );
   }
@@ -80,7 +77,6 @@ class PaymentMethodDecodable {
       'cvc': cvc,
       'card_provider': cardProvider,
       'id': id,
-      'card_alias': cardAlias,
       'is_main_payment_method': isMainPaymentMethod,
     };
   }

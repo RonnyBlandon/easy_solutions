@@ -1,13 +1,14 @@
 import 'package:easy_solutions/src/base/Views/base_view.dart';
+import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 import 'package:flutter/material.dart';
 //Colors
 import 'package:easy_solutions/src/colors/colors.dart';
 //Commons Widgets
 import 'package:easy_solutions/src/features/presentation/commons_widgets/headers/header_text.dart';
-import 'package:easy_solutions/src/features/presentation/commons_widgets/buttons/create_elevated_button.dart';
 
 class EmptyPaymentMethodsView extends StatelessWidget with BaseView {
-  EmptyPaymentMethodsView({super.key});
+  final BaseViewStateDelegate? delegate;
+  EmptyPaymentMethodsView({super.key, this.delegate});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,9 @@ class EmptyPaymentMethodsView extends StatelessWidget with BaseView {
             const SizedBox(width: 10.0),
             createElevatedButton(
               onPressed: () {
-                coordinator.showAddEditCardPage(
+                coordinator.showAddCardPage(
                   context: context,
-                  isForEditing: false,
+                  viewStateDelegate: delegate,
                 );
               },
               labelButton: 'Agregar tarjeta',

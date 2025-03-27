@@ -50,7 +50,6 @@ class DefaultFavoriteRepository extends FavoriteRepository {
     }
 
     // Si la respuesta contiene 'detail', significa que hubo un error
-    print("Esto contiene response en favorites_repository: ${response}");
     if (response.containsKey("detail")) {
       final detailList = response["detail"];
       if (detailList is List && detailList.isNotEmpty) {
@@ -81,7 +80,6 @@ class DefaultFavoriteRepository extends FavoriteRepository {
     }
 
     if (response.containsKey("detail")) {
-      print("Esto contiene response en favorites_repository: ${response}");
       final detailList = response["detail"];
       if (detailList is List && detailList.isNotEmpty) {
         final errorMessage = detailList.first["msg"] ?? "Error desconocido";

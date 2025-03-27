@@ -7,6 +7,7 @@ class UserEntity {
   String? email;
   String? phone;
   String? startDate;
+  int? municipalityId;
   String? accessToken;
   List<String>? providers;
 
@@ -17,6 +18,7 @@ class UserEntity {
     this.email,
     this.phone,
     this.startDate,
+    this.municipalityId,
     this.accessToken,
     this.providers,
   });
@@ -28,6 +30,7 @@ class UserEntity {
     String? email,
     String? phone,
     String? startDate,
+    int? municipalityId,
     String? accessToken,
     List<String>? providers,
   }) {
@@ -38,6 +41,7 @@ class UserEntity {
       email: email,
       phone: phone,
       startDate: startDate,
+      municipalityId: municipalityId,
       accessToken: accessToken,
       providers: providers,
     );
@@ -55,6 +59,7 @@ class UserEntity {
     email: json["email"],
     phone: json["phone_number"],
     startDate: json["start_date"],
+    municipalityId: json["municipality_id"],
     accessToken: json["access_token"],
     providers: json["providers"],
   );
@@ -66,6 +71,7 @@ class UserEntity {
     "email": email,
     "phone_number": phone,
     "start_date": startDate,
+    "municipality_id": municipalityId,
     "access_token": accessToken,
     "providers": providers,
   };

@@ -18,11 +18,13 @@ abstract class GeoLocationFailureMessages {
 class DefaultGeolocationService extends GeolocationService {
   @override
   Future<Result<PositionEntity, Failure>> getCurrentPosition() async {
-    return await _determinePosition().then((position) {
+    try {
+      Position position = await _determinePosition();
       return Result.success(GeolocationServiceMappers.mapPosition(position));
-    }, onError: (e) {
+    } catch (e) {
+      print("Esto tiene e en getCurrentPosition de geolocation_service: $e");
       return Result.failure(Failure.fromMessage(message: e.toString()));
-    });
+    }
   }
 
   @override
@@ -72,14 +74,16 @@ extension PrivateMethods on DefaultGeolocationService {
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
         return Future.error(
-            GeoLocationFailureMessages.locationPermissionsDenied);
+          GeoLocationFailureMessages.locationPermissionsDenied,
+        );
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
       return Future.error(
-          GeoLocationFailureMessages.locationPermissionsDeniedForever);
+        GeoLocationFailureMessages.locationPermissionsDeniedForever,
+      );
     }
 
     // When we reach here, permissions are granted and we can

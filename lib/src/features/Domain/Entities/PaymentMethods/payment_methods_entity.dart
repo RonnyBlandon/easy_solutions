@@ -46,7 +46,6 @@ class PaymentMethodEntity {
   String cvc;
   String? cardProvider;
   String id;
-  String cardAlias;
   bool isMainPaymentMethod;
 
   PaymentMethodEntity({
@@ -56,7 +55,6 @@ class PaymentMethodEntity {
     required this.cvc,
     required this.cardProvider,
     required this.id,
-    required this.cardAlias,
     required this.isMainPaymentMethod,
   });
 
@@ -68,7 +66,6 @@ class PaymentMethodEntity {
       cvc: json['cvc'],
       cardProvider: json['card_provider'],
       id: json['id'],
-      cardAlias: json['card_alias'],
       isMainPaymentMethod: json['is_main_payment_method'] ?? false,
     );
   }
@@ -83,7 +80,6 @@ class PaymentMethodEntity {
       'cvc': cvc,
       'card_provider': cardProvider,
       'id': id,
-      'card_alias': cardAlias,
       'is_main_payment_method': isMainPaymentMethod,
     };
   }
@@ -96,7 +92,6 @@ class PaymentMethodEntity {
       cvc: '',
       cardProvider: '',
       id: '',
-      cardAlias: '',
       isMainPaymentMethod: false,
     );
   }

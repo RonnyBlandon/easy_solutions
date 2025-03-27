@@ -10,9 +10,9 @@ import 'package:easy_solutions/src/utils/styles/box_decoration_shadows.dart';
 import 'package:flutter/material.dart';
 
 class PaymentMethodsContentView extends StatefulWidget {
-  List<PaymentMethodEntity> paymentMethodList;
-  BaseViewStateDelegate? delegate;
-  PaymentMethodsContentView({
+  final List<PaymentMethodEntity> paymentMethodList;
+  final BaseViewStateDelegate? delegate;
+  const PaymentMethodsContentView({
     super.key,
     required this.paymentMethodList,
     required this.delegate,
@@ -97,7 +97,7 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
                         : Colors.black,
               ),
               headerText(
-                text: paymentMethod.cardAlias,
+                text: paymentMethod.monthAndYear,
                 fontsize: 16.0,
                 color:
                     paymentMethod.isMainPaymentMethod
@@ -116,7 +116,7 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
     required PaymentMethodEntity paymentMethod,
   }) {
     return Container(
-      height: getScreenHeight(context: context, multiplier: 0.35),
+      height: getScreenHeight(context: context, multiplier: 0.3),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -136,7 +136,9 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
                     vertical: 10.0,
                   ),
                   child: headerText(
-                    text: paymentMethod.cardNumber,
+                    text: CheckoutHelper.obfuscateCardNumber(
+                      paymentMethod.cardNumber,
+                    ),
                     fontsize: 18.0,
                   ),
                 ),
@@ -148,7 +150,7 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
                     bottom: 10.0,
                   ),
                   child: headerText(
-                    text: paymentMethod.cardAlias,
+                    text: "Vence: ${paymentMethod.monthAndYear}",
                     fontsize: 16.0,
                   ),
                 ),
@@ -163,13 +165,6 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
                 _selectMainPaymentMethod(paymentMethod);
               },
             ),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Editar tarjeta'),
-            onTap: () {
-              _showAlertEditPaymentMethod(context, paymentMethod);
-            },
-          ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: const Text('Eliminar tarjeta'),
@@ -191,9 +186,8 @@ class _PaymentMethodsContentViewState extends State<PaymentMethodsContentView>
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
       child: createElevatedButton(
         onPressed: () {
-          coordinator.showAddEditCardPage(
+          coordinator.showAddCardPage(
             context: context,
-            isForEditing: false,
             paymentMethod: paymentMethod,
             viewStateDelegate: delegate,
           );
@@ -210,30 +204,6 @@ extension _UserActions on _PaymentMethodsContentViewState {
     (context)
         .selectMainPaymentMethod(paymentMethod: paymentMethod)
         .then((_) => _pop(context));
-  }
-
-  _showAlertEditPaymentMethod(
-    BuildContext context,
-    PaymentMethodEntity paymentMethod,
-  ) {
-    AlertView.showAlertDialog(
-      context: context,
-      headerTitle: "¿Quierés editar esta tarjeta?",
-      headerSubTitle: "",
-      labelButton: "Editar tarjeta",
-      backgroundColorButton: Colors.red,
-      isDismissible: true,
-      cancelText: "Cancelar",
-      cancelAction: () => AlertView.closeAlertDialog(context),
-      doneButtonFunc: () {
-        coordinator.showAddEditCardPage(
-          context: context,
-          isForEditing: true,
-          paymentMethod: paymentMethod,
-          viewStateDelegate: widget.delegate,
-        );
-      },
-    );
   }
 
   _deletePaymentMethod(

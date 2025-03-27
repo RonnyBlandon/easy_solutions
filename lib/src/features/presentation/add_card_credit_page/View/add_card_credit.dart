@@ -15,30 +15,23 @@ import 'package:flutter/material.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/PaymentMethods/payment_methods_entity.dart';
 import 'package:flutter/services.dart';
 
-class AddEditCardPage extends StatefulWidget {
-  final bool? isEditing;
+class AddCardPage extends StatefulWidget {
   PaymentMethodEntity? paymentMethod;
   BaseViewStateDelegate? viewStateDelegate;
 
-  AddEditCardPage({
-    super.key,
-    this.isEditing,
-    this.paymentMethod,
-    this.viewStateDelegate,
-  });
+  AddCardPage({super.key, this.paymentMethod, this.viewStateDelegate});
 
   @override
-  State<AddEditCardPage> createState() => _AddEditCardPageState();
+  State<AddCardPage> createState() => _AddCardPageState();
 }
 
-class _AddEditCardPageState extends State<AddEditCardPage>
+class _AddCardPageState extends State<AddCardPage>
     with TextFormFieldDelegate, ExpiryDateSelectorDelegate, BaseView {
   String _actionText = "";
   Decoration? _cardNameDecoration = defaultTextFieldDecoration;
   Decoration? _cardNumberDecoration = defaultTextFieldDecoration;
   Decoration? _cardMonthAndYearDecoration = defaultTextFieldDecoration;
   Decoration? _cardCvcDecoration = defaultTextFieldDecoration;
-  Decoration? _cardAliasDecoration = defaultTextFieldDecoration;
 
   final AddEditCardTextEditingControllers _controllers =
       AddEditCardTextEditingControllers();
@@ -52,15 +45,12 @@ class _AddEditCardPageState extends State<AddEditCardPage>
       appBar: AppBar(
         leading: backButton(context, black),
         backgroundColor: white,
-        title: headerText(
-          text: _isEditing() ? "Edit Card" : "Add Card",
-          fontsize: 18.0,
-        ),
+        title: headerText(text: "Agregar Tarjeta", fontsize: 18.0),
         centerTitle: true,
         actions: [
           GestureDetector(
             onTap: () {
-              _editAddCard(context);
+              _addCard(context);
             },
             child: Container(
               padding: const EdgeInsets.only(right: 15.0),
@@ -163,22 +153,6 @@ class _AddEditCardPageState extends State<AddEditCardPage>
                       inputFormatters: [LengthLimitingTextInputFormatter(4)],
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      "ALIAS PARA ESTA TARJETA",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: accentColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    CustomTextFormField(
-                      delegate: this,
-                      hintext: 'Alias para esta tarjeta',
-                      textFormFieldType: CustomTextFormFieldType.alias,
-                      decoration: _cardAliasDecoration,
-                      initialValue: widget.paymentMethod?.cardAlias ?? "",
-                    ),
-                    const SizedBox(height: 16),
                   ],
                 ),
               ),
@@ -205,9 +179,6 @@ class _AddEditCardPageState extends State<AddEditCardPage>
         case CustomTextFormFieldType.cvc:
           widget.paymentMethod?.cvc = newValue;
           break;
-        case CustomTextFormFieldType.alias:
-          widget.paymentMethod?.cardAlias = newValue;
-          break;
         default:
           break;
       }
@@ -230,51 +201,16 @@ class _AddEditCardPageState extends State<AddEditCardPage>
   }
 }
 
-extension _UserActions on _AddEditCardPageState {
-  _editAddCard(BuildContext context) {
+extension _UserActions on _AddCardPageState {
+  _addCard(BuildContext context) {
+    // Null Check
+    if (widget.paymentMethod == null) {
+      return;
+    }
+
     setState(() {
       (context).setLoadingState(isLoading: true);
     });
-
-    if (_isEditing()) {
-      // Aquí editamos la tarjeta
-      _editCard();
-    } else {
-      // Aquí creamos la tarjeta
-      _addCard();
-    }
-  }
-
-  _editCard() {
-    // Null Check
-    if (widget.paymentMethod == null) {
-      return;
-    }
-    (context)
-        .editPaymentMethod(paymentMethod: widget.paymentMethod!)
-        .then(
-          (_) {
-            setState(() {
-              (context).setLoadingState(isLoading: false);
-            });
-            _pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-          onError: (_) {
-            (context).showErrorAlert(
-              message: AppFailureMessages.unExpectedErrorMessage,
-              context: context,
-            );
-          },
-        );
-  }
-
-  _addCard() {
-    // Null Check
-    if (widget.paymentMethod == null) {
-      return;
-    }
 
     (context)
         .addPaymentMethod(paymentMethod: widget.paymentMethod!)
@@ -309,23 +245,19 @@ extension _UserActions on _AddEditCardPageState {
   }
 }
 
-extension _PrivateMethods on _AddEditCardPageState {
+extension _PrivateMethods on _AddCardPageState {
   _validateForm() {
     if ((widget.paymentMethod?.nameInTheCard.isEmpty ?? true) ||
         (widget.paymentMethod?.cardNumber.isEmpty ?? true) ||
         (widget.paymentMethod?.monthAndYear.isEmpty ?? true) ||
         (widget.paymentMethod?.cvc.isEmpty ?? true) ||
-        (widget.paymentMethod?.cardAlias.isEmpty ?? true) ||
         !CheckoutHelper.isValidCardName(
           widget.paymentMethod?.nameInTheCard ?? "",
         ) ||
         !CheckoutHelper.isValidCardNumber(
           widget.paymentMethod?.cardNumber ?? "",
         ) ||
-        !CheckoutHelper.isValidCvc(widget.paymentMethod?.cvc ?? "") ||
-        !CheckoutHelper.isValidCardAlias(
-          widget.paymentMethod?.cardAlias ?? "",
-        )) {
+        !CheckoutHelper.isValidCvc(widget.paymentMethod?.cvc ?? "")) {
       // No es un formulario válido
       _actionText = "";
     } else {
@@ -367,23 +299,11 @@ extension _PrivateMethods on _AddEditCardPageState {
     } else {
       _cardCvcDecoration = defaultTextFieldDecoration;
     }
-
-    if (!CheckoutHelper.isValidCardName(
-      widget.paymentMethod?.cardAlias ?? "",
-    )) {
-      _cardAliasDecoration = errorTextFieldDecoration;
-    } else {
-      _cardAliasDecoration = defaultTextFieldDecoration;
-    }
-  }
-
-  bool _isEditing() {
-    return widget.isEditing ?? false;
   }
 
   _prepareView() {
     viewStateDelegate = widget.viewStateDelegate;
-    if (!_isEditing() && widget.paymentMethod == null) {
+    if (widget.paymentMethod == null) {
       widget.paymentMethod = PaymentMethodEntity.getEmptyPaymentMethod();
     } else {
       _setInitialValuesToControllers();

@@ -48,12 +48,13 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                       paymentMethodList: snapshot.data!.paymentMethods,
                       delegate: this,
                     )
-                    : EmptyPaymentMethodsView();
+                    : EmptyPaymentMethodsView(delegate: this);
               } else {
-                print(
-                  "Esto tiene snapshot.error en payment_methods_page: ${snapshot.error}",
+                return ErrorView(
+                  onButtonPressed: () {
+                    Navigator.pop(context);
+                  },
                 );
-                return ErrorView(onButtonPressed: () {});
               }
             default:
               return loadingView;

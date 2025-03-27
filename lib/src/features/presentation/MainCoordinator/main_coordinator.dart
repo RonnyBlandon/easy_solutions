@@ -1,17 +1,19 @@
 import 'package:easy_solutions/src/base/Constants/local_storage_keys.dart';
 import 'package:easy_solutions/src/base/Views/base_view.dart';
+import 'package:easy_solutions/src/features/Domain/Entities/Address/address_entity.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/PaymentMethods/payment_methods_entity.dart';
 import 'package:easy_solutions/src/features/Domain/Entities/Products/products_entity.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/fetch_local_storage_use_case.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/local_storage_use_case_parameters.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/LocalStorage/save_local_storage_use_case.dart';
 import 'package:easy_solutions/src/features/Domain/UseCases/User/ValidateCurrentUserUseCase/validate_current_user_use_case.dart';
+import 'package:easy_solutions/src/features/presentation/add_edit_address_page/View/add_edit_address_page.dart';
 import 'package:easy_solutions/src/features/presentation/business_category_page/View/business_category_page.dart';
 import 'package:easy_solutions/src/features/presentation/business_list_page/View/business_list_page.dart';
 import 'package:easy_solutions/src/features/presentation/business_page/View/business_page.dart';
 import 'package:easy_solutions/src/features/presentation/business_product_page%20copy/View/business_product_page.dart';
 import 'package:easy_solutions/src/features/presentation/carts_list_page/View/carts_list_page.dart';
-import 'package:easy_solutions/src/features/presentation/edit_add_card_credit_page/View/edit_add_card_credit.dart';
+import 'package:easy_solutions/src/features/presentation/add_card_credit_page/View/add_card_credit.dart';
 import 'package:easy_solutions/src/features/presentation/payment_methods_page/View/payment_methods_page.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_product_page/View/restaurant_product_page.dart';
 import 'package:easy_solutions/src/features/presentation/restaurant_list_page/View/restaurant_list_page.dart';
@@ -188,17 +190,31 @@ class MainCoordinator {
     );
   }
 
-  showAddEditCardPage({
+  showAddCardPage({
     required BuildContext context,
-    bool? isForEditing,
     PaymentMethodEntity? paymentMethod,
     BaseViewStateDelegate? viewStateDelegate,
   }) {
     pushPage(
       context: context,
-      page: AddEditCardPage(
-        isEditing: isForEditing,
+      page: AddCardPage(
         paymentMethod: paymentMethod,
+        viewStateDelegate: viewStateDelegate,
+      ),
+    );
+  }
+
+  showAddEditAddressPage({
+    required BuildContext context,
+    required bool? isForEditing,
+    AddressEntity? deliveryAddress,
+    BaseViewStateDelegate? viewStateDelegate,
+  }) {
+    pushPage(
+      context: context,
+      page: AddEditAddressPage(
+        isEditing: isForEditing,
+        deliveryAddressEntity: deliveryAddress,
         viewStateDelegate: viewStateDelegate,
       ),
     );

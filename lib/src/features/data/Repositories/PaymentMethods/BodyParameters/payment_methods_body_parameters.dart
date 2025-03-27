@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:easy_solutions/src/utils/Helpers/Checkout/checkout_helper.dart';
-
 class PaymentMethodListBodyParameters {
   final List<PaymentMethodBodyParameters> paymentMethods;
 
@@ -39,7 +37,6 @@ class PaymentMethodBodyParameters {
   final String cvc;
   final String? cardProvider;
   final String id;
-  final String cardAlias;
   final bool isMainPaymentMethod;
 
   PaymentMethodBodyParameters({
@@ -49,7 +46,6 @@ class PaymentMethodBodyParameters {
     required this.cvc,
     required this.cardProvider,
     required this.id,
-    required this.cardAlias,
     required this.isMainPaymentMethod,
   });
 
@@ -61,7 +57,6 @@ class PaymentMethodBodyParameters {
       cvc: json['cvc'],
       cardProvider: json['card_provider'],
       id: json['id'],
-      cardAlias: json['card_alias'],
       isMainPaymentMethod: json['is_main_payment_method'],
     );
   }
@@ -76,7 +71,6 @@ class PaymentMethodBodyParameters {
       'cvc': cvc,
       'card_provider': cardProvider,
       'id': id,
-      'card_alias': cardAlias,
       'is_main_payment_method': isMainPaymentMethod,
     };
   }

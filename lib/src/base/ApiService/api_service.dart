@@ -54,7 +54,8 @@ class DefaultApiService extends ApiService {
           accessToken = await _tokenStorage.getAccessToken();
         } else {
           throw Failure.fromMessage(
-              message: "Token expirado. Inicia sesión nuevamente.");
+            message: "Token expirado. Inicia sesión nuevamente.",
+          );
         }
       }
       headers["Authorization"] = "Bearer $accessToken";
@@ -76,8 +77,11 @@ class DefaultApiService extends ApiService {
         .get(parsedUrl, headers: headers)
         .timeout(const Duration(seconds: 25));
 
-    return await _handleResponse(response,
-        () => getDataFromGetRequest(url: url, requiresAuth: requiresAuth), requiresAuth: requiresAuth);
+    return await _handleResponse(
+      response,
+      () => getDataFromGetRequest(url: url, requiresAuth: requiresAuth),
+      requiresAuth: requiresAuth,
+    );
   }
 
   // Método para solicitudes POST
@@ -95,8 +99,15 @@ class DefaultApiService extends ApiService {
         .post(parsedUrl, headers: headers, body: body)
         .timeout(const Duration(seconds: 25));
 
-    return await _handleResponse(response, () => getDataFromPostRequest(
-        bodyParameters: bodyParameters, url: url, requiresAuth: requiresAuth), requiresAuth: requiresAuth);
+    return await _handleResponse(
+      response,
+      () => getDataFromPostRequest(
+        bodyParameters: bodyParameters,
+        url: url,
+        requiresAuth: requiresAuth,
+      ),
+      requiresAuth: requiresAuth,
+    );
   }
 
   // Método para solicitudes PUT
@@ -114,8 +125,15 @@ class DefaultApiService extends ApiService {
         .put(parsedUrl, headers: headers, body: body)
         .timeout(const Duration(seconds: 25));
 
-    return await _handleResponse(response, () => getDataFromPutRequest(
-        bodyParameters: bodyParameters, url: url, requiresAuth: requiresAuth), requiresAuth: requiresAuth);
+    return await _handleResponse(
+      response,
+      () => getDataFromPutRequest(
+        bodyParameters: bodyParameters,
+        url: url,
+        requiresAuth: requiresAuth,
+      ),
+      requiresAuth: requiresAuth,
+    );
   }
 
   // Método para solicitudes DELETE
@@ -131,13 +149,19 @@ class DefaultApiService extends ApiService {
         .delete(parsedUrl, headers: headers)
         .timeout(const Duration(seconds: 25));
 
-    return await _handleResponse(response, () => getDataFromDeleteRequest(
-        url: url, requiresAuth: requiresAuth), requiresAuth: requiresAuth);
+    return await _handleResponse(
+      response,
+      () => getDataFromDeleteRequest(url: url, requiresAuth: requiresAuth),
+      requiresAuth: requiresAuth,
+    );
   }
 
   // Método para manejar respuestas y refrescar tokens si es necesario
   Future<Map<String, dynamic>> _handleResponse(
-      http.Response response, Future<Map<String, dynamic>> Function() retryRequest, {required bool requiresAuth}) async {
+    http.Response response,
+    Future<Map<String, dynamic>> Function() retryRequest, {
+    required bool requiresAuth,
+  }) async {
     try {
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);
@@ -153,7 +177,8 @@ class DefaultApiService extends ApiService {
           return await retryRequest(); // Reintentar con nuevo token
         } else {
           throw Failure.fromMessage(
-              message: "Token expirado. Inicia sesión nuevamente.");
+            message: "Token expirado. Inicia sesión nuevamente.",
+          );
         }
       } else {
         throw Failure.fromBody(body: response.body);

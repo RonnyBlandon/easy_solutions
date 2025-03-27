@@ -29,9 +29,7 @@ class DefaultPaymentMethodsUseCase extends PaymentMethodsUseCase {
     return await _paymentMethodsRepository
         .getPaymentMethods()
         .then((response) {
-          PaymentMethodListEntity paymentMethods =
-              PaymentMethodListEntity.fromMap(response.toMap());
-          return paymentMethods;
+          return PaymentMethodListEntity.fromMap(response.toMap());
         })
         .catchError((e) {
           throw Failure.fromMessage(
